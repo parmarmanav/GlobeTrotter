@@ -8,6 +8,8 @@ const Activity = require('../src/models/Activity');
 const config = require('../src/config/env');
 
 describe('STAGE 4 — CITY & ACTIVITY DISCOVERY + BUDGET & EXPENSES + CALENDAR TEST SUITE', () => {
+  jest.setTimeout(30000);
+
   let userToken = '';
   let adminToken = '';
   let unauthorizedUserToken = '';

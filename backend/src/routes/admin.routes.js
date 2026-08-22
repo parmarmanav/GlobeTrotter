@@ -11,64 +11,27 @@ const { restrictTo } = require('../middlewares/role.middleware');
  *     description: Platform monitoring, analytics and user role management
  */
 
-// All admin routes require authentication and ADMIN role
+// Require authentication and ADMIN role for all routes in this router
 router.use(protect);
 router.use(restrictTo('ADMIN'));
 
 /**
- * @swagger
- * /admin/analytics:
- *   get:
- *     summary: Get comprehensive platform metrics and analytics
- *     tags: [Admin & Analytics]
- *     security:
- *       - bearerAuth: []
- *     responses:
- *       200:
- *         description: Platform analytics
+ * Analytics Routes
  */
 router.get('/analytics', adminController.getAnalytics);
+router.get('/analytics/overview', adminController.getOverviewAnalytics);
+router.get('/analytics/users', adminController.getUserAnalytics);
+router.get('/analytics/trips', adminController.getTripAnalytics);
+router.get('/analytics/cities', adminController.getCityAnalytics);
+router.get('/analytics/activities', adminController.getActivityAnalytics);
 
 /**
- * @swagger
- * /admin/users:
- *   get:
- *     summary: List platform users with pagination & search
- *     tags: [Admin & Analytics]
- *     security:
- *       - bearerAuth: []
- *     responses:
- *       200:
- *         description: Users list
+ * User Management Routes
  */
 router.get('/users', adminController.getUsers);
-
-/**
- * @swagger
- * /admin/users/{userId}/role:
- *   patch:
- *     summary: Change user role (ADMIN / USER)
- *     tags: [Admin & Analytics]
- *     security:
- *       - bearerAuth: []
- *     parameters:
- *       - in: path
- *         name: userId
- *         required: true
- *         schema: { type: string }
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             required: [role]
- *             properties:
- *               role: { type: string, enum: [USER, ADMIN] }
- *     responses:
- *       200:
- *         description: User role updated
- */
+router.get('/users/:userId', adminController.getUserById);
+router.patch('/users/:userId/status', adminController.updateUserStatus);
 router.patch('/users/:userId/role', adminController.updateUserRole);
+router.delete('/users/:userId', adminController.deleteUser);
 
 module.exports = router;

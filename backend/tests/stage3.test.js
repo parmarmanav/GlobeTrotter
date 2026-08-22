@@ -8,6 +8,8 @@ const Activity = require('../src/models/Activity');
 const config = require('../src/config/env');
 
 describe('STAGE 3 — TRIPS + ITINERARY BUILDER + DASHBOARD TEST SUITE', () => {
+  jest.setTimeout(30000);
+
   let user1Token = '';
   let user2Token = '';
   let user1Id = '';

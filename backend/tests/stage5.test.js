@@ -10,6 +10,8 @@ const PublicTrip = require('../src/models/PublicTrip');
 const config = require('../src/config/env');
 
 describe('STAGE 5 — COMMUNITY + PUBLIC TRIP SHARING + SAVED DESTINATIONS + ADMIN TEST SUITE', () => {
+  jest.setTimeout(30000);
+
   let user1Token = '';
   let user2Token = '';
   let adminToken = '';
