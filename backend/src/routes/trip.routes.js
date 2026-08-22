@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const tripController = require('../controllers/trip.controller');
 const itineraryController = require('../controllers/itinerary.controller');
+const calendarController = require('../controllers/calendar.controller');
+const budgetRoutes = require('./budget.routes');
 const { protect, optionalAuth } = require('../middlewares/auth.middleware');
 const { validate } = require('../middlewares/validation.middleware');
 const {
@@ -548,5 +550,32 @@ router.delete(
   protect,
   itineraryController.deleteActivity
 );
+
+// ==========================================
+// 4. BUDGET, EXPENSES & CALENDAR INTEGRATIONS
+// ==========================================
+
+/**
+ * @swagger
+ * /trips/{tripId}/calendar:
+ *   get:
+ *     summary: Get calendar timeline events for a trip
+ *     tags: [Calendar & Timeline]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: tripId
+ *         required: true
+ *         schema: { type: string }
+ *     responses:
+ *       200:
+ *         description: Calendar events
+ */
+router.get('/:tripId/calendar', optionalAuth, calendarController.getTripCalendar);
+
+// Mount budget & expenses sub-routes
+router.use('/:tripId/budget', budgetRoutes);
+router.use('/:tripId', budgetRoutes);
 
 module.exports = router;

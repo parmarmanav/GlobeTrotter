@@ -13,6 +13,9 @@ const healthRoutes = require('./routes/health.routes');
 const authRoutes = require('./routes/auth.routes');
 const userRoutes = require('./routes/user.routes');
 const tripRoutes = require('./routes/trip.routes');
+const cityRoutes = require('./routes/city.routes');
+const activityRoutes = require('./routes/activity.routes');
+const calendarRoutes = require('./routes/calendar.routes');
 const dashboardRoutes = require('./routes/dashboard.routes');
 
 const app = express();
@@ -57,6 +60,9 @@ app.use('/api/v1', healthRoutes);
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/trips', tripRoutes);
+app.use('/api/v1/cities', cityRoutes);
+app.use('/api/v1/activities', activityRoutes);
+app.use('/api/v1/calendar', calendarRoutes);
 app.use('/api/v1/dashboard', dashboardRoutes);
 
 // Handle 404 Not Found
