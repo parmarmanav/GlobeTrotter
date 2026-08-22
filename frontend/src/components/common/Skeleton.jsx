@@ -42,6 +42,22 @@ export function CityCardSkeleton() {
   )
 }
 
+export function ActivityCardSkeleton() {
+  return (
+    <div className="rounded-2xl border border-slate-200 bg-white overflow-hidden shadow-xs">
+      <Skeleton className="h-44 w-full rounded-none" />
+      <div className="p-4 space-y-3">
+        <Skeleton className="h-4 w-2/3" />
+        <Skeleton className="h-3 w-full" />
+        <div className="flex justify-between items-center pt-2 border-t border-slate-100">
+          <Skeleton className="h-4 w-16" />
+          <Skeleton className="h-7 w-24 rounded-lg" />
+        </div>
+      </div>
+    </div>
+  )
+}
+
 export function TableRowSkeleton({ cols = 5 }) {
   return (
     <tr className="border-b border-slate-100 animate-pulse">
