@@ -86,12 +86,24 @@ const cityQueryValidation = [
   query('costIndex')
     .optional()
     .isInt({ min: 1, max: 5 }),
+  query('minCost')
+    .optional()
+    .isNumeric(),
+  query('maxCost')
+    .optional()
+    .isNumeric(),
   query('tag')
     .optional()
     .trim(),
   query('sort')
     .optional()
     .trim(),
+  query('sortBy')
+    .optional()
+    .trim(),
+  query('sortOrder')
+    .optional()
+    .isIn(['asc', 'desc', 'ASC', 'DESC', '1', '-1']),
   query('page')
     .optional()
     .isInt({ min: 1 }),

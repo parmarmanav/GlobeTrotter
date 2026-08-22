@@ -80,15 +80,27 @@ const activityQueryValidation = [
   query('cityId')
     .optional()
     .isMongoId(),
+  query('city')
+    .optional()
+    .trim(),
   query('category')
     .optional()
     .trim(),
   query('search')
     .optional()
     .trim(),
+  query('minCost')
+    .optional()
+    .isNumeric(),
   query('maxCost')
     .optional()
     .isNumeric(),
+  query('duration')
+    .optional()
+    .isNumeric(),
+  query('rating')
+    .optional()
+    .isFloat({ min: 0, max: 5 }),
   query('minRating')
     .optional()
     .isFloat({ min: 0, max: 5 }),
@@ -98,6 +110,12 @@ const activityQueryValidation = [
   query('sort')
     .optional()
     .trim(),
+  query('sortBy')
+    .optional()
+    .trim(),
+  query('sortOrder')
+    .optional()
+    .isIn(['asc', 'desc', 'ASC', 'DESC', '1', '-1']),
   query('page')
     .optional()
     .isInt({ min: 1 }),

@@ -64,6 +64,40 @@ router.get('/', cityQueryValidation, validate, cityController.getCities);
 
 /**
  * @swagger
+ * /cities/search:
+ *   get:
+ *     summary: Search and filter cities
+ *     tags: [Cities / Destinations]
+ *     parameters:
+ *       - in: query
+ *         name: search
+ *         schema: { type: string }
+ *       - in: query
+ *         name: country
+ *         schema: { type: string }
+ *       - in: query
+ *         name: region
+ *         schema: { type: string }
+ *       - in: query
+ *         name: minCost
+ *         schema: { type: number }
+ *       - in: query
+ *         name: maxCost
+ *         schema: { type: number }
+ *       - in: query
+ *         name: sortBy
+ *         schema: { type: string }
+ *       - in: query
+ *         name: sortOrder
+ *         schema: { type: string }
+ *     responses:
+ *       200:
+ *         description: Search results
+ */
+router.get('/search', cityQueryValidation, validate, cityController.getCities);
+
+/**
+ * @swagger
  * /cities/{cityId}:
  *   get:
  *     summary: Get city details and top activities

@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const City = require('../models/City');
 const Activity = require('../models/Activity');
 const { getPaginationParams, getPaginationMeta } = require('../utils/pagination');
@@ -12,7 +13,7 @@ class DiscoveryService {
    */
   static async getCities(queryParams = {}) {
     const { page, limit, skip } = getPaginationParams(queryParams);
-    const { search, country, region, costIndex, tag, sort } = queryParams;
+    const { search, country, region, costIndex, minCost, maxCost, tag, sort, sortBy, sortOrder } = queryParams;
 
     const filter = {};
 
@@ -35,7 +36,13 @@ class DiscoveryService {
       filter.region = new RegExp(`^${region.trim()}$`, 'i');
     }
 
-    if (costIndex) {
+    if (minCost !== undefined && minCost !== '' && maxCost !== undefined && maxCost !== '') {
+      filter.costIndex = { $gte: Number(minCost), $lte: Number(maxCost) };
+    } else if (minCost !== undefined && minCost !== '') {
+      filter.costIndex = { $gte: Number(minCost) };
+    } else if (maxCost !== undefined && maxCost !== '') {
+      filter.costIndex = { $lte: Number(maxCost) };
+    } else if (costIndex) {
       filter.costIndex = Number(costIndex);
     }
 
@@ -50,6 +57,14 @@ class DiscoveryService {
     else if (sort === 'cost_desc') sortOption = { costIndex: -1 };
     else if (sort === 'name_asc') sortOption = { name: 1 };
     else if (sort === 'name_desc') sortOption = { name: -1 };
+
+    if (sortBy) {
+      const order = sortOrder === 'asc' || sortOrder === '1' || sortOrder === 1 ? 1 : -1;
+      if (sortBy === 'cost' || sortBy === 'costIndex') sortOption = { costIndex: order };
+      else if (sortBy === 'popularity' || sortBy === 'popularityScore') sortOption = { popularityScore: order };
+      else if (sortBy === 'name') sortOption = { name: order };
+      else if (sortBy === 'createdAt') sortOption = { createdAt: order };
+    }
 
     const [cities, total] = await Promise.all([
       City.find(filter).sort(sortOption).skip(skip).limit(limit).lean(),
@@ -176,12 +191,36 @@ class DiscoveryService {
    */
   static async getActivities(queryParams = {}) {
     const { page, limit, skip } = getPaginationParams(queryParams);
-    const { cityId, category, search, maxCost, minRating, tag, sort } = queryParams;
+    const {
+      cityId,
+      city,
+      category,
+      search,
+      minCost,
+      maxCost,
+      duration,
+      rating,
+      minRating,
+      tag,
+      sort,
+      sortBy,
+      sortOrder
+    } = queryParams;
 
     const filter = {};
 
     if (cityId) {
       filter.cityId = cityId;
+    } else if (city && city.trim() !== '') {
+      if (mongoose.Types.ObjectId.isValid(city.trim())) {
+        filter.cityId = city.trim();
+      } else {
+        const matchingCities = await City.find(
+          { name: new RegExp(city.trim(), 'i') },
+          '_id'
+        ).lean();
+        filter.cityId = { $in: matchingCities.map(c => c._id) };
+      }
     }
 
     if (category && category.toUpperCase() !== 'ALL') {
@@ -197,12 +236,21 @@ class DiscoveryService {
       ];
     }
 
-    if (maxCost !== undefined && maxCost !== '') {
+    if (minCost !== undefined && minCost !== '' && maxCost !== undefined && maxCost !== '') {
+      filter.estimatedCost = { $gte: Number(minCost), $lte: Number(maxCost) };
+    } else if (minCost !== undefined && minCost !== '') {
+      filter.estimatedCost = { $gte: Number(minCost) };
+    } else if (maxCost !== undefined && maxCost !== '') {
       filter.estimatedCost = { $lte: Number(maxCost) };
     }
 
-    if (minRating !== undefined && minRating !== '') {
-      filter.rating = { $gte: Number(minRating) };
+    if (duration !== undefined && duration !== '') {
+      filter.durationMinutes = { $lte: Number(duration) };
+    }
+
+    const ratingFilter = rating !== undefined && rating !== '' ? rating : minRating;
+    if (ratingFilter !== undefined && ratingFilter !== '') {
+      filter.rating = { $gte: Number(ratingFilter) };
     }
 
     if (tag) {
@@ -215,6 +263,15 @@ class DiscoveryService {
     else if (sort === 'cost_asc') sortOption = { estimatedCost: 1 };
     else if (sort === 'cost_desc') sortOption = { estimatedCost: -1 };
     else if (sort === 'name_asc') sortOption = { name: 1 };
+
+    if (sortBy) {
+      const order = sortOrder === 'asc' || sortOrder === '1' || sortOrder === 1 ? 1 : -1;
+      if (sortBy === 'cost' || sortBy === 'estimatedCost') sortOption = { estimatedCost: order };
+      else if (sortBy === 'popularity' || sortBy === 'popularityScore') sortOption = { popularityScore: order };
+      else if (sortBy === 'rating') sortOption = { rating: order };
+      else if (sortBy === 'name') sortOption = { name: order };
+      else if (sortBy === 'duration' || sortBy === 'durationMinutes') sortOption = { durationMinutes: order };
+    }
 
     const [activities, total] = await Promise.all([
       Activity.find(filter)

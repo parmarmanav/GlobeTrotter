@@ -191,6 +191,15 @@ describe('STAGE 4 — CITY & ACTIVITY DISCOVERY + BUDGET & EXPENSES + CALENDAR T
       expect(res.body.meta).toHaveProperty('totalPages');
     });
 
+    test('GET /api/v1/cities/search — Should search cities via dedicated /search endpoint', async () => {
+      const res = await request(app).get('/api/v1/cities/search?search=Barcelona&country=Spain');
+
+      expect(res.statusCode).toBe(200);
+      expect(res.body.success).toBe(true);
+      expect(res.body.data.length).toBeGreaterThanOrEqual(1);
+      expect(res.body.data[0].name).toBe('Barcelona Test');
+    });
+
     test('GET /api/v1/cities/:cityId — Should retrieve city details and associated activities', async () => {
       const res = await request(app).get(`/api/v1/cities/${cityId}`);
 
@@ -242,6 +251,15 @@ describe('STAGE 4 — CITY & ACTIVITY DISCOVERY + BUDGET & EXPENSES + CALENDAR T
       expect(Array.isArray(res.body.data)).toBe(true);
       expect(res.body.data.length).toBeGreaterThanOrEqual(1);
       expect(res.body.data[0].category).toBe('CULTURE');
+    });
+
+    test('GET /api/v1/activities/search — Should search activities via dedicated /search endpoint', async () => {
+      const res = await request(app).get('/api/v1/activities/search?search=Sagrada&category=CULTURE');
+
+      expect(res.statusCode).toBe(200);
+      expect(res.body.success).toBe(true);
+      expect(res.body.data.length).toBeGreaterThanOrEqual(1);
+      expect(res.body.data[0].name).toBe('Sagrada Familia Guided Tour');
     });
 
     test('GET /api/v1/cities/:cityId/activities — Should get activities specifically for a city', async () => {
@@ -341,6 +359,23 @@ describe('STAGE 4 — CITY & ACTIVITY DISCOVERY + BUDGET & EXPENSES + CALENDAR T
       expect(res.body.data.recentExpenses.length).toBe(2);
     });
 
+    test('GET /api/v1/trips/:tripId/budget/summary — Should return concise breakdown with average per day', async () => {
+      const res = await request(app)
+        .get(`/api/v1/trips/${tripId}/budget/summary`)
+        .set('Authorization', `Bearer ${userToken}`);
+
+      expect(res.statusCode).toBe(200);
+      expect(res.body.success).toBe(true);
+      expect(res.body.data).toHaveProperty('totalBudget', 2500);
+      expect(res.body.data).toHaveProperty('estimatedCost', 535.5);
+      expect(res.body.data).toHaveProperty('remaining', 1964.5);
+      expect(res.body.data).toHaveProperty('averagePerDay');
+      expect(res.body.data).toHaveProperty('categories');
+      expect(res.body.data.categories).toHaveProperty('meals', 85.5);
+      expect(res.body.data.categories).toHaveProperty('stay', 450);
+      expect(res.body.data).toHaveProperty('overBudget', false);
+    });
+
     test('GET /api/v1/trips/:tripId/expenses — Should list and filter expenses by category', async () => {
       const res = await request(app)
         .get(`/api/v1/trips/${tripId}/expenses?category=FOOD`)
@@ -386,7 +421,7 @@ describe('STAGE 4 — CITY & ACTIVITY DISCOVERY + BUDGET & EXPENSES + CALENDAR T
   // 4. CALENDAR & TIMELINE TESTS
   // ====================================================
   describe('4. Calendar and Timeline APIs', () => {
-    test('GET /api/v1/trips/:tripId/calendar — Should return formatted events for trip calendar/timeline', async () => {
+    test('GET /api/v1/trips/:tripId/calendar — Should return formatted events and day structures for trip calendar/timeline', async () => {
       const res = await request(app)
         .get(`/api/v1/trips/${tripId}/calendar`)
         .set('Authorization', `Bearer ${userToken}`);
@@ -398,6 +433,19 @@ describe('STAGE 4 — CITY & ACTIVITY DISCOVERY + BUDGET & EXPENSES + CALENDAR T
       expect(res.body.data.events.some(e => e.type === 'TRIP')).toBe(true);
       expect(res.body.data.events.some(e => e.type === 'STOP')).toBe(true);
       expect(res.body.data.events.some(e => e.type === 'ACTIVITY')).toBe(true);
+
+      // Verify days structure with activities, timing and cost
+      expect(res.body.data).toHaveProperty('days');
+      expect(Array.isArray(res.body.data.days)).toBe(true);
+      expect(res.body.data.days.length).toBeGreaterThanOrEqual(1);
+      const firstDay = res.body.data.days[0];
+      expect(firstDay).toHaveProperty('dayNumber', 1);
+      expect(firstDay).toHaveProperty('city', 'Barcelona');
+      expect(firstDay).toHaveProperty('activities');
+      expect(firstDay.activities.length).toBeGreaterThanOrEqual(1);
+      expect(firstDay.activities[0]).toHaveProperty('startTime', '10:00 AM');
+      expect(firstDay.activities[0]).toHaveProperty('endTime', '12:00 PM');
+      expect(firstDay.activities[0]).toHaveProperty('estimatedCost', 45);
     });
 
     test('GET /api/v1/calendar — Should return all aggregated calendar events for current user', async () => {

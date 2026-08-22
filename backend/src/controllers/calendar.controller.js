@@ -59,9 +59,23 @@ class CalendarController {
         });
       }
 
-      // 3. Day-Wise Activities Events
+      // 3. Day-Wise Activities and Days structure
+      const days = [];
       if (Array.isArray(trip.itineraryDays)) {
         trip.itineraryDays.forEach(day => {
+          // Find matching stop for the day if dates overlap or default to primary stop
+          let dayCity = '';
+          if (Array.isArray(trip.stops) && trip.stops.length > 0) {
+            const matchingStop = trip.stops.find(s => {
+              if (day.date && s.startDate && s.endDate) {
+                return new Date(day.date) >= new Date(s.startDate) && new Date(day.date) <= new Date(s.endDate);
+              }
+              return false;
+            });
+            dayCity = matchingStop ? matchingStop.cityName : trip.stops[0].cityName;
+          }
+
+          const dayActivities = [];
           if (Array.isArray(day.activities)) {
             day.activities.forEach(activity => {
               events.push({
@@ -80,8 +94,31 @@ class CalendarController {
                 color: '#F59E0B', // Amber
                 allDay: !activity.startTime
               });
+
+              dayActivities.push({
+                _id: activity._id,
+                activityId: activity.activityId,
+                title: activity.title,
+                description: activity.description,
+                startTime: activity.startTime || '',
+                endTime: activity.endTime || '',
+                estimatedCost: activity.estimatedCost || 0,
+                category: activity.category,
+                sequenceOrder: activity.sequenceOrder,
+                notes: activity.notes
+              });
             });
           }
+
+          days.push({
+            _id: day._id,
+            date: day.date,
+            dayNumber: day.dayNumber,
+            title: day.title,
+            city: dayCity,
+            notes: day.notes,
+            activities: dayActivities
+          });
         });
       }
 
@@ -90,6 +127,7 @@ class CalendarController {
         tripName: trip.name,
         startDate: trip.startDate,
         endDate: trip.endDate,
+        days,
         events
       }, 200);
     } catch (error) {

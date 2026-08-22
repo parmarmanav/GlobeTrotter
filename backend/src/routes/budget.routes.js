@@ -35,6 +35,8 @@ const {
  *         description: Budget summary and charts data
  */
 router.get('/', optionalAuth, budgetController.getBudgetOverview);
+router.get('/summary', optionalAuth, budgetController.getBudgetSummary);
+router.get('/budget/summary', optionalAuth, budgetController.getBudgetSummary);
 
 /**
  * @swagger

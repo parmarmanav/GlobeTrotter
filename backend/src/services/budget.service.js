@@ -80,6 +80,106 @@ class BudgetService {
   }
 
   /**
+   * Get concise budget summary matching GlobeTrotter specification
+   */
+  static async getBudgetSummary(tripId, user) {
+    const trip = await Trip.findById(tripId);
+
+    if (!trip) {
+      const error = new Error('Trip not found');
+      error.statusCode = 404;
+      throw error;
+    }
+
+    const isOwner = user && trip.userId.toString() === user._id.toString();
+    const isAdmin = user && user.role === 'ADMIN';
+
+    if (!isOwner && !isAdmin && !trip.isPublic) {
+      const error = new Error('Access denied. This trip is private');
+      error.statusCode = 403;
+      throw error;
+    }
+
+    const totalBudget = (trip.budget && Number(trip.budget.totalBudget)) || 0;
+    const currency = (trip.budget && trip.budget.currency) || 'USD';
+
+    let totalExpenses = 0;
+    const categories = {
+      transport: 0,
+      stay: 0,
+      activities: 0,
+      meals: 0,
+      other: 0
+    };
+
+    if (Array.isArray(trip.expenses)) {
+      trip.expenses.forEach(exp => {
+        const amount = Number(exp.amount || 0);
+        totalExpenses += amount;
+
+        const cat = (exp.category || '').toUpperCase();
+        if (cat === 'TRANSPORT') {
+          categories.transport += amount;
+        } else if (cat === 'STAY' || cat === 'ACCOMMODATION') {
+          categories.stay += amount;
+        } else if (cat === 'ACTIVITIES' || cat === 'ACTIVITY') {
+          categories.activities += amount;
+        } else if (cat === 'MEAL' || cat === 'FOOD') {
+          categories.meals += amount;
+        } else {
+          categories.other += amount;
+        }
+      });
+    }
+
+    // Also calculate activities cost from itinerary if no activity expenses
+    let itineraryActivitiesCost = 0;
+    if (Array.isArray(trip.itineraryDays)) {
+      trip.itineraryDays.forEach(day => {
+        if (Array.isArray(day.activities)) {
+          day.activities.forEach(act => {
+            itineraryActivitiesCost += Number(act.estimatedCost || 0);
+          });
+        }
+      });
+    }
+
+    if (categories.activities === 0 && itineraryActivitiesCost > 0) {
+      categories.activities = itineraryActivitiesCost;
+    }
+
+    const estimatedCost = totalExpenses > 0 ? totalExpenses : itineraryActivitiesCost;
+    const remaining = Math.round((totalBudget - estimatedCost) * 100) / 100;
+    const overBudget = estimatedCost > totalBudget;
+
+    // Calculate days for averagePerDay
+    let days = 1;
+    if (trip.startDate && trip.endDate) {
+      const diffTime = Math.abs(new Date(trip.endDate) - new Date(trip.startDate));
+      days = Math.max(1, Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1);
+    }
+    const averagePerDay = Math.round(estimatedCost / days);
+
+    return {
+      tripId: trip._id,
+      tripName: trip.name,
+      totalBudget: Math.round(totalBudget * 100) / 100,
+      estimatedCost: Math.round(estimatedCost * 100) / 100,
+      remaining,
+      averagePerDay,
+      currency,
+      categories: {
+        transport: Math.round(categories.transport * 100) / 100,
+        stay: Math.round(categories.stay * 100) / 100,
+        activities: Math.round(categories.activities * 100) / 100,
+        meals: Math.round(categories.meals * 100) / 100,
+        other: Math.round(categories.other * 100) / 100
+      },
+      overBudget
+    };
+  }
+
+  /**
    * Update overall trip budget
    */
   static async updateBudget(tripId, userId, budgetData, userRole = 'USER') {

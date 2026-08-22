@@ -50,6 +50,46 @@ router.get('/', activityQueryValidation, validate, activityController.getActivit
 
 /**
  * @swagger
+ * /activities/search:
+ *   get:
+ *     summary: Search and filter activities across cities
+ *     tags: [Activities]
+ *     parameters:
+ *       - in: query
+ *         name: search
+ *         schema: { type: string }
+ *       - in: query
+ *         name: city
+ *         schema: { type: string }
+ *       - in: query
+ *         name: cityId
+ *         schema: { type: string }
+ *       - in: query
+ *         name: category
+ *         schema: { type: string }
+ *       - in: query
+ *         name: minCost
+ *         schema: { type: number }
+ *       - in: query
+ *         name: maxCost
+ *         schema: { type: number }
+ *       - in: query
+ *         name: duration
+ *         schema: { type: number }
+ *       - in: query
+ *         name: rating
+ *         schema: { type: number }
+ *       - in: query
+ *         name: sortBy
+ *         schema: { type: string }
+ *     responses:
+ *       200:
+ *         description: Search results
+ */
+router.get('/search', activityQueryValidation, validate, activityController.getActivities);
+
+/**
+ * @swagger
  * /activities/{activityId}:
  *   get:
  *     summary: Get single activity details

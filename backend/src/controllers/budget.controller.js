@@ -11,6 +11,15 @@ class BudgetController {
     }
   }
 
+  static async getBudgetSummary(req, res, next) {
+    try {
+      const summary = await BudgetService.getBudgetSummary(req.params.tripId, req.user);
+      return ApiResponse.success(res, 'Trip budget summary retrieved successfully', summary, 200);
+    } catch (error) {
+      next(error);
+    }
+  }
+
   static async updateBudget(req, res, next) {
     try {
       const updatedBudget = await BudgetService.updateBudget(
