@@ -55,10 +55,40 @@ const deleteAccount = async (req, res, next) => {
   }
 };
 
+const addSavedDestination = async (req, res, next) => {
+  try {
+    const result = await UserService.addSavedDestination(req.user._id, req.params.cityId);
+    return ApiResponse.success(res, result.message, result.savedDestinations, 200);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const removeSavedDestination = async (req, res, next) => {
+  try {
+    const result = await UserService.removeSavedDestination(req.user._id, req.params.cityId);
+    return ApiResponse.success(res, result.message, result.savedDestinations, 200);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getSavedDestinations = async (req, res, next) => {
+  try {
+    const destinations = await UserService.getSavedDestinations(req.user._id);
+    return ApiResponse.success(res, 'Saved destinations retrieved successfully', destinations, 200);
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   getProfile,
   updateProfile,
   updatePreferences,
   updateProfileImage,
-  deleteAccount
+  deleteAccount,
+  addSavedDestination,
+  removeSavedDestination,
+  getSavedDestinations
 };

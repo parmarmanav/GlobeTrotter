@@ -17,6 +17,9 @@ const cityRoutes = require('./routes/city.routes');
 const activityRoutes = require('./routes/activity.routes');
 const calendarRoutes = require('./routes/calendar.routes');
 const dashboardRoutes = require('./routes/dashboard.routes');
+const publicTripRoutes = require('./routes/publicTrip.routes');
+const communityRoutes = require('./routes/community.routes');
+const adminRoutes = require('./routes/admin.routes');
 
 const app = express();
 
@@ -64,6 +67,9 @@ app.use('/api/v1/cities', cityRoutes);
 app.use('/api/v1/activities', activityRoutes);
 app.use('/api/v1/calendar', calendarRoutes);
 app.use('/api/v1/dashboard', dashboardRoutes);
+app.use('/api/v1/public', publicTripRoutes);
+app.use('/api/v1/community', communityRoutes);
+app.use('/api/v1/admin', adminRoutes);
 
 // Handle 404 Not Found
 app.use((req, res, next) => {

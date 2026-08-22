@@ -52,6 +52,58 @@ router.post('/me/profile-image', protect, upload.single('profileImage'), userCon
 
 /**
  * @swagger
+ * /users/me/saved-destinations:
+ *   get:
+ *     summary: Get current user saved destinations
+ *     tags: [Users / Profile]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: List of saved destinations
+ */
+router.get('/me/saved-destinations', protect, userController.getSavedDestinations);
+
+/**
+ * @swagger
+ * /users/me/saved-destinations/{cityId}:
+ *   post:
+ *     summary: Save destination city to user preferences
+ *     tags: [Users / Profile]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: cityId
+ *         required: true
+ *         schema: { type: string }
+ *     responses:
+ *       200:
+ *         description: Destination saved
+ */
+router.post('/me/saved-destinations/:cityId', protect, userController.addSavedDestination);
+
+/**
+ * @swagger
+ * /users/me/saved-destinations/{cityId}:
+ *   delete:
+ *     summary: Remove destination from user saved destinations
+ *     tags: [Users / Profile]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: cityId
+ *         required: true
+ *         schema: { type: string }
+ *     responses:
+ *       200:
+ *         description: Destination removed
+ */
+router.delete('/me/saved-destinations/:cityId', protect, userController.removeSavedDestination);
+
+/**
+ * @swagger
  * /users/me:
  *   delete:
  *     summary: Delete / Deactivate current user account

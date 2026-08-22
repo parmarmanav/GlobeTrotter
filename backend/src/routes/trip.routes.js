@@ -3,6 +3,7 @@ const router = express.Router();
 const tripController = require('../controllers/trip.controller');
 const itineraryController = require('../controllers/itinerary.controller');
 const calendarController = require('../controllers/calendar.controller');
+const publicTripController = require('../controllers/publicTrip.controller');
 const budgetRoutes = require('./budget.routes');
 const { protect, optionalAuth } = require('../middlewares/auth.middleware');
 const { validate } = require('../middlewares/validation.middleware');
@@ -573,6 +574,48 @@ router.delete(
  *         description: Calendar events
  */
 router.get('/:tripId/calendar', optionalAuth, calendarController.getTripCalendar);
+
+// ==========================================
+// 5. PUBLIC TRIP SHARING ENDPOINTS
+// ==========================================
+
+/**
+ * @swagger
+ * /trips/{tripId}/publish:
+ *   post:
+ *     summary: Publish trip publicly and generate community share link
+ *     tags: [Public Trips & Sharing]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: tripId
+ *         required: true
+ *         schema: { type: string }
+ *     responses:
+ *       200:
+ *         description: Trip published
+ */
+router.post('/:tripId/publish', protect, publicTripController.publishTrip);
+
+/**
+ * @swagger
+ * /trips/{tripId}/publish:
+ *   delete:
+ *     summary: Unpublish trip (make private again)
+ *     tags: [Public Trips & Sharing]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: tripId
+ *         required: true
+ *         schema: { type: string }
+ *     responses:
+ *       200:
+ *         description: Trip unpublished
+ */
+router.delete('/:tripId/publish', protect, publicTripController.unpublishTrip);
 
 // Mount budget & expenses sub-routes
 router.use('/:tripId/budget', budgetRoutes);

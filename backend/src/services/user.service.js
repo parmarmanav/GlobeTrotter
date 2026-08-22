@@ -96,6 +96,95 @@ class UserService {
 
     return { message: 'Account successfully deleted/deactivated' };
   }
+
+  /**
+   * Save a destination city to user preferences
+   */
+  static async addSavedDestination(userId, cityId) {
+    const city = await City.findById(cityId);
+    if (!city) {
+      const error = new Error('City not found');
+      error.statusCode = 404;
+      throw error;
+    }
+
+    const user = await User.findById(userId);
+    if (!user) {
+      const error = new Error('User not found');
+      error.statusCode = 404;
+      throw error;
+    }
+
+    if (!user.preferences) user.preferences = {};
+    if (!Array.isArray(user.preferences.savedDestinations)) {
+      user.preferences.savedDestinations = [];
+    }
+
+    const cityIdStr = cityId.toString();
+    const alreadySaved = user.preferences.savedDestinations.some(
+      id => id.toString() === cityIdStr
+    );
+
+    if (!alreadySaved) {
+      user.preferences.savedDestinations.push(cityId);
+      await user.save();
+    }
+
+    const updatedUser = await User.findById(userId)
+      .select('-passwordHash')
+      .populate('preferences.savedDestinations');
+
+    return {
+      message: 'Destination saved successfully',
+      savedDestinations: updatedUser.preferences.savedDestinations
+    };
+  }
+
+  /**
+   * Remove a saved destination from user preferences
+   */
+  static async removeSavedDestination(userId, cityId) {
+    const user = await User.findById(userId);
+    if (!user) {
+      const error = new Error('User not found');
+      error.statusCode = 404;
+      throw error;
+    }
+
+    if (user.preferences && Array.isArray(user.preferences.savedDestinations)) {
+      const cityIdStr = cityId.toString();
+      user.preferences.savedDestinations = user.preferences.savedDestinations.filter(
+        id => id.toString() !== cityIdStr
+      );
+      await user.save();
+    }
+
+    const updatedUser = await User.findById(userId)
+      .select('-passwordHash')
+      .populate('preferences.savedDestinations');
+
+    return {
+      message: 'Destination removed from saved list',
+      savedDestinations: (updatedUser.preferences && updatedUser.preferences.savedDestinations) || []
+    };
+  }
+
+  /**
+   * Get all saved destinations for user
+   */
+  static async getSavedDestinations(userId) {
+    const user = await User.findById(userId)
+      .populate('preferences.savedDestinations')
+      .lean();
+
+    if (!user) {
+      const error = new Error('User not found');
+      error.statusCode = 404;
+      throw error;
+    }
+
+    return (user.preferences && user.preferences.savedDestinations) || [];
+  }
 }
 
 module.exports = UserService;
