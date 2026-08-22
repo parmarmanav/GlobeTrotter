@@ -38,4 +38,10 @@ npm run dev
 
 # Build for production
 npm run build
+
+# Lint the codebase
+npm run lint
 ```
+
+## Code Quality
+- **oxlint** — fast Rust-based linter for consistent code style
