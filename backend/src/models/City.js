@@ -61,8 +61,6 @@ const citySchema = new mongoose.Schema(
 
 // Compound indexes for searching and sorting
 citySchema.index({ name: 1, country: 1 }, { unique: true });
-citySchema.index({ popularityScore: -1 });
-citySchema.index({ costIndex: 1 });
 
 const City = mongoose.model('City', citySchema);
 

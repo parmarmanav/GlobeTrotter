@@ -10,6 +10,8 @@ const ApiResponse = require('./utils/apiResponse');
 
 // Import routes
 const healthRoutes = require('./routes/health.routes');
+const authRoutes = require('./routes/auth.routes');
+const userRoutes = require('./routes/user.routes');
 
 const app = express();
 
@@ -50,6 +52,8 @@ setupSwagger(app);
 
 // Mount API v1 Routes
 app.use('/api/v1', healthRoutes);
+app.use('/api/v1/auth', authRoutes);
+app.use('/api/v1/users', userRoutes);
 
 // Handle 404 Not Found
 app.use((req, res, next) => {
