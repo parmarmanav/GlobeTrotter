@@ -18,7 +18,6 @@ const navigationItems = [
   { name: 'Dashboard', to: ROUTES.DASHBOARD, icon: LayoutDashboard },
   { name: 'My Trips', to: ROUTES.TRIPS, icon: Map },
   { name: 'Destinations', to: ROUTES.EXPLORE, icon: Compass },
-  { name: 'Activities', to: ROUTES.ACTIVITIES, icon: Sparkles },
   { name: 'Community', to: ROUTES.COMMUNITY, icon: Users },
   { name: 'Saved', to: ROUTES.SAVED_DESTINATIONS, icon: Bookmark },
 ]

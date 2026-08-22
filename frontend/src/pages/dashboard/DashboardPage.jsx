@@ -16,6 +16,7 @@ import { Button, Card, Badge, Skeleton, ErrorState } from '@/components/common'
 import { DashboardMetrics } from '@/components/dashboard/DashboardMetrics'
 import { UpcomingTripsWidget } from '@/components/dashboard/UpcomingTripsWidget'
 import { PopularDestinationsWidget } from '@/components/dashboard/PopularDestinationsWidget'
+import { TripsCalendarWidget } from '@/components/dashboard/TripsCalendarWidget'
 
 export function DashboardPage() {
   const { user } = useAuth()
@@ -114,6 +115,9 @@ export function DashboardPage() {
         <>
           {/* Key Metrics / Highlights */}
           <DashboardMetrics highlights={dashboardData?.budgetHighlights} />
+
+          {/* Trips Duration Calendar */}
+          <TripsCalendarWidget trips={dashboardData?.allTrips || dashboardData?.upcomingTrips || []} />
 
           {/* Widgets Grid: Upcoming Trips & Popular Destinations */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">

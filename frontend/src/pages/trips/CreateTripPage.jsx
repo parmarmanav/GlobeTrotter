@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom'
 import { tripService } from '@/services/tripService'
 import { useApp } from '@/context/AppContext'
 import { ROUTES } from '@/constants/routes'
-import { Map, Calendar, DollarSign, Image, ArrowRight, Compass, Sparkles } from 'lucide-react'
+import { Map, Calendar, IndianRupee, Image, ArrowRight, Compass, Sparkles } from 'lucide-react'
 import { Card, Button, Input, DatePicker, Textarea, Select } from '@/components/common'
 
 const CURATED_COVERS = [
@@ -25,7 +25,7 @@ export function CreateTripPage() {
     endDate: '',
     coverImage: CURATED_COVERS[0].url,
     totalBudget: '',
-    currency: 'USD',
+    currency: 'INR',
   })
 
   const [isLoading, setIsLoading] = useState(false)
@@ -151,30 +151,23 @@ export function CreateTripPage() {
           {/* Budget Config */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 rounded-2xl bg-slate-50 border border-slate-100">
             <Input
-              label="Target Budget Limit"
+              label="Target Budget Limit (₹ INR)"
               name="totalBudget"
               type="number"
               min="0"
               step="any"
-              placeholder="e.g. 3500"
-              icon={DollarSign}
+              placeholder="e.g. 50000"
+              icon={IndianRupee}
               value={formData.totalBudget}
               onChange={handleChange}
             />
-            <Select
-              label="Budget Currency"
-              name="currency"
-              options={[
-                { value: 'USD', label: 'USD ($) — US Dollar' },
-                { value: 'EUR', label: 'EUR (€) — Euro' },
-                { value: 'GBP', label: 'GBP (£) — British Pound' },
-                { value: 'JPY', label: 'JPY (¥) — Japanese Yen' },
-                { value: 'INR', label: 'INR (₹) — Indian Rupee' },
-                { value: 'AUD', label: 'AUD ($) — Australian Dollar' },
-              ]}
-              value={formData.currency}
-              onChange={handleChange}
-            />
+            <div className="space-y-1.5 flex flex-col justify-center">
+              <label className="block text-xs font-semibold text-slate-700">Platform Currency</label>
+              <div className="h-10 px-3.5 rounded-xl bg-white border border-slate-200 flex items-center justify-between text-xs">
+                <span className="text-slate-600 font-medium">Standard Currency</span>
+                <span className="font-bold text-teal-700">INR (₹)</span>
+              </div>
+            </div>
           </div>
 
           {/* Cover Image Selection */}

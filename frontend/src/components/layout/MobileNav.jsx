@@ -25,7 +25,6 @@ export function MobileNav() {
       ]
     : [
         { name: 'Explore', to: ROUTES.EXPLORE, icon: Compass },
-        { name: 'Activities', to: ROUTES.ACTIVITIES, icon: Compass },
         { name: 'Community', to: ROUTES.COMMUNITY, icon: Users },
         { name: 'Sign In', to: ROUTES.LOGIN, icon: LogIn },
       ]

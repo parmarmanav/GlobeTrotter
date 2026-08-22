@@ -25,7 +25,13 @@ export function LoginPage() {
   const handleSubmit = async (e) => {
     e.preventDefault()
     if (!formData.identifier || !formData.password) {
-      setErrorMessage('Please enter your email/username and password.')
+      const msg = 'Please enter your email/username and password.'
+      setErrorMessage(msg)
+      addToast({
+        type: 'error',
+        title: 'Sign In Failed',
+        message: msg,
+      })
       return
     }
 
@@ -44,7 +50,13 @@ export function LoginPage() {
       })
       navigate(from, { replace: true })
     } else {
-      setErrorMessage(result.message || 'Invalid email or password. Please try again.')
+      const errMsg = result.message || 'Invalid email or password. Please try again.'
+      setErrorMessage(errMsg)
+      addToast({
+        type: 'error',
+        title: 'Sign In Failed',
+        message: errMsg,
+      })
     }
   }
 

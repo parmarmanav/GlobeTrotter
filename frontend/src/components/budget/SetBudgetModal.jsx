@@ -1,28 +1,25 @@
 import React, { useState, useEffect } from 'react'
-import { Modal, Input, Select, Button } from '@/components/common'
-import { DollarSign, Save } from 'lucide-react'
+import { Modal, Input, Button } from '@/components/common'
+import { IndianRupee, Save } from 'lucide-react'
 
 export function SetBudgetModal({
   isOpen,
   onClose,
   initialBudget = 0,
-  initialCurrency = 'USD',
   onSave,
   isLoading = false,
 }) {
   const [totalBudget, setTotalBudget] = useState(initialBudget)
-  const [currency, setCurrency] = useState(initialCurrency)
 
   useEffect(() => {
     setTotalBudget(initialBudget)
-    setCurrency(initialCurrency)
-  }, [initialBudget, initialCurrency, isOpen])
+  }, [initialBudget, isOpen])
 
   const handleSubmit = (e) => {
     e.preventDefault()
     onSave({
       totalBudget: Number(totalBudget) || 0,
-      currency: currency || 'USD',
+      currency: 'INR',
     })
   }
 
@@ -31,35 +28,26 @@ export function SetBudgetModal({
       isOpen={isOpen}
       onClose={onClose}
       title="Set Trip Budget"
-      description="Define the total spending limit and currency for this journey"
+      description="Define the total spending limit in INR (₹) for this journey"
       maxWidth="max-w-md"
     >
       <form onSubmit={handleSubmit} className="space-y-4">
         <Input
-          label="Total Budget Limit"
+          label="Total Budget Limit (₹ INR)"
           type="number"
           min="0"
           step="any"
-          icon={DollarSign}
+          icon={IndianRupee}
+          placeholder="e.g. 50000"
           value={totalBudget}
           onChange={(e) => setTotalBudget(e.target.value)}
           required
         />
 
-        <Select
-          label="Currency"
-          options={[
-            { value: 'USD', label: 'USD ($) — US Dollar' },
-            { value: 'EUR', label: 'EUR (€) — Euro' },
-            { value: 'GBP', label: 'GBP (£) — British Pound' },
-            { value: 'JPY', label: 'JPY (¥) — Japanese Yen' },
-            { value: 'INR', label: 'INR (₹) — Indian Rupee' },
-            { value: 'AUD', label: 'AUD ($) — Australian Dollar' },
-            { value: 'CAD', label: 'CAD ($) — Canadian Dollar' },
-          ]}
-          value={currency}
-          onChange={(e) => setCurrency(e.target.value)}
-        />
+        <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-600 flex items-center justify-between">
+          <span className="font-semibold">Standard Platform Currency:</span>
+          <span className="font-bold text-teal-700">INR (₹)</span>
+        </div>
 
         <div className="flex items-center justify-end gap-2.5 pt-3 border-t border-slate-100">
           <Button variant="outline" size="sm" onClick={onClose} disabled={isLoading}>

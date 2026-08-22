@@ -13,6 +13,9 @@ export const userService = {
   
   // Saved Destinations
   getSavedDestinations: () => apiClient.get(ENDPOINTS.USERS.SAVED_DESTINATIONS),
+  addSavedDestination: (cityId) => apiClient.post(ENDPOINTS.USERS.SAVED_DESTINATION_BY_ID(cityId)),
   saveDestination: (cityId) => apiClient.post(ENDPOINTS.USERS.SAVED_DESTINATION_BY_ID(cityId)),
   removeSavedDestination: (cityId) => apiClient.delete(ENDPOINTS.USERS.SAVED_DESTINATION_BY_ID(cityId)),
 }
+
+export default userService

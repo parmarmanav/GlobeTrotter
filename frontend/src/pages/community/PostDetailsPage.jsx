@@ -29,7 +29,7 @@ export function PostDetailsPage() {
       const pData = postRes.data || postRes
       setPost(pData)
 
-      const cData = commentsRes.data || pData.comments || []
+      const cData = commentsRes.comments || commentsRes.data?.comments || commentsRes.data || pData.comments || []
       setComments(Array.isArray(cData) ? cData : [])
     } catch (err) {
       console.warn('Failed to load post details:', err)

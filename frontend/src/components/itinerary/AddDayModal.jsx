@@ -7,23 +7,35 @@ export function AddDayModal({
   onClose,
   onAddDay,
   nextDayNumber = 1,
+  maxDays = null,
+  currentDaysCount = 0,
   isLoading = false,
 }) {
   const [dayNumber, setDayNumber] = useState(nextDayNumber)
   const [date, setDate] = useState('')
   const [title, setTitle] = useState('')
   const [notes, setNotes] = useState('')
+  const [validationError, setValidationError] = useState('')
 
   React.useEffect(() => {
     setDayNumber(nextDayNumber)
-  }, [nextDayNumber])
+    setValidationError('')
+  }, [nextDayNumber, isOpen])
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    const num = Number(dayNumber) || nextDayNumber
+
+    if (maxDays && num > maxDays) {
+      setValidationError(`Day ${num} exceeds the scheduled trip duration of ${maxDays} days.`)
+      return
+    }
+
+    setValidationError('')
     onAddDay({
-      dayNumber: Number(dayNumber) || nextDayNumber,
+      dayNumber: num,
       date: date || undefined,
-      title: title.trim() || `Day ${dayNumber}`,
+      title: title.trim() || `Day ${num}`,
       notes: notes.trim() || undefined,
     })
     setTitle('')
@@ -36,17 +48,42 @@ export function AddDayModal({
       isOpen={isOpen}
       onClose={onClose}
       title="Add Itinerary Day"
-      description="Create a new scheduled day block in your trip itinerary"
+      description={
+        maxDays
+          ? `Create a scheduled day block (Up to ${maxDays} days for this trip)`
+          : 'Create a new scheduled day block in your trip itinerary'
+      }
       maxWidth="max-w-md"
     >
       <form onSubmit={handleSubmit} className="space-y-4">
+        {maxDays && (
+          <div className="p-2.5 rounded-xl bg-teal-50 border border-teal-200 text-teal-800 text-xs flex items-center justify-between">
+            <span className="font-semibold">Trip Duration: {maxDays} Days Maximum</span>
+            <span className="font-medium">{currentDaysCount} / {maxDays} planned</span>
+          </div>
+        )}
+
+        {validationError && (
+          <div className="p-2.5 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-xs font-semibold">
+            {validationError}
+          </div>
+        )}
+
         <div className="grid grid-cols-2 gap-3">
           <Input
             label="Day Number"
             type="number"
             min="1"
+            max={maxDays || undefined}
             value={dayNumber}
-            onChange={(e) => setDayNumber(e.target.value)}
+            onChange={(e) => {
+              setDayNumber(e.target.value)
+              if (maxDays && Number(e.target.value) > maxDays) {
+                setValidationError(`Day cannot exceed maximum ${maxDays} days.`)
+              } else {
+                setValidationError('')
+              }
+            }}
             required
           />
           <DatePicker

@@ -62,39 +62,7 @@ export function Navbar() {
           </Link>
         </div>
 
-        {/* Center: Desktop Navigation Links */}
-        <nav className="hidden md:flex items-center gap-1">
-          <Link
-            to={ROUTES.EXPLORE}
-            className={`px-3.5 py-2 text-xs font-semibold rounded-lg transition-colors ${
-              location.pathname.startsWith('/explore') || location.pathname.startsWith('/cities')
-                ? 'text-teal-700 bg-teal-50/70'
-                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
-            }`}
-          >
-            Destinations
-          </Link>
-          <Link
-            to={ROUTES.ACTIVITIES}
-            className={`px-3.5 py-2 text-xs font-semibold rounded-lg transition-colors ${
-              location.pathname.startsWith('/activities')
-                ? 'text-teal-700 bg-teal-50/70'
-                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
-            }`}
-          >
-            Activities
-          </Link>
-          <Link
-            to={ROUTES.COMMUNITY}
-            className={`px-3.5 py-2 text-xs font-semibold rounded-lg transition-colors ${
-              location.pathname.startsWith('/community')
-                ? 'text-teal-700 bg-teal-50/70'
-                : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
-            }`}
-          >
-            Community
-          </Link>
-        </nav>
+
 
         {/* Right: Actions / Auth / Profile */}
         <div className="flex items-center gap-3">

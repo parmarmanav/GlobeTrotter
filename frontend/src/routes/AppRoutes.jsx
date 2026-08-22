@@ -79,8 +79,8 @@ export function AppRoutes() {
         <Route path={ROUTES.EXPLORE} element={<ExplorePage />} />
         <Route path={ROUTES.CITIES} element={<ExplorePage />} />
         <Route path={ROUTES.CITY_DETAILS} element={<CityDetailsPage />} />
-        <Route path={ROUTES.ACTIVITIES} element={<ActivitiesPage />} />
-        <Route path={ROUTES.ACTIVITY_DETAILS} element={<ActivityDetailsPage />} />
+        <Route path={ROUTES.ACTIVITIES} element={<Navigate to={ROUTES.EXPLORE} replace />} />
+        <Route path={ROUTES.ACTIVITY_DETAILS} element={<Navigate to={ROUTES.EXPLORE} replace />} />
         <Route path={ROUTES.COMMUNITY} element={<CommunityPage />} />
         <Route path={ROUTES.POST_DETAILS} element={<PostDetailsPage />} />
         <Route path={ROUTES.PUBLIC_TRIP} element={<PublicTripPage />} />

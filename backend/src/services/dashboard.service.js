@@ -59,6 +59,7 @@ class DashboardService {
       welcomeMessage,
       upcomingTrips,
       recentTrips,
+      allTrips: allUserTrips,
       popularDestinations,
       budgetHighlights: {
         totalTrips: allUserTrips.length,

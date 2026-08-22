@@ -61,6 +61,28 @@ class ItineraryService {
 
     const dayNumber = dayData.dayNumber || (trip.itineraryDays.length + 1);
 
+    // Calculate maximum allowed days if trip has startDate and endDate
+    if (trip.startDate && trip.endDate) {
+      const start = new Date(trip.startDate);
+      const end = new Date(trip.endDate);
+      if (!isNaN(start.getTime()) && !isNaN(end.getTime())) {
+        const diffTime = Math.abs(end - start);
+        const maxDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+
+        if (trip.itineraryDays.length >= maxDays) {
+          const error = new Error(`Cannot add more days. This trip is scheduled for ${maxDays} days maximum.`);
+          error.statusCode = 400;
+          throw error;
+        }
+
+        if (dayNumber > maxDays) {
+          const error = new Error(`Day number ${dayNumber} exceeds the maximum ${maxDays}-day duration of this trip.`);
+          error.statusCode = 400;
+          throw error;
+        }
+      }
+    }
+
     // Auto-calculate date from trip.startDate + day offset if date not provided
     let dayDate = dayData.date ? new Date(dayData.date) : null;
     if (!dayDate && trip.startDate) {

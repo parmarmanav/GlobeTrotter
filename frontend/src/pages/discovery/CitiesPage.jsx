@@ -1,14 +1,18 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { cityService } from '@/services/cityService'
+import { userService } from '@/services/userService'
+import { useAuth } from '@/context/AuthContext'
 import { useDebounce } from '@/hooks/useDebounce'
 import { Search, MapPin, Filter, Globe, Sparkles } from 'lucide-react'
 import { Input, Select, Pagination, EmptyState, ErrorState, CityCardSkeleton } from '@/components/common'
 import { CityCard } from '@/components/discovery/CityCard'
-import { AddToTripModal } from '@/components/discovery/AddToTripModal'
+import { GenerateTripFromCityModal } from '@/components/discovery/GenerateTripFromCityModal'
 
 export function CitiesPage() {
+  const { isAuthenticated } = useAuth()
   const [cities, setCities] = useState([])
-  const [pagination, setPagination] = useState({ page: 1, limit: 12, total: 0, totalPages: 1 })
+  const [savedCityIds, setSavedCityIds] = useState(new Set())
+  const [pagination, setPagination] = useState({ page: 1, limit: 20, total: 0, totalPages: 1 })
   const [searchQuery, setSearchQuery] = useState('')
   const [regionFilter, setRegionFilter] = useState('ALL')
   const [costFilter, setCostFilter] = useState('ALL')
@@ -20,13 +24,32 @@ export function CitiesPage() {
 
   const debouncedSearch = useDebounce(searchQuery, 350)
 
+  // Fetch saved destinations for wishlist syncing
+  useEffect(() => {
+    if (!isAuthenticated) return
+
+    const loadSaved = async () => {
+      try {
+        const res = await userService.getSavedDestinations()
+        const list = res.data || []
+        const idSet = new Set(
+          (Array.isArray(list) ? list : []).map((c) => String(c._id || c.id || c))
+        )
+        setSavedCityIds(idSet)
+      } catch (e) {
+        console.warn('Failed to load saved IDs:', e)
+      }
+    }
+    loadSaved()
+  }, [isAuthenticated])
+
   const fetchCities = useCallback(async (page = 1) => {
     setIsLoading(true)
     setError(null)
     try {
       const params = {
         page,
-        limit: 12,
+        limit: 20,
         sort: sortBy,
       }
 
@@ -90,10 +113,10 @@ export function CitiesPage() {
             <Globe className="w-3.5 h-3.5" /> Destination Directory
           </span>
           <h1 className="text-2xl sm:text-4xl font-extrabold font-display">
-            Discover Incredible Cities
+            Discover Curated Destinations
           </h1>
           <p className="text-xs sm:text-sm text-slate-200 leading-relaxed">
-            Explore curated travel guides, cost indicators, top sights, and seamlessly add destinations to your multi-city journeys.
+            Explore 2–3 hand-picked destinations per region complete with detailed day-by-day itineraries, estimated budgets in ₹ INR, and auto-trip generation.
           </p>
         </div>
       </div>
@@ -156,29 +179,34 @@ export function CitiesPage() {
       ) : (
         <>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {cities.map((city) => (
-              <CityCard
-                key={city._id || city.id}
-                city={city}
-                onAddToTrip={(c) => setSelectedCityForTrip(c)}
-              />
-            ))}
+            {cities.map((city) => {
+              const cityId = String(city._id || city.id)
+              return (
+                <CityCard
+                  key={cityId}
+                  city={city}
+                  initialIsSaved={savedCityIds.has(cityId)}
+                  onAddToTrip={(c) => setSelectedCityForTrip(c)}
+                />
+              )
+            })}
           </div>
 
-          <Pagination
-            currentPage={pagination.page}
-            totalPages={pagination.totalPages}
-            onPageChange={(p) => fetchCities(p)}
-          />
+          {pagination.totalPages > 1 && (
+            <Pagination
+              currentPage={pagination.page}
+              totalPages={pagination.totalPages}
+              onPageChange={(p) => fetchCities(p)}
+            />
+          )}
         </>
       )}
 
-      {/* Add To Trip Modal */}
-      <AddToTripModal
+      {/* Auto-Generate Trip from Curated Itinerary Modal */}
+      <GenerateTripFromCityModal
         isOpen={Boolean(selectedCityForTrip)}
         onClose={() => setSelectedCityForTrip(null)}
-        item={selectedCityForTrip}
-        itemType="city"
+        city={selectedCityForTrip}
       />
     </div>
   )

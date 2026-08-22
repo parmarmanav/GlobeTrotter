@@ -5,6 +5,7 @@ import { userService } from '@/services/userService'
 import { useAuth } from '@/context/AuthContext'
 import { useApp } from '@/context/AppContext'
 import { ROUTES } from '@/constants/routes'
+import { formatCurrency } from '@/utils/formatCurrency'
 import {
   MapPin,
   Bookmark,
@@ -12,7 +13,7 @@ import {
   Compass,
   ArrowLeft,
   Calendar,
-  DollarSign,
+  IndianRupee,
   Plus,
   Sparkles,
   Sun,
@@ -24,10 +25,9 @@ import {
   Badge,
   Skeleton,
   ErrorState,
-  EmptyState,
 } from '@/components/common'
-import { ActivityCard } from '@/components/discovery/ActivityCard'
-import { AddToTripModal } from '@/components/discovery/AddToTripModal'
+import { CuratedItinerarySection } from '@/components/discovery/CuratedItinerarySection'
+import { GenerateTripFromCityModal } from '@/components/discovery/GenerateTripFromCityModal'
 
 const DEFAULT_COVER = 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=1200&q=80'
 
@@ -37,35 +37,42 @@ export function CityDetailsPage() {
   const { addToast } = useApp()
 
   const [city, setCity] = useState(null)
-  const [activities, setActivities] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState(null)
   const [isSaved, setIsSaved] = useState(false)
-  const [selectedActivityForTrip, setSelectedActivityForTrip] = useState(null)
-  const [isCityAddOpen, setIsCityAddOpen] = useState(false)
+  const [isSaving, setIsSaving] = useState(false)
+  const [isGenerateTripOpen, setIsGenerateTripOpen] = useState(false)
 
   const fetchCityData = useCallback(async () => {
     if (!cityId) return
     setIsLoading(true)
     setError(null)
     try {
-      const [cityRes, actRes] = await Promise.all([
-        cityService.getCityById(cityId),
-        cityService.getCityActivities(cityId).catch(() => ({ data: [] })),
-      ])
-
+      const cityRes = await cityService.getCityById(cityId)
       const cityData = cityRes.data || cityRes
       setCity(cityData)
 
-      const actData = actRes.data || []
-      setActivities(Array.isArray(actData) ? actData : [])
+      // If user is authenticated, check if this destination is in their wishlist
+      if (isAuthenticated) {
+        try {
+          const savedRes = await userService.getSavedDestinations()
+          const savedList = savedRes.data || []
+          const isAlreadySaved = Array.isArray(savedList) && savedList.some((s) => {
+            const sId = s._id || s.id || s
+            return String(sId) === String(cityId)
+          })
+          setIsSaved(isAlreadySaved)
+        } catch (e) {
+          console.warn('Could not check saved status:', e)
+        }
+      }
     } catch (err) {
       console.warn('Failed to load city details:', err)
       setError(err.message || 'Unable to retrieve destination details.')
     } finally {
       setIsLoading(false)
     }
-  }, [cityId])
+  }, [cityId, isAuthenticated])
 
   useEffect(() => {
     fetchCityData()
@@ -73,22 +80,42 @@ export function CityDetailsPage() {
 
   const handleSaveToggle = async () => {
     if (!isAuthenticated) {
-      addToast({ type: 'info', title: 'Sign In Required', message: 'Please sign in to save destinations.' })
+      addToast({
+        type: 'info',
+        title: 'Sign In Required',
+        message: 'Please sign in to save destinations to your wishlist.',
+      })
       return
     }
 
+    setIsSaving(true)
     try {
       if (isSaved) {
         await userService.removeSavedDestination(cityId)
         setIsSaved(false)
-        addToast({ type: 'info', title: 'Removed', message: `${city?.name} removed from your saved list.` })
+        addToast({
+          type: 'info',
+          title: 'Removed from Wishlist',
+          message: `${city?.name} has been removed from your saved list.`,
+        })
       } else {
         await userService.addSavedDestination(cityId)
         setIsSaved(true)
-        addToast({ type: 'success', title: 'Saved!', message: `${city?.name} added to your travel wishlist.` })
+        addToast({
+          type: 'success',
+          title: 'Destination Saved! 🌟',
+          message: `${city?.name} has been saved to your wishlist.`,
+        })
       }
     } catch (err) {
-      addToast({ type: 'error', title: 'Action Failed', message: err.message || 'Could not update wishlist.' })
+      console.error('Save destination toggle error:', err)
+      addToast({
+        type: 'error',
+        title: 'Action Failed',
+        message: err.message || 'Could not update wishlist.',
+      })
+    } finally {
+      setIsSaving(false)
     }
   }
 
@@ -138,10 +165,11 @@ export function CityDetailsPage() {
           <button
             type="button"
             onClick={handleSaveToggle}
-            className={`p-2.5 rounded-full backdrop-blur-md transition-colors cursor-pointer ${
-              isSaved ? 'bg-rose-600 text-white' : 'bg-black/40 hover:bg-black/60 text-white'
+            disabled={isSaving}
+            className={`p-2.5 rounded-full backdrop-blur-md transition-all cursor-pointer ${
+              isSaved ? 'bg-rose-600 text-white scale-105' : 'bg-black/40 hover:bg-black/60 text-white'
             }`}
-            title="Save to Wishlist"
+            title={isSaved ? 'Remove from Saved' : 'Save to Wishlist'}
           >
             <Bookmark className={`w-4 h-4 ${isSaved ? 'fill-white' : ''}`} />
           </button>
@@ -175,7 +203,7 @@ export function CityDetailsPage() {
               variant="accent"
               size="md"
               icon={Plus}
-              onClick={() => setIsCityAddOpen(true)}
+              onClick={() => setIsGenerateTripOpen(true)}
             >
               Add to Trip
             </Button>
@@ -183,9 +211,9 @@ export function CityDetailsPage() {
         </div>
       </div>
 
-      {/* Main Grid: Guide Details & Top Activities */}
+      {/* Main Grid: Guide Details & Curated Daily Itinerary */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
-        {/* Left Column: About & Travel Tips */}
+        {/* Left Column: About, Essentials & Curated Itinerary */}
         <div className="lg:col-span-2 space-y-6">
           <Card className="p-6 sm:p-8 space-y-4">
             <h2 className="text-lg font-bold text-slate-900 font-display">About {city.name}</h2>
@@ -215,88 +243,52 @@ export function CityDetailsPage() {
 
               <div className="space-y-1">
                 <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">
-                  Local Currency
+                  Platform Currency
                 </span>
                 <p className="text-xs font-semibold text-slate-800 flex items-center gap-1">
-                  <DollarSign className="w-3.5 h-3.5 text-emerald-600" /> {city.currency || 'USD'}
+                  <IndianRupee className="w-3.5 h-3.5 text-emerald-600" /> INR (₹)
                 </p>
               </div>
             </div>
           </Card>
 
-          {/* Top Sights and Experiences in this City */}
-          <div className="space-y-4">
-            <div className="flex items-center justify-between">
-              <h2 className="text-lg font-bold text-slate-900 font-display">
-                Top Activities in {city.name} ({activities.length})
-              </h2>
-              <Link to={ROUTES.ACTIVITIES} className="text-xs font-bold text-teal-600 hover:text-teal-700">
-                Explore All Activities &rarr;
-              </Link>
-            </div>
-
-            {activities.length === 0 ? (
-              <div className="p-8 text-center bg-slate-50 rounded-2xl border border-dashed border-slate-200">
-                <Compass className="w-8 h-8 text-slate-300 mx-auto mb-2" />
-                <p className="text-xs font-semibold text-slate-700">No curated activities listed yet for this city</p>
-                <p className="text-[11px] text-slate-400">You can create custom activities in the Itinerary Builder.</p>
-              </div>
-            ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {activities.map((act) => (
-                  <ActivityCard
-                    key={act._id || act.id}
-                    activity={act}
-                    onAddToTrip={(a) => setSelectedActivityForTrip(a)}
-                  />
-                ))}
-              </div>
-            )}
-          </div>
+          {/* Detailed Day-by-Day Curated Itinerary */}
+          <CuratedItinerarySection
+            city={city}
+            onAddToTrip={() => setIsGenerateTripOpen(true)}
+          />
         </div>
 
-        {/* Right Sidebar: Quick Actions & Trip Planning */}
+        {/* Right Sidebar: Trip Generation CTA */}
         <div className="space-y-6">
-          <Card className="p-6 space-y-4">
-            <h3 className="text-sm font-bold text-slate-900 font-display">Plan Your Visit</h3>
+          <Card className="p-6 space-y-4 sticky top-24">
+            <h3 className="text-sm font-bold text-slate-900 font-display">
+              Ready for {city.name}?
+            </h3>
             <p className="text-xs text-slate-500 leading-relaxed">
-              Incorporate {city.name} into an upcoming multi-city itinerary or create a new dedicated getaway.
+              Auto-generate your multi-day trip with all curated activities, timings, and budget pre-scheduled into your account.
             </p>
 
-            <div className="space-y-2 pt-2">
+            <div className="pt-2">
               <Button
                 variant="primary"
                 size="md"
                 className="w-full"
                 icon={Plus}
-                onClick={() => setIsCityAddOpen(true)}
+                onClick={() => setIsGenerateTripOpen(true)}
               >
-                Add {city.name} to Trip
+                Add to Trip
               </Button>
-              <Link to={ROUTES.CREATE_TRIP} className="block">
-                <Button variant="outline" size="md" className="w-full">
-                  Create Dedicated Trip
-                </Button>
-              </Link>
             </div>
           </Card>
         </div>
       </div>
 
-      {/* Add City Modal */}
-      <AddToTripModal
-        isOpen={isCityAddOpen}
-        onClose={() => setIsCityAddOpen(false)}
-        item={city}
-        itemType="city"
-      />
-
-      {/* Add Activity Modal */}
-      <AddToTripModal
-        isOpen={Boolean(selectedActivityForTrip)}
-        onClose={() => setSelectedActivityForTrip(null)}
-        item={selectedActivityForTrip}
-        itemType="activity"
+      {/* Auto-Generate Trip Modal */}
+      <GenerateTripFromCityModal
+        isOpen={isGenerateTripOpen}
+        onClose={() => setIsGenerateTripOpen(false)}
+        city={city}
       />
     </div>
   )

@@ -3,8 +3,11 @@ import { Link } from 'react-router-dom'
 import { ROUTES } from '@/constants/routes'
 import { userService } from '@/services/userService'
 import { useApp } from '@/context/AppContext'
-import { Bookmark, MapPin, Trash2, Plus, Star, Compass } from 'lucide-react'
+import { getCuratedItineraryForCity } from '@/data/curatedItineraries'
+import { formatCurrency } from '@/utils/formatCurrency'
+import { Bookmark, MapPin, Trash2, Plus, Star, Compass, Sparkles } from 'lucide-react'
 import { Card, Button, Badge, EmptyState, ErrorState, CityCardSkeleton, ConfirmDialog } from '@/components/common'
+import { GenerateTripFromCityModal } from '@/components/discovery/GenerateTripFromCityModal'
 
 export function SavedDestinationsPage() {
   const { addToast } = useApp()
@@ -13,6 +16,7 @@ export function SavedDestinationsPage() {
   const [error, setError] = useState(null)
   const [cityToDelete, setCityToDelete] = useState(null)
   const [isDeleting, setIsDeleting] = useState(false)
+  const [selectedCityForTrip, setSelectedCityForTrip] = useState(null)
 
   const fetchSaved = useCallback(async () => {
     setIsLoading(true)
@@ -97,6 +101,9 @@ export function SavedDestinationsPage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {savedCities.map((city) => {
             const cityId = city._id || city.id
+            const curatedPlan = getCuratedItineraryForCity(city)
+            const totalDays = curatedPlan?.durationDays || 3
+
             return (
               <Card key={cityId} className="p-0 overflow-hidden group hoverable border-slate-200/90 shadow-xs">
                 <div className="relative h-44 w-full bg-slate-100 overflow-hidden">
@@ -125,18 +132,27 @@ export function SavedDestinationsPage() {
                         <MapPin className="w-3.5 h-3.5 text-teal-600" /> {city.country}
                       </p>
                     </div>
-                    {city.costIndex && <Badge variant="secondary" size="sm">{city.costIndex}</Badge>}
+                    <Badge variant="primary" size="sm" className="font-bold">
+                      {totalDays} Days Plan
+                    </Badge>
                   </div>
+
+                  <p className="text-xs text-slate-500 line-clamp-2 leading-relaxed">
+                    {curatedPlan?.tagline || city.description}
+                  </p>
 
                   <div className="flex items-center justify-between pt-3 border-t border-slate-100">
                     <Link to={`/cities/${cityId}`} className="text-xs font-bold text-teal-600 hover:text-teal-700">
-                      View Destination Guide &rarr;
+                      View Itinerary &rarr;
                     </Link>
-                    <Link to={ROUTES.CREATE_TRIP}>
-                      <Button size="sm" variant="outline" icon={Plus}>
-                        Plan Trip
-                      </Button>
-                    </Link>
+                    <Button
+                      size="sm"
+                      variant="primary"
+                      icon={Plus}
+                      onClick={() => setSelectedCityForTrip(city)}
+                    >
+                      Add to Trip
+                    </Button>
                   </div>
                 </div>
               </Card>
@@ -155,6 +171,13 @@ export function SavedDestinationsPage() {
         confirmText="Remove"
         confirmVariant="danger"
         isLoading={isDeleting}
+      />
+
+      {/* Auto-Generate Trip from Curated Itinerary Modal */}
+      <GenerateTripFromCityModal
+        isOpen={Boolean(selectedCityForTrip)}
+        onClose={() => setSelectedCityForTrip(null)}
+        city={selectedCityForTrip}
       />
     </div>
   )

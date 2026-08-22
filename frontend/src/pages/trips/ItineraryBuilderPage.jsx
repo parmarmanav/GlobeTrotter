@@ -4,6 +4,7 @@ import { tripService } from '@/services/tripService'
 import { itineraryService } from '@/services/itineraryService'
 import { useApp } from '@/context/AppContext'
 import { ROUTES } from '@/constants/routes'
+import { getDurationDays } from '@/utils/formatDate'
 import {
   Calendar,
   MapPin,
@@ -354,6 +355,8 @@ export function ItineraryBuilderPage() {
   const stops = Array.isArray(trip.stops) ? trip.stops : []
   const days = Array.isArray(trip.itineraryDays) ? trip.itineraryDays : []
   const currency = trip.budget?.currency || 'USD'
+  const maxDays = trip.startDate && trip.endDate ? getDurationDays(trip.startDate, trip.endDate) : null
+  const isMaxDaysReached = maxDays !== null && days.length >= maxDays
   const nextDayNumber = days.length > 0 ? Math.max(...days.map((d) => d.dayNumber || 1)) + 1 : 1
 
   return (
@@ -372,17 +375,19 @@ export function ItineraryBuilderPage() {
             <h1 className="text-lg sm:text-xl font-bold text-slate-900 font-display line-clamp-1">
               {trip.name} — Itinerary Builder
             </h1>
-            <p className="text-xs text-slate-500 flex items-center gap-2">
+            <p className="text-xs text-slate-500 flex items-center gap-2 flex-wrap">
               <span>{stops.length} Stops</span>
               <span>•</span>
-              <span>{days.length} Days</span>
+              <span className={isMaxDaysReached ? 'text-amber-600 font-semibold' : ''}>
+                {days.length} {maxDays ? `of ${maxDays} Days Planned` : 'Days'}
+              </span>
               <span>•</span>
               <span className="font-semibold text-teal-600">{trip.budget?.currency || 'USD'} Budget</span>
             </p>
           </div>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 flex-wrap">
           <Link to={`/trips/${tripId}`}>
             <Button variant="outline" size="sm" icon={Eye}>
               View Details
@@ -398,11 +403,26 @@ export function ItineraryBuilderPage() {
             size="sm"
             icon={Plus}
             onClick={() => setIsAddDayOpen(true)}
+            disabled={isMaxDaysReached}
+            title={isMaxDaysReached ? `Maximum ${maxDays} days reached for this trip` : undefined}
           >
             Add Day Block
           </Button>
         </div>
       </div>
+
+      {/* Trip Duration Notice Banner */}
+      {isMaxDaysReached && (
+        <div className="p-3.5 rounded-2xl bg-amber-50 border border-amber-200 text-amber-900 flex items-center justify-between text-xs">
+          <div className="flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-amber-500" />
+            <span className="font-semibold">
+              Trip Capacity Reached: You have scheduled all {maxDays} days of your {maxDays}-day journey ({trip.startDate ? `${new Date(trip.startDate).toLocaleDateString()} – ${new Date(trip.endDate).toLocaleDateString()}` : ''}).
+            </span>
+          </div>
+          <span className="text-[11px] text-amber-700">Delete or adjust existing days to add different blocks</span>
+        </div>
+      )}
 
       {/* Main Builder Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -422,15 +442,17 @@ export function ItineraryBuilderPage() {
 
         {/* Right Column: Days & Activities Workspace */}
         <div className="lg:col-span-2 space-y-5">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between flex-wrap gap-2">
             <h2 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
-              Day-by-Day Itinerary Schedule ({days.length})
+              Day-by-Day Itinerary Schedule ({days.length}{maxDays ? `/${maxDays}` : ''})
             </h2>
             <Button
               size="sm"
               variant="outline"
               icon={Plus}
               onClick={() => setIsAddDayOpen(true)}
+              disabled={isMaxDaysReached}
+              title={isMaxDaysReached ? `Maximum ${maxDays} days reached` : undefined}
             >
               Add Next Day (Day {nextDayNumber})
             </Button>
@@ -440,7 +462,7 @@ export function ItineraryBuilderPage() {
             <EmptyState
               icon={Calendar}
               title="No days planned yet"
-              description="Start organizing your trip day-by-day by creating Day 1."
+              description={`Start organizing your trip day-by-day (up to ${maxDays || 'any'} days).`}
               actionLabel="Add Day 1"
               onAction={() => setIsAddDayOpen(true)}
             />
@@ -477,6 +499,8 @@ export function ItineraryBuilderPage() {
         onClose={() => setIsAddDayOpen(false)}
         onAddDay={handleAddDay}
         nextDayNumber={nextDayNumber}
+        maxDays={maxDays}
+        currentDaysCount={days.length}
         isLoading={isMutating}
       />
     </div>

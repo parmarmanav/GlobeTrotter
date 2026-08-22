@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Modal, Input, Select, DatePicker, Textarea, Button } from '@/components/common'
-import { DollarSign, Plus, Save } from 'lucide-react'
+import { IndianRupee, Plus, Save } from 'lucide-react'
 
 const EXPENSE_CATEGORY_OPTIONS = [
   { value: 'ACCOMMODATION', label: 'Accommodation / Hotels' },
@@ -16,7 +16,7 @@ export function ExpenseModal({
   onClose,
   onSaveExpense,
   initialData = null,
-  currency = 'USD',
+  currency = 'INR',
   isLoading = false,
 }) {
   const [title, setTitle] = useState('')
@@ -97,7 +97,7 @@ export function ExpenseModal({
             type="number"
             min="0"
             step="any"
-            icon={DollarSign}
+            icon={IndianRupee}
             placeholder="0.00"
             value={amount}
             onChange={(e) => {

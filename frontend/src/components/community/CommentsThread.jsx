@@ -25,7 +25,7 @@ export function CommentsThread({ postId, initialComments = [] }) {
     setIsSubmitting(true)
     try {
       const response = await communityService.addComment(postId, { text: newComment.trim() })
-      const addedComment = response.data || response
+      const addedComment = response.comment || response.data?.comment || response.data || response
       setComments((prev) => [...prev, addedComment])
       setNewComment('')
       addToast({ type: 'success', title: 'Comment Added', message: 'Your comment was posted.' })

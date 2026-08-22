@@ -104,24 +104,13 @@ export function SettingsPage() {
 
         <form onSubmit={handlePreferencesSubmit} className="space-y-4 pt-2">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <Select
-              label="Default Currency"
-              options={[
-                { value: 'USD', label: 'USD ($) — US Dollar' },
-                { value: 'EUR', label: 'EUR (€) — Euro' },
-                { value: 'GBP', label: 'GBP (£) — British Pound' },
-                { value: 'JPY', label: 'JPY (¥) — Japanese Yen' },
-                { value: 'INR', label: 'INR (₹) — Indian Rupee' },
-                { value: 'AUD', label: 'AUD ($) — Australian Dollar' },
-              ]}
-              value={preferences.preferredBudgetRange.currency}
-              onChange={(e) =>
-                setPreferences((prev) => ({
-                  ...prev,
-                  preferredBudgetRange: { ...prev.preferredBudgetRange, currency: e.target.value },
-                }))
-              }
-            />
+            <div className="space-y-1.5 flex flex-col justify-center">
+              <label className="block text-xs font-semibold text-slate-700">Platform Display Currency</label>
+              <div className="h-10 px-3.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between text-xs">
+                <span className="text-slate-600 font-medium">Standard Currency</span>
+                <span className="font-bold text-teal-700">INR (₹)</span>
+              </div>
+            </div>
 
             <Select
               label="Preferred Language"

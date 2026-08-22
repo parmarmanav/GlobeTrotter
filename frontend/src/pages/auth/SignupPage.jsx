@@ -32,23 +32,33 @@ export function SignupPage() {
   const handleSubmit = async (e) => {
     e.preventDefault()
     if (!formData.firstName.trim() || !formData.lastName.trim()) {
-      setErrorMessage('Please provide your first and last name.')
+      const msg = 'Please provide your first and last name.'
+      setErrorMessage(msg)
+      addToast({ type: 'error', title: 'Registration Incomplete', message: msg })
       return
     }
     if (!formData.username.trim() || formData.username.trim().length < 3) {
-      setErrorMessage('Username must be at least 3 characters.')
+      const msg = 'Username must be at least 3 characters.'
+      setErrorMessage(msg)
+      addToast({ type: 'error', title: 'Invalid Username', message: msg })
       return
     }
     if (!formData.email.trim()) {
-      setErrorMessage('A valid email address is required.')
+      const msg = 'A valid email address is required.'
+      setErrorMessage(msg)
+      addToast({ type: 'error', title: 'Invalid Email', message: msg })
       return
     }
     if (formData.password !== formData.confirmPassword) {
-      setErrorMessage('Passwords do not match.')
+      const msg = 'Passwords do not match.'
+      setErrorMessage(msg)
+      addToast({ type: 'error', title: 'Password Mismatch', message: msg })
       return
     }
     if (formData.password.length < 6) {
-      setErrorMessage('Password must be at least 6 characters.')
+      const msg = 'Password must be at least 6 characters.'
+      setErrorMessage(msg)
+      addToast({ type: 'error', title: 'Password Too Short', message: msg })
       return
     }
 
@@ -72,7 +82,13 @@ export function SignupPage() {
       })
       navigate(ROUTES.DASHBOARD, { replace: true })
     } else {
-      setErrorMessage(result.message || 'Registration failed. Please check the fields.')
+      const errMsg = result.message || 'Registration failed. Please check the fields.'
+      setErrorMessage(errMsg)
+      addToast({
+        type: 'error',
+        title: 'Registration Failed',
+        message: errMsg,
+      })
     }
   }
 
