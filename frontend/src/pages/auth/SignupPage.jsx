@@ -1,12 +1,14 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '@/context/AuthContext'
+import { useApp } from '@/context/AppContext'
 import { ROUTES } from '@/constants/routes'
-import { Mail, Lock, User, MapPin, Eye, EyeOff, Globe } from 'lucide-react'
+import { Mail, Lock, User, MapPin, Eye, EyeOff, Globe, Phone } from 'lucide-react'
 import { Button, Input, Card } from '@/components/common'
 
 export function SignupPage() {
   const { register, isLoading } = useAuth()
+  const { addToast } = useApp()
   const navigate = useNavigate()
   const [showPassword, setShowPassword] = useState(false)
   const [formData, setFormData] = useState({
@@ -16,7 +18,7 @@ export function SignupPage() {
     email: '',
     password: '',
     confirmPassword: '',
-    phone: '',
+    phoneNumber: '',
     city: '',
     country: '',
   })
@@ -29,6 +31,18 @@ export function SignupPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    if (!formData.firstName.trim() || !formData.lastName.trim()) {
+      setErrorMessage('Please provide your first and last name.')
+      return
+    }
+    if (!formData.username.trim() || formData.username.trim().length < 3) {
+      setErrorMessage('Username must be at least 3 characters.')
+      return
+    }
+    if (!formData.email.trim()) {
+      setErrorMessage('A valid email address is required.')
+      return
+    }
     if (formData.password !== formData.confirmPassword) {
       setErrorMessage('Passwords do not match.')
       return
@@ -39,19 +53,23 @@ export function SignupPage() {
     }
 
     const payload = {
-      name: `${formData.firstName} ${formData.lastName}`.trim(),
-      firstName: formData.firstName,
-      lastName: formData.lastName,
-      username: formData.username,
-      email: formData.email,
+      firstName: formData.firstName.trim(),
+      lastName: formData.lastName.trim(),
+      username: formData.username.trim().toLowerCase(),
+      email: formData.email.trim().toLowerCase(),
       password: formData.password,
-      phone: formData.phone,
-      city: formData.city,
-      country: formData.country,
+      phoneNumber: formData.phoneNumber.trim(),
+      city: formData.city.trim(),
+      country: formData.country.trim(),
     }
 
     const result = await register(payload)
     if (result.success) {
+      addToast({
+        type: 'success',
+        title: 'Account Created!',
+        message: 'Welcome to GlobeTrotter! Start planning your trips.',
+      })
       navigate(ROUTES.DASHBOARD, { replace: true })
     } else {
       setErrorMessage(result.message || 'Registration failed. Please check the fields.')
@@ -59,14 +77,14 @@ export function SignupPage() {
   }
 
   return (
-    <Card className="p-6 sm:p-8 border-slate-200/90 shadow-lg my-4">
+    <Card className="p-6 sm:p-8 border-slate-200/90 shadow-lg my-4 animate-in fade-in duration-200">
       <div className="text-center mb-6">
         <h2 className="text-2xl font-bold text-slate-900 font-display">Create Account</h2>
         <p className="text-xs text-slate-500 mt-1">Join GlobeTrotter and plan trips smarter</p>
       </div>
 
       {errorMessage && (
-        <div className="mb-5 p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs font-medium">
+        <div className="mb-5 p-3.5 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs font-medium">
           {errorMessage}
         </div>
       )}
@@ -74,7 +92,7 @@ export function SignupPage() {
       <form onSubmit={handleSubmit} className="space-y-3.5">
         <div className="grid grid-cols-2 gap-3">
           <Input
-            label="First Name"
+            label="First Name *"
             name="firstName"
             placeholder="John"
             value={formData.firstName}
@@ -82,7 +100,7 @@ export function SignupPage() {
             required
           />
           <Input
-            label="Last Name"
+            label="Last Name *"
             name="lastName"
             placeholder="Doe"
             value={formData.lastName}
@@ -92,7 +110,7 @@ export function SignupPage() {
         </div>
 
         <Input
-          label="Username"
+          label="Username *"
           name="username"
           placeholder="johndoe_travels"
           icon={User}
@@ -102,7 +120,7 @@ export function SignupPage() {
         />
 
         <Input
-          label="Email Address"
+          label="Email Address *"
           name="email"
           type="email"
           placeholder="john@example.com"
@@ -110,6 +128,16 @@ export function SignupPage() {
           value={formData.email}
           onChange={handleChange}
           required
+        />
+
+        <Input
+          label="Phone Number"
+          name="phoneNumber"
+          type="tel"
+          placeholder="+1 (555) 000-0000"
+          icon={Phone}
+          value={formData.phoneNumber}
+          onChange={handleChange}
         />
 
         <div className="grid grid-cols-2 gap-3">
@@ -132,7 +160,7 @@ export function SignupPage() {
         </div>
 
         <Input
-          label="Password"
+          label="Password *"
           name="password"
           type={showPassword ? 'text' : 'password'}
           placeholder="••••••••"
@@ -144,7 +172,7 @@ export function SignupPage() {
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="hover:text-slate-600 cursor-pointer p-1"
+              className="hover:text-slate-600 cursor-pointer p-1 text-slate-400"
             >
               {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
             </button>
@@ -152,7 +180,7 @@ export function SignupPage() {
         />
 
         <Input
-          label="Confirm Password"
+          label="Confirm Password *"
           name="confirmPassword"
           type={showPassword ? 'text' : 'password'}
           placeholder="••••••••"
