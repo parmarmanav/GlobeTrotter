@@ -138,12 +138,12 @@ export function AdminUsersPage() {
   return (
     <div className="space-y-6 animate-in fade-in duration-200">
       <div>
-        <h1 className="text-2xl font-bold text-slate-900 font-display">User Management</h1>
-        <p className="text-xs text-slate-500 mt-1">Audit accounts, manage roles, and review access status</p>
+        <h1 className="text-2xl font-bold text-white font-display">User Management</h1>
+        <p className="text-xs text-slate-400 mt-1">Audit accounts, manage roles, and review access status</p>
       </div>
 
       {/* Search Bar */}
-      <div className="p-3.5 bg-white rounded-2xl border border-slate-200 shadow-2xs">
+      <div className="p-3.5 bg-[var(--color-card)] rounded-2xl border border-[var(--color-border-subtle)] shadow-2xs">
         <Input
           placeholder="Search by name, email, or username..."
           icon={Search}
@@ -175,9 +175,9 @@ export function AdminUsersPage() {
         />
       ) : (
         <>
-          <div className="hidden md:block overflow-hidden bg-white rounded-2xl border border-slate-200 shadow-2xs">
+          <div className="hidden md:block overflow-hidden bg-[var(--color-card)] rounded-2xl border border-[var(--color-border-subtle)] shadow-2xs">
             <table className="w-full text-left text-xs">
-              <thead className="bg-slate-50 border-b border-slate-100 text-slate-500 font-bold uppercase tracking-wider">
+              <thead className="bg-slate-800/50 border-b border-[var(--color-border-subtle)] text-slate-400 font-bold uppercase tracking-wider">
                 <tr>
                   <th className="py-3.5 px-4">User</th>
                   <th className="py-3.5 px-4">Role</th>
@@ -194,19 +194,19 @@ export function AdminUsersPage() {
                   const isActive = u.isActive !== false
 
                   return (
-                    <tr key={uId} className="hover:bg-slate-50/60 transition-colors">
+                    <tr key={uId} className="hover:bg-slate-800/50/60 transition-colors">
                       <td className="py-3.5 px-4">
                         <div className="flex items-center gap-3">
                           <Avatar src={u.profileImage} name={fullName} size="sm" />
                           <div>
-                            <p className="font-bold text-slate-900">{fullName}</p>
+                            <p className="font-bold text-white">{fullName}</p>
                             <p className="text-[11px] text-slate-400">{u.email}</p>
                           </div>
                         </div>
                       </td>
                       <td className="py-3.5 px-4">
                         <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold border ${
-                          isAdmin ? 'bg-purple-50 text-purple-700 border-purple-200' : 'bg-slate-50 text-slate-700 border-slate-200'
+                          isAdmin ? 'bg-purple-50 text-purple-700 border-purple-200' : 'bg-slate-800/50 text-slate-300 border-[var(--color-border-subtle)]'
                         }`}>
                           {u.role || 'USER'}
                         </span>
@@ -218,7 +218,7 @@ export function AdminUsersPage() {
                           {isActive ? 'Active' : 'Suspended'}
                         </span>
                       </td>
-                      <td className="py-3.5 px-4 text-slate-500">
+                      <td className="py-3.5 px-4 text-slate-400">
                         {formatDate(u.createdAt || new Date())}
                       </td>
                       <td className="py-3.5 px-4 text-right">
@@ -270,7 +270,7 @@ export function AdminUsersPage() {
                     <div className="flex items-center gap-2.5">
                       <Avatar src={u.profileImage} name={fullName} size="sm" />
                       <div>
-                        <p className="text-xs font-bold text-slate-900">{fullName}</p>
+                        <p className="text-xs font-bold text-white">{fullName}</p>
                         <p className="text-[10px] text-slate-400">{u.email}</p>
                       </div>
                     </div>
@@ -279,7 +279,7 @@ export function AdminUsersPage() {
                     </Badge>
                   </div>
 
-                  <div className="flex items-center justify-between pt-2 border-t border-slate-100 text-xs">
+                  <div className="flex items-center justify-between pt-2 border-t border-[var(--color-border-subtle)] text-xs">
                     <span className={isActive ? 'text-emerald-600 font-bold' : 'text-rose-600 font-bold'}>
                       {isActive ? 'Active' : 'Suspended'}
                     </span>

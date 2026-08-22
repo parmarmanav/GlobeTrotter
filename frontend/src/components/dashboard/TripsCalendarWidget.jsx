@@ -24,12 +24,12 @@ const WEEK_DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 
 // Color palettes for trip badges on calendar
 const TRIP_COLORS = [
-  { bg: 'bg-teal-500/15', text: 'text-teal-800', border: 'border-teal-300', dot: 'bg-teal-500' },
-  { bg: 'bg-indigo-500/15', text: 'text-indigo-800', border: 'border-indigo-300', dot: 'bg-indigo-500' },
-  { bg: 'bg-amber-500/15', text: 'text-amber-800', border: 'border-amber-300', dot: 'bg-amber-500' },
-  { bg: 'bg-rose-500/15', text: 'text-rose-800', border: 'border-rose-300', dot: 'bg-rose-500' },
-  { bg: 'bg-emerald-500/15', text: 'text-emerald-800', border: 'border-emerald-300', dot: 'bg-emerald-500' },
-  { bg: 'bg-sky-500/15', text: 'text-sky-800', border: 'border-sky-300', dot: 'bg-sky-500' },
+  { bg: 'bg-indigo-500/20', text: 'text-indigo-300', border: 'border-indigo-500/40', dot: 'bg-indigo-400' },
+  { bg: 'bg-purple-500/20', text: 'text-purple-300', border: 'border-purple-500/40', dot: 'bg-purple-400' },
+  { bg: 'bg-amber-500/20', text: 'text-amber-300', border: 'border-amber-500/40', dot: 'bg-amber-400' },
+  { bg: 'bg-rose-500/20', text: 'text-rose-300', border: 'border-rose-500/40', dot: 'bg-rose-400' },
+  { bg: 'bg-emerald-500/20', text: 'text-emerald-300', border: 'border-emerald-500/40', dot: 'bg-emerald-400' },
+  { bg: 'bg-sky-500/20', text: 'text-sky-300', border: 'border-sky-500/40', dot: 'bg-sky-400' },
 ]
 
 export function TripsCalendarWidget({ trips = [] }) {
@@ -119,21 +119,21 @@ export function TripsCalendarWidget({ trips = [] }) {
   }
 
   return (
-    <Card className="p-5 sm:p-7 shadow-xs">
+    <Card className="p-5 sm:p-7 shadow-md">
       {/* Header & Controls */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-slate-100">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-[var(--color-border-subtle)]">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-teal-50 border border-teal-100 flex items-center justify-center text-teal-600">
+          <div className="w-10 h-10 rounded-xl bg-indigo-500/10 border border-teal-100 flex items-center justify-center text-indigo-400">
             <CalendarIcon className="w-5 h-5" />
           </div>
           <div>
-            <h2 className="text-base sm:text-lg font-bold text-slate-900 font-display flex items-center gap-2">
+            <h2 className="text-base sm:text-lg font-bold text-white font-display flex items-center gap-2">
               Trips & Schedule Calendar
               <Badge variant="primary" size="sm" className="font-semibold">
                 {validTrips.length} {validTrips.length === 1 ? 'Trip' : 'Trips'} Scheduled
               </Badge>
             </h2>
-            <p className="text-xs text-slate-500">
+            <p className="text-xs text-slate-400">
               Overview of all your planned journeys with their durations
             </p>
           </div>
@@ -145,26 +145,26 @@ export function TripsCalendarWidget({ trips = [] }) {
             variant="ghost"
             size="sm"
             onClick={handleToday}
-            className="text-xs text-teal-700 hover:bg-teal-50"
+            className="text-xs text-indigo-400 hover:bg-indigo-500/10"
           >
             Today
           </Button>
-          <div className="flex items-center bg-slate-100 rounded-xl p-1">
+          <div className="flex items-center bg-slate-800 rounded-xl p-1">
             <button
               type="button"
               onClick={handlePrevMonth}
-              className="p-1.5 rounded-lg hover:bg-white text-slate-700 transition-colors cursor-pointer"
+              className="p-1.5 rounded-lg hover:bg-[var(--color-card)] text-slate-300 transition-colors cursor-pointer"
               title="Previous Month"
             >
               <ChevronLeft className="w-4 h-4" />
             </button>
-            <span className="px-3 text-xs font-bold text-slate-800 min-w-[110px] text-center font-display">
+            <span className="px-3 text-xs font-bold text-slate-200 min-w-[110px] text-center font-display">
               {MONTH_NAMES[currentMonth]} {currentYear}
             </span>
             <button
               type="button"
               onClick={handleNextMonth}
-              className="p-1.5 rounded-lg hover:bg-white text-slate-700 transition-colors cursor-pointer"
+              className="p-1.5 rounded-lg hover:bg-[var(--color-card)] text-slate-300 transition-colors cursor-pointer"
               title="Next Month"
             >
               <ChevronRight className="w-4 h-4" />
@@ -196,7 +196,7 @@ export function TripsCalendarWidget({ trips = [] }) {
                 return (
                   <div
                     key={index}
-                    className="min-h-[70px] sm:min-h-[85px] rounded-xl bg-slate-50/50 border border-transparent p-1.5 opacity-30"
+                    className="min-h-[70px] sm:min-h-[85px] rounded-xl bg-slate-800/50/50 border border-transparent p-1.5 opacity-30"
                   />
                 )
               }
@@ -211,28 +211,28 @@ export function TripsCalendarWidget({ trips = [] }) {
                   onClick={() => setSelectedDate(dayNum)}
                   className={`min-h-[70px] sm:min-h-[85px] rounded-xl border p-1.5 transition-all cursor-pointer flex flex-col justify-between ${
                     today
-                      ? 'bg-teal-50/40 border-teal-400 ring-1 ring-teal-400/30'
+                      ? 'bg-indigo-500/15 border-indigo-500/60 ring-1 ring-indigo-500/40'
                       : isSelected
-                      ? 'bg-slate-100 border-slate-400 shadow-2xs'
+                      ? 'bg-slate-800 border-indigo-400 shadow-md ring-1 ring-indigo-400/20'
                       : dayTrips.length > 0
-                      ? 'bg-white border-slate-200 hover:border-teal-300 shadow-2xs'
-                      : 'bg-white border-slate-100 hover:bg-slate-50'
+                      ? 'bg-slate-900/90 border-slate-800 hover:border-slate-700 shadow-xs hover-lift'
+                      : 'bg-slate-900/40 border-slate-800/60 hover:bg-slate-800/40 hover:border-slate-700'
                   }`}
                 >
                   <div className="flex items-center justify-between">
                     <span
                       className={`text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full ${
                         today
-                          ? 'bg-teal-600 text-white'
+                          ? 'bg-indigo-600 text-white shadow-xs'
                           : isSelected
-                          ? 'bg-slate-800 text-white'
-                          : 'text-slate-700'
+                          ? 'bg-indigo-500 text-white'
+                          : 'text-slate-300'
                       }`}
                     >
                       {dayNum}
                     </span>
                     {dayTrips.length > 0 && (
-                      <span className="w-1.5 h-1.5 rounded-full bg-teal-500" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-indigo-400" />
                     )}
                   </div>
 
@@ -263,7 +263,7 @@ export function TripsCalendarWidget({ trips = [] }) {
         <div className="lg:col-span-4 flex flex-col justify-between space-y-4">
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <h3 className="text-xs font-bold text-slate-800 uppercase tracking-wider">
+              <h3 className="text-xs font-bold text-slate-200 uppercase tracking-wider">
                 {selectedDate
                   ? `Trips on ${MONTH_NAMES[currentMonth]} ${selectedDate}`
                   : `Trips in ${MONTH_NAMES[currentMonth]}`} ({selectedDate ? getTripsForDay(selectedDate).length : monthTrips.length})
@@ -272,7 +272,7 @@ export function TripsCalendarWidget({ trips = [] }) {
                 <button
                   type="button"
                   onClick={() => setSelectedDate(null)}
-                  className="text-[11px] font-semibold text-teal-600 hover:text-teal-800 cursor-pointer"
+                  className="text-[11px] font-semibold text-indigo-400 hover:text-teal-800 cursor-pointer"
                 >
                   Show all month
                 </button>
@@ -285,9 +285,9 @@ export function TripsCalendarWidget({ trips = [] }) {
 
               if (displayList.length === 0) {
                 return (
-                  <div className="p-6 text-center rounded-2xl bg-slate-50 border border-dashed border-slate-200 space-y-2">
+                  <div className="p-6 text-center rounded-2xl bg-slate-800/50 border border-dashed border-[var(--color-border-subtle)] space-y-2">
                     <Compass className="w-8 h-8 text-slate-300 mx-auto" />
-                    <p className="text-xs font-semibold text-slate-600">
+                    <p className="text-xs font-semibold text-slate-400">
                       {selectedDate
                         ? `No trips scheduled for ${MONTH_NAMES[currentMonth]} ${selectedDate}`
                         : `No trips scheduled for ${MONTH_NAMES[currentMonth]} ${currentYear}`}
@@ -314,13 +314,13 @@ export function TripsCalendarWidget({ trips = [] }) {
                     return (
                       <div
                         key={tripId}
-                        className={`p-3.5 rounded-2xl border transition-all ${t.color.bg} ${t.color.border} hover:shadow-xs`}
+                        className={`p-3.5 rounded-2xl border transition-all ${t.color.bg} ${t.color.border} hover:shadow-md`}
                       >
                         <div className="flex items-start justify-between gap-2">
                           <div className="space-y-1 min-w-0">
                             <div className="flex items-center gap-1.5 flex-wrap">
                               <span className={`w-2 h-2 rounded-full ${t.color.dot}`} />
-                              <span className={`text-[10px] font-black uppercase px-2 py-0.5 rounded-md bg-white/80 ${t.color.text}`}>
+                              <span className={`text-[10px] font-black uppercase px-2 py-0.5 rounded-md bg-[var(--color-card)]/80 ${t.color.text}`}>
                                 {t.duration} {t.duration === 1 ? 'Day' : 'Days'} Duration
                               </span>
                               <Badge variant="secondary" size="sm" className="text-[9px]">
@@ -328,18 +328,18 @@ export function TripsCalendarWidget({ trips = [] }) {
                               </Badge>
                             </div>
 
-                            <h4 className="text-xs sm:text-sm font-bold text-slate-900 truncate">
+                            <h4 className="text-xs sm:text-sm font-bold text-white truncate">
                               {t.name}
                             </h4>
 
-                            <p className="text-[11px] text-slate-600 flex items-center gap-1 font-medium">
+                            <p className="text-[11px] text-slate-400 flex items-center gap-1 font-medium">
                               <CalendarIcon className="w-3 h-3 text-slate-400" />
                               {range}
                             </p>
 
                             {stops.length > 0 && (
-                              <p className="text-[10px] text-slate-500 flex items-center gap-1 truncate">
-                                <MapPin className="w-3 h-3 text-teal-600 shrink-0" />
+                              <p className="text-[10px] text-slate-400 flex items-center gap-1 truncate">
+                                <MapPin className="w-3 h-3 text-indigo-400 shrink-0" />
                                 <span>{stops.map((s) => s.cityName || s.cityId?.name).filter(Boolean).join(' → ')}</span>
                               </p>
                             )}
@@ -347,7 +347,7 @@ export function TripsCalendarWidget({ trips = [] }) {
 
                           <Link
                             to={`/trips/${tripId}`}
-                            className="p-1.5 rounded-xl bg-white text-slate-700 hover:text-teal-700 shadow-2xs hover:scale-105 transition-all shrink-0"
+                            className="p-1.5 rounded-xl bg-[var(--color-card)] text-slate-300 hover:text-indigo-400 shadow-2xs hover:scale-105 transition-all shrink-0"
                             title="View Trip Details"
                           >
                             <ArrowRight className="w-4 h-4" />
@@ -362,8 +362,8 @@ export function TripsCalendarWidget({ trips = [] }) {
           </div>
 
           {/* Quick Action Footer */}
-          <div className="pt-2 border-t border-slate-100 flex items-center justify-between">
-            <Link to={ROUTES.TRIPS} className="text-xs font-bold text-teal-600 hover:text-teal-800 flex items-center gap-1">
+          <div className="pt-2 border-t border-[var(--color-border-subtle)] flex items-center justify-between">
+            <Link to={ROUTES.TRIPS} className="text-xs font-bold text-indigo-400 hover:text-teal-800 flex items-center gap-1">
               <span>View all my trips</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </Link>

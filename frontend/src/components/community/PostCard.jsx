@@ -95,13 +95,13 @@ export function PostCard({ post, onDeletePost }) {
 
   return (
     <>
-      <Card className="p-5 sm:p-6 space-y-4 border-slate-200/90 shadow-2xs hover:shadow-xs transition-shadow">
+      <Card className="p-5 sm:p-6 space-y-4 bg-slate-900 border border-slate-800 shadow-lg hover-lift backdrop-blur-md">
         {/* Post Header */}
         <div className="flex items-start justify-between gap-3">
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 min-w-0">
             <Avatar src={authorImage} name={authorName} size="md" />
-            <div>
-              <h4 className="text-xs sm:text-sm font-bold text-slate-900 font-display">
+            <div className="min-w-0">
+              <h4 className="text-xs sm:text-sm font-bold text-white font-display truncate-safe">
                 {authorName}
               </h4>
               <p className="text-[11px] text-slate-400">
@@ -114,7 +114,7 @@ export function PostCard({ post, onDeletePost }) {
             <button
               type="button"
               onClick={() => setShowDeleteConfirm(true)}
-              className="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors cursor-pointer"
+              className="p-1.5 text-slate-400 hover:text-rose-400 hover:bg-rose-500/10 rounded-lg transition-colors cursor-pointer shrink-0"
               title="Delete post"
             >
               <Trash2 className="w-4 h-4" />
@@ -123,13 +123,13 @@ export function PostCard({ post, onDeletePost }) {
         </div>
 
         {/* Post Content */}
-        <div className="space-y-2">
+        <div className="space-y-2 min-w-0">
           <Link to={`/community/${postId}`} className="block group/title">
-            <h3 className="text-base font-bold text-slate-900 group-hover/title:text-teal-600 transition-colors font-display">
+            <h3 className="text-base font-bold text-white group-hover/title:text-indigo-400 transition-colors font-display truncate-safe">
               {post.title}
             </h3>
           </Link>
-          <p className="text-xs sm:text-sm text-slate-700 leading-relaxed whitespace-pre-line">
+          <p className="text-xs sm:text-sm text-slate-300 leading-relaxed whitespace-pre-line font-light">
             {post.content}
           </p>
         </div>
@@ -151,22 +151,22 @@ export function PostCard({ post, onDeletePost }) {
         )}
 
         {/* Action Bar */}
-        <div className="flex items-center justify-between pt-3 border-t border-slate-100 text-xs text-slate-500">
+        <div className="flex items-center justify-between pt-3 border-t border-slate-800 text-xs text-slate-400">
           <div className="flex items-center gap-4">
             <button
               type="button"
               onClick={handleLikeToggle}
-              className={`flex items-center gap-1.5 font-bold transition-colors cursor-pointer ${
-                isLiked ? 'text-rose-600' : 'text-slate-500 hover:text-rose-600'
+              className={`flex items-center gap-1.5 font-bold transition-all cursor-pointer ${
+                isLiked ? 'text-rose-400' : 'text-slate-400 hover:text-rose-400'
               }`}
             >
-              <Heart className={`w-4 h-4 ${isLiked ? 'fill-rose-600 text-rose-600' : ''}`} />
+              <Heart className={`w-4 h-4 transition-transform active:scale-125 ${isLiked ? 'fill-rose-500 text-rose-500' : ''}`} />
               <span>{likesCount}</span>
             </button>
 
             <Link
               to={`/community/${postId}`}
-              className="flex items-center gap-1.5 font-semibold text-slate-500 hover:text-teal-600 transition-colors"
+              className="flex items-center gap-1.5 font-semibold text-slate-400 hover:text-indigo-400 transition-colors"
             >
               <MessageSquare className="w-4 h-4" />
               <span>{commentsCount}</span>
@@ -176,7 +176,7 @@ export function PostCard({ post, onDeletePost }) {
           <button
             type="button"
             onClick={handleShare}
-            className="flex items-center gap-1 font-semibold text-slate-400 hover:text-slate-700 transition-colors cursor-pointer"
+            className="flex items-center gap-1.5 font-semibold text-slate-400 hover:text-slate-200 transition-colors cursor-pointer"
             title="Share story"
           >
             <Share2 className="w-4 h-4" />

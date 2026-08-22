@@ -9,7 +9,7 @@ import { Globe, DollarSign, Trash2, Save, ShieldAlert } from 'lucide-react'
 
 export function SettingsPage() {
   const { user, logout, setUser } = useAuth()
-  const { addToast } = useApp()
+  const { addToast, theme, setTheme } = useApp()
   const navigate = useNavigate()
 
   const [preferences, setPreferences] = useState({
@@ -91,8 +91,8 @@ export function SettingsPage() {
   return (
     <div className="max-w-4xl mx-auto space-y-6 animate-in fade-in duration-200">
       <div>
-        <h1 className="text-2xl font-bold text-slate-900 font-display">Account Settings</h1>
-        <p className="text-xs text-slate-500 mt-1">Configure preferences, travel defaults, and account security</p>
+        <h1 className="text-2xl font-bold text-white font-display">Account Settings</h1>
+        <p className="text-xs text-slate-400 mt-1">Configure preferences, travel defaults, and account security</p>
       </div>
 
       {/* Preferences Form */}
@@ -103,12 +103,40 @@ export function SettingsPage() {
         </CardHeader>
 
         <form onSubmit={handlePreferencesSubmit} className="space-y-4 pt-2">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div className="space-y-1.5 flex flex-col justify-center">
-              <label className="block text-xs font-semibold text-slate-700">Platform Display Currency</label>
-              <div className="h-10 px-3.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between text-xs">
-                <span className="text-slate-600 font-medium">Standard Currency</span>
-                <span className="font-bold text-teal-700">INR (₹)</span>
+              <label className="block text-xs font-semibold text-slate-300">Theme Appearance</label>
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => setTheme('dark')}
+                  className={`flex-1 py-2.5 px-3 rounded-xl text-xs font-bold border transition-all cursor-pointer ${
+                    theme === 'dark'
+                      ? 'bg-indigo-600 text-white border-indigo-400 shadow-md'
+                      : 'bg-slate-900/50 text-slate-400 border-slate-800 hover:bg-slate-800'
+                  }`}
+                >
+                  Dark Mode
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setTheme('light')}
+                  className={`flex-1 py-2.5 px-3 rounded-xl text-xs font-bold border transition-all cursor-pointer ${
+                    theme === 'light'
+                      ? 'bg-indigo-600 text-white border-indigo-400 shadow-md'
+                      : 'bg-slate-900/50 text-slate-400 border-slate-800 hover:bg-slate-800'
+                  }`}
+                >
+                  Light Mode
+                </button>
+              </div>
+            </div>
+
+            <div className="space-y-1.5 flex flex-col justify-center">
+              <label className="block text-xs font-semibold text-slate-300">Platform Display Currency</label>
+              <div className="min-h-[44px] px-3.5 rounded-xl bg-slate-900/60 border border-slate-800 flex items-center justify-between text-xs">
+                <span className="text-slate-400 font-medium">Standard Currency</span>
+                <span className="font-bold text-indigo-400">INR (₹)</span>
               </div>
             </div>
 
@@ -149,7 +177,7 @@ export function SettingsPage() {
             <h3 className="text-sm font-bold text-rose-700 font-display flex items-center gap-1.5">
               <ShieldAlert className="w-4 h-4 text-rose-600" /> Danger Zone
             </h3>
-            <p className="text-xs text-slate-600">
+            <p className="text-xs text-slate-400">
               Permanently delete your account, trips, itineraries, and logged travel history.
             </p>
           </div>

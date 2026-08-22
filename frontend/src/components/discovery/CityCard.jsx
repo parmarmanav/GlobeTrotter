@@ -75,23 +75,23 @@ export function CityCard({ city, onAddToTrip, initialIsSaved = false }) {
   }
 
   return (
-    <Card className="p-0 overflow-hidden flex flex-col justify-between group hoverable border-slate-200/90 shadow-xs hover:shadow-md transition-all duration-200">
+    <Card className="p-0 overflow-hidden flex flex-col justify-between group bg-slate-900 border border-slate-800 hover-lift shadow-xl min-w-0">
       {/* Cover Image & Badges */}
-      <div className="relative h-48 w-full bg-slate-100 overflow-hidden">
+      <div className="relative h-52 w-full bg-slate-800 overflow-hidden shrink-0">
         <img
           src={city.image || DEFAULT_CITY_IMAGE}
           alt={name}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
           onError={(e) => { e.target.src = DEFAULT_CITY_IMAGE }}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-900/70 via-transparent to-black/30" />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/30 to-black/30" />
 
         {/* Cost Index Badge & Popularity */}
-        <div className="absolute top-3 left-3 flex items-center gap-1.5">
-          <span className="px-2.5 py-0.5 text-xs font-bold rounded-full bg-black/50 text-white backdrop-blur-md border border-white/20">
+        <div className="absolute top-3 left-3 flex items-center gap-1.5 z-10">
+          <span className="px-2.5 py-0.5 text-xs font-bold rounded-full bg-black/60 text-white backdrop-blur-md border border-white/15">
             {costIndex}
           </span>
-          <span className="px-2.5 py-0.5 text-xs font-bold rounded-full bg-teal-600/90 text-white backdrop-blur-md flex items-center gap-1 shadow-xs">
+          <span className="px-2.5 py-0.5 text-xs font-bold rounded-full bg-indigo-600/90 text-white backdrop-blur-md flex items-center gap-1 shadow-md">
             <Star className="w-3 h-3 fill-amber-300 text-amber-300" /> {popularity}
           </span>
         </div>
@@ -101,59 +101,62 @@ export function CityCard({ city, onAddToTrip, initialIsSaved = false }) {
           type="button"
           onClick={handleSaveToggle}
           disabled={isSaving}
-          className={`absolute top-3 right-3 p-2 rounded-full backdrop-blur-md transition-all cursor-pointer ${
+          className={`absolute top-3 right-3 p-2 rounded-full backdrop-blur-md transition-all cursor-pointer min-w-[36px] min-h-[36px] flex items-center justify-center z-10 ${
             isSaved
-              ? 'bg-rose-600 text-white scale-105'
-              : 'bg-black/40 hover:bg-black/60 text-white'
+              ? 'bg-rose-600 text-white shadow-lg shadow-rose-600/30'
+              : 'bg-black/50 hover:bg-black/70 text-white border border-white/15 hover:scale-105'
           }`}
           title={isSaved ? 'Remove from Saved' : 'Save to Wishlist'}
         >
-          <Bookmark className={`w-3.5 h-3.5 ${isSaved ? 'fill-white' : ''}`} />
+          <Bookmark className={`w-4 h-4 ${isSaved ? 'fill-white' : ''}`} />
         </button>
 
         {/* City & Country on Overlay */}
-        <div className="absolute bottom-3 left-3 right-3 text-white">
-          <h3 className="text-base font-bold text-white font-display drop-shadow-sm">
+        <div className="absolute bottom-3 left-3 right-3 text-white z-10 min-w-0">
+          <h3 className="text-lg font-bold text-white font-display drop-shadow-md truncate-safe">
             {name}
           </h3>
-          <p className="text-xs text-slate-200 flex items-center gap-1">
-            <MapPin className="w-3 h-3 text-teal-400" /> {country}
+          <p className="text-xs text-slate-200 flex items-center gap-1.5 truncate-safe mt-0.5 font-medium">
+            <MapPin className="w-3.5 h-3.5 text-indigo-400 shrink-0" />
+            <span className="truncate-safe">{country}</span>
           </p>
         </div>
       </div>
 
       {/* Card Body */}
-      <div className="p-4 flex-1 flex flex-col justify-between space-y-3">
+      <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between space-y-4 min-w-0">
         {/* Curated Itinerary Badge & Highlights */}
-        <div className="space-y-1.5">
-          <div className="flex items-center justify-between">
-            <span className="inline-flex items-center gap-1 text-[11px] font-bold text-teal-700 bg-teal-50 px-2 py-0.5 rounded-md border border-teal-200">
-              <Sparkles className="w-3 h-3 text-teal-600" /> {totalDays}-Day Curated Plan
+        <div className="space-y-2 min-w-0">
+          <div className="flex items-center justify-between gap-2 min-w-0">
+            <span className="inline-flex items-center gap-1 text-[11px] font-bold text-indigo-300 bg-indigo-500/15 px-2 py-0.5 rounded-lg border border-indigo-500/30 truncate-safe">
+              <Sparkles className="w-3 h-3 text-indigo-400 shrink-0" />
+              <span className="truncate-safe">{totalDays}-Day Plan</span>
             </span>
-            <span className="text-[11px] font-semibold text-slate-500">
+            <span className="text-[11px] font-bold text-slate-300 shrink-0">
               Est. {formatCurrency(curatedPlan?.estimatedBudgetINR || 45000, 'INR')}
             </span>
           </div>
 
-          <p className="text-xs text-slate-500 line-clamp-2 leading-relaxed">
+          <p className="text-xs text-slate-400 line-clamp-2 leading-relaxed font-light">
             {curatedPlan?.tagline || city.description}
           </p>
         </div>
 
-        <div className="flex items-center justify-between pt-3 border-t border-slate-100">
+        <div className="flex items-center justify-between pt-3 border-t border-slate-800 gap-2 min-w-0">
           <Link
             to={`/cities/${cityId}`}
-            className="text-xs font-bold text-teal-600 hover:text-teal-700 flex items-center gap-1"
+            className="text-xs font-bold text-indigo-400 hover:text-indigo-300 flex items-center gap-1 transition-colors group/link truncate-safe"
           >
-            View Itinerary <ArrowRight className="w-3.5 h-3.5" />
+            View Itinerary <ArrowRight className="w-3.5 h-3.5 group-hover/link:translate-x-1 transition-transform shrink-0" />
           </Link>
           <Button
             size="sm"
             variant="outline"
             icon={Plus}
             onClick={() => onAddToTrip?.(city)}
+            className="border-slate-700 text-slate-200 hover:bg-slate-800 hover:text-white shrink-0 min-h-[36px]"
           >
-            Add to Trip
+            Add
           </Button>
         </div>
       </div>

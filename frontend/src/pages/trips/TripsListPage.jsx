@@ -94,8 +94,8 @@ export function TripsListPage() {
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 font-display">My Trips</h1>
-          <p className="text-xs text-slate-500 mt-1">Manage your planned adventures, itineraries, and stops</p>
+          <h1 className="text-2xl sm:text-3xl font-bold text-white font-display">My Trips</h1>
+          <p className="text-xs text-slate-400 mt-1">Manage your planned adventures, itineraries, and stops</p>
         </div>
         <Link to={ROUTES.CREATE_TRIP}>
           <Button variant="primary" size="md" icon={Plus}>
@@ -108,7 +108,7 @@ export function TripsListPage() {
       <div className="space-y-4">
         <Tabs tabs={tabs} activeTab={activeTab} onChange={setActiveTab} />
 
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 bg-white rounded-2xl border border-slate-200/80 shadow-xs">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 bg-[var(--color-card)] rounded-2xl border border-[var(--color-border-subtle)]/80 shadow-md">
           <div className="flex-1">
             <Input
               placeholder="Search trips by name or description..."

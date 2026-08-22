@@ -93,8 +93,8 @@ export function AdminAnalyticsPage() {
   return (
     <div className="space-y-8 animate-in fade-in duration-200">
       <div>
-        <h1 className="text-2xl font-bold text-slate-900 font-display">Deep Platform Analytics</h1>
-        <p className="text-xs text-slate-500 mt-1">
+        <h1 className="text-2xl font-bold text-white font-display">Deep Platform Analytics</h1>
+        <p className="text-xs text-slate-400 mt-1">
           Travel trends, itinerary completion rates, and global engagement metrics
         </p>
       </div>
@@ -104,7 +104,7 @@ export function AdminAnalyticsPage() {
         <Card className="p-6">
           <CardHeader className="border-none px-0 pt-0 mb-2">
             <CardTitle>Trip Lifecycle Breakdown</CardTitle>
-            <p className="text-xs text-slate-500">Distribution of planned vs completed itineraries</p>
+            <p className="text-xs text-slate-400">Distribution of planned vs completed itineraries</p>
           </CardHeader>
 
           <div className="h-64 w-full">
@@ -130,13 +130,13 @@ export function AdminAnalyticsPage() {
 
           <div className="flex flex-wrap justify-center gap-3 pt-2">
             {tripStatusData.map((entry, index) => (
-              <div key={entry.name} className="flex items-center gap-1.5 text-xs text-slate-600">
+              <div key={entry.name} className="flex items-center gap-1.5 text-xs text-slate-400">
                 <span
                   className="w-2.5 h-2.5 rounded-full shrink-0"
                   style={{ backgroundColor: COLORS[index % COLORS.length] }}
                 />
                 <span className="font-medium">{entry.name}:</span>
-                <span className="font-bold text-slate-900">{entry.value}</span>
+                <span className="font-bold text-white">{entry.value}</span>
               </div>
             ))}
           </div>
@@ -146,7 +146,7 @@ export function AdminAnalyticsPage() {
         <Card className="p-6">
           <CardHeader className="border-none px-0 pt-0 mb-2">
             <CardTitle>Top Popular Destinations</CardTitle>
-            <p className="text-xs text-slate-500">Highest ranking cities across all user searches</p>
+            <p className="text-xs text-slate-400">Highest ranking cities across all user searches</p>
           </CardHeader>
 
           <div className="h-64 w-full">

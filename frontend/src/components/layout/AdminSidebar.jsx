@@ -42,7 +42,7 @@ export function AdminSidebar({ className }) {
 
         {/* Navigation */}
         <div className="space-y-1">
-          <p className="px-3 text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-2">
+          <p className="px-3 text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-2">
             System Administration
           </p>
           {adminNav.map((item) => {
@@ -55,7 +55,7 @@ export function AdminSidebar({ className }) {
                   cn(
                     'flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-medium transition-colors',
                     isActive
-                      ? 'bg-teal-600 text-white font-semibold shadow-xs'
+                      ? 'bg-indigo-600 text-white font-semibold shadow-md'
                       : 'text-slate-400 hover:bg-slate-800 hover:text-white'
                   )
                 }

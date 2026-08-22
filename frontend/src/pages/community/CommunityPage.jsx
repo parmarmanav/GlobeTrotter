@@ -85,7 +85,7 @@ export function CommunityPage() {
       {/* Banner */}
       <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-teal-800 via-teal-900 to-slate-900 text-white p-6 sm:p-10 shadow-lg">
         <div className="relative z-10 max-w-2xl space-y-3">
-          <span className="px-3 py-1 text-xs font-bold rounded-full bg-teal-500/20 text-teal-200 border border-teal-400/30 flex items-center gap-1.5 w-fit">
+          <span className="px-3 py-1 text-xs font-bold rounded-full bg-indigo-500/20 text-teal-200 border border-teal-400/30 flex items-center gap-1.5 w-fit">
             <Users className="w-3.5 h-3.5" /> Globetrotter Community
           </span>
           <h1 className="text-2xl sm:text-4xl font-extrabold font-display">
@@ -108,7 +108,7 @@ export function CommunityPage() {
       </div>
 
       {/* Search & Sort Controls */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 bg-white rounded-2xl border border-slate-200 shadow-2xs">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 bg-[var(--color-card)] rounded-2xl border border-[var(--color-border-subtle)] shadow-2xs">
         <div className="flex-1">
           <Input
             placeholder="Search stories, tips, and topics..."
@@ -131,7 +131,7 @@ export function CommunityPage() {
       {isLoading ? (
         <div className="space-y-4">
           {Array.from({ length: 4 }).map((_, i) => (
-            <div key={i} className="p-6 rounded-2xl bg-white border border-slate-200 space-y-3 animate-pulse">
+            <div key={i} className="p-6 rounded-2xl bg-[var(--color-card)] border border-[var(--color-border-subtle)] space-y-3 animate-pulse">
               <div className="flex items-center gap-3">
                 <Skeleton className="w-10 h-10 rounded-full" />
                 <div className="space-y-1">

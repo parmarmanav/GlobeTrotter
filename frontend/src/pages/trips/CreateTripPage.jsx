@@ -94,12 +94,12 @@ export function CreateTripPage() {
     <div className="max-w-3xl mx-auto space-y-6 animate-in fade-in duration-200">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 font-display">Plan a New Adventure</h1>
-          <p className="text-xs text-slate-500 mt-1">
+          <h1 className="text-2xl sm:text-3xl font-bold text-white font-display">Plan a New Adventure</h1>
+          <p className="text-xs text-slate-400 mt-1">
             Define your journey dates, description, and budget to begin building your custom itinerary.
           </p>
         </div>
-        <Link to={ROUTES.TRIPS} className="text-xs font-semibold text-slate-500 hover:text-slate-900">
+        <Link to={ROUTES.TRIPS} className="text-xs font-semibold text-slate-400 hover:text-white">
           &larr; Back to Trips
         </Link>
       </div>
@@ -149,7 +149,7 @@ export function CreateTripPage() {
           />
 
           {/* Budget Config */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 rounded-2xl bg-slate-50 border border-slate-100">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 rounded-2xl bg-slate-800/50 border border-[var(--color-border-subtle)]">
             <Input
               label="Target Budget Limit (₹ INR)"
               name="totalBudget"
@@ -162,17 +162,17 @@ export function CreateTripPage() {
               onChange={handleChange}
             />
             <div className="space-y-1.5 flex flex-col justify-center">
-              <label className="block text-xs font-semibold text-slate-700">Platform Currency</label>
-              <div className="h-10 px-3.5 rounded-xl bg-white border border-slate-200 flex items-center justify-between text-xs">
-                <span className="text-slate-600 font-medium">Standard Currency</span>
-                <span className="font-bold text-teal-700">INR (₹)</span>
+              <label className="block text-xs font-semibold text-slate-300">Platform Currency</label>
+              <div className="h-10 px-3.5 rounded-xl bg-[var(--color-card)] border border-[var(--color-border-subtle)] flex items-center justify-between text-xs">
+                <span className="text-slate-400 font-medium">Standard Currency</span>
+                <span className="font-bold text-indigo-400">INR (₹)</span>
               </div>
             </div>
           </div>
 
           {/* Cover Image Selection */}
           <div className="space-y-2">
-            <label className="block text-xs font-semibold text-slate-700">
+            <label className="block text-xs font-semibold text-slate-300">
               Trip Cover Image
             </label>
             <div className="grid grid-cols-5 gap-2">
@@ -201,7 +201,7 @@ export function CreateTripPage() {
             />
           </div>
 
-          <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-100">
+          <div className="flex items-center justify-end gap-3 pt-4 border-t border-[var(--color-border-subtle)]">
             <Link to={ROUTES.TRIPS}>
               <Button variant="outline" size="md">
                 Cancel

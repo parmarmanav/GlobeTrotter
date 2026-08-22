@@ -109,7 +109,7 @@ export function ActivityDetailsPage() {
         <div className="absolute bottom-6 left-6 right-6 z-10 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
           <div className="space-y-2 max-w-2xl">
             <div className="flex items-center gap-2">
-              <span className="px-2.5 py-0.5 text-xs font-bold rounded-full bg-teal-500/80 text-white backdrop-blur-md">
+              <span className="px-2.5 py-0.5 text-xs font-bold rounded-full bg-indigo-500/80 text-white backdrop-blur-md">
                 {activity.category || 'Sightseeing'}
               </span>
               {cityName && (
@@ -142,19 +142,19 @@ export function ActivityDetailsPage() {
         {/* Left Column: Description & Essentials */}
         <div className="lg:col-span-2 space-y-6">
           <Card className="p-6 sm:p-8 space-y-4">
-            <h2 className="text-lg font-bold text-slate-900 font-display">Experience Overview</h2>
-            <p className="text-xs sm:text-sm text-slate-700 leading-relaxed whitespace-pre-line">
+            <h2 className="text-lg font-bold text-white font-display">Experience Overview</h2>
+            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed whitespace-pre-line">
               {activity.description || 'Enjoy a memorable journey experiencing the best attractions and local culture.'}
             </p>
 
             {/* Meta Highlights */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-4 border-t border-slate-100">
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-4 border-t border-[var(--color-border-subtle)]">
               <div className="space-y-1">
                 <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">
                   Typical Duration
                 </span>
-                <p className="text-xs font-semibold text-slate-800 flex items-center gap-1">
-                  <Clock className="w-3.5 h-3.5 text-teal-600" /> {duration}
+                <p className="text-xs font-semibold text-slate-200 flex items-center gap-1">
+                  <Clock className="w-3.5 h-3.5 text-indigo-400" /> {duration}
                 </p>
               </div>
 
@@ -173,11 +173,11 @@ export function ActivityDetailsPage() {
                   Location / City
                 </span>
                 {cityId ? (
-                  <Link to={`/cities/${cityId}`} className="text-xs font-semibold text-teal-600 hover:underline flex items-center gap-1">
+                  <Link to={`/cities/${cityId}`} className="text-xs font-semibold text-indigo-400 hover:underline flex items-center gap-1">
                     <MapPin className="w-3.5 h-3.5" /> {cityName || 'View City'}
                   </Link>
                 ) : (
-                  <p className="text-xs font-semibold text-slate-800">{cityName || 'Universal'}</p>
+                  <p className="text-xs font-semibold text-slate-200">{cityName || 'Universal'}</p>
                 )}
               </div>
             </div>
@@ -187,8 +187,8 @@ export function ActivityDetailsPage() {
         {/* Right Column: CTA */}
         <div className="space-y-6">
           <Card className="p-6 space-y-4">
-            <h3 className="text-sm font-bold text-slate-900 font-display">Schedule This Activity</h3>
-            <p className="text-xs text-slate-500 leading-relaxed">
+            <h3 className="text-sm font-bold text-white font-display">Schedule This Activity</h3>
+            <p className="text-xs text-slate-400 leading-relaxed">
               Add this experience directly to one of your planned trips and assign it to a specific day.
             </p>
 

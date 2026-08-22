@@ -38,10 +38,10 @@ export function ResetPasswordPage() {
   }
 
   return (
-    <Card className="p-6 sm:p-8 border-slate-200/90 shadow-lg">
+    <Card className="p-6 sm:p-8 border-[var(--color-border-subtle)]/90 shadow-lg">
       <div className="text-center mb-6">
-        <h2 className="text-2xl font-bold text-slate-900 font-display">Create New Password</h2>
-        <p className="text-xs text-slate-500 mt-1">Please choose a secure new password</p>
+        <h2 className="text-2xl font-bold text-white font-display">Create New Password</h2>
+        <p className="text-xs text-slate-400 mt-1">Please choose a secure new password</p>
       </div>
 
       {isSuccess ? (
@@ -49,7 +49,7 @@ export function ResetPasswordPage() {
           <div className="w-12 h-12 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto">
             <CheckCircle2 className="w-6 h-6" />
           </div>
-          <p className="text-xs text-slate-600">
+          <p className="text-xs text-slate-400">
             Your password has been successfully reset.
           </p>
           <Button

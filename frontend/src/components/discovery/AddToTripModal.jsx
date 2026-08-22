@@ -138,12 +138,12 @@ export function AddToTripModal({
     >
       {isLoadingTrips ? (
         <div className="py-8 text-center space-y-2">
-          <Spinner size="md" className="mx-auto text-teal-600" />
-          <p className="text-xs text-slate-500">Loading your trips...</p>
+          <Spinner size="md" className="mx-auto text-indigo-400" />
+          <p className="text-xs text-slate-400">Loading your trips...</p>
         </div>
       ) : trips.length === 0 ? (
         <div className="py-6 text-center space-y-3">
-          <p className="text-xs text-slate-600">You don't have any trips created yet.</p>
+          <p className="text-xs text-slate-400">You don't have any trips created yet.</p>
           <Button
             size="sm"
             variant="primary"
@@ -180,7 +180,7 @@ export function AddToTripModal({
             </div>
           )}
 
-          <div className="flex items-center justify-end gap-2.5 pt-3 border-t border-slate-100">
+          <div className="flex items-center justify-end gap-2.5 pt-3 border-t border-[var(--color-border-subtle)]">
             <Button variant="outline" size="sm" onClick={onClose} disabled={isSubmitting}>
               Cancel
             </Button>

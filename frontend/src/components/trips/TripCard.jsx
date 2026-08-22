@@ -29,7 +29,7 @@ export function TripCard({ trip, onDelete, onUpdate }) {
   const tripId = trip._id || trip.id
   const status = trip.status || 'PLANNED'
   const statusLabel = TRIP_STATUS_LABELS[status] || status
-  const statusColor = TRIP_STATUS_COLORS[status] || 'bg-slate-100 text-slate-700'
+  const statusColor = TRIP_STATUS_COLORS[status] || 'bg-slate-800 text-slate-300'
   const dateRange = formatDateRange(trip.startDate, trip.endDate)
   const stopsCount = Array.isArray(trip.stops) ? trip.stops.length : 0
   const stopsList = Array.isArray(trip.stops)
@@ -50,24 +50,24 @@ export function TripCard({ trip, onDelete, onUpdate }) {
 
   return (
     <>
-      <Card className="p-0 overflow-hidden flex flex-col justify-between group hoverable border-slate-200/90 shadow-xs hover:shadow-md transition-all duration-200">
+      <Card className="p-0 overflow-hidden flex flex-col justify-between group bg-slate-900 border border-slate-800 hover-lift">
         {/* Cover Image & Header Badges */}
-        <div className="relative h-48 w-full bg-slate-100 overflow-hidden">
+        <div className="relative h-48 w-full bg-slate-800 overflow-hidden shrink-0">
           <img
             src={trip.coverImage || DEFAULT_COVER}
             alt={trip.name}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
             onError={(e) => {
               e.target.src = DEFAULT_COVER
             }}
           />
           {/* Subtle gradient overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-black/20" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0a0f1a] via-black/20 to-transparent" />
 
           {/* Status Badge */}
           <div className="absolute top-3 left-3">
             <span
-              className={`px-2.5 py-1 text-xs font-bold rounded-full border shadow-xs backdrop-blur-md ${statusColor}`}
+              className={`px-2.5 py-1 text-xs font-bold rounded-full border shadow-md backdrop-blur-md ${statusColor}`}
             >
               {statusLabel}
             </span>
@@ -80,7 +80,7 @@ export function TripCard({ trip, onDelete, onUpdate }) {
               trigger={
                 <button
                   type="button"
-                  className="p-1.5 rounded-full bg-black/40 hover:bg-black/60 text-white backdrop-blur-md transition-colors cursor-pointer"
+                  className="p-2 rounded-full bg-black/40 hover:bg-black/60 text-white backdrop-blur-md transition-colors cursor-pointer min-w-[36px] min-h-[36px] flex items-center justify-center border border-white/10"
                   aria-label="Trip actions"
                 >
                   <MoreVertical className="w-4 h-4" />
@@ -117,57 +117,57 @@ export function TripCard({ trip, onDelete, onUpdate }) {
           </div>
 
           {/* Trip Dates on Image */}
-          <div className="absolute bottom-3 left-3 right-3 text-white">
-            <p className="text-xs font-medium flex items-center gap-1.5 drop-shadow-sm text-slate-100">
-              <Calendar className="w-3.5 h-3.5 text-teal-300 shrink-0" />
+          <div className="absolute bottom-3 left-3 right-3 text-white min-w-0">
+            <p className="text-xs font-medium flex items-center gap-1.5 drop-shadow-md text-slate-200 truncate-safe">
+              <Calendar className="w-3.5 h-3.5 text-indigo-400 shrink-0" />
               <span>{dateRange || 'Dates not set'}</span>
             </p>
           </div>
         </div>
 
         {/* Card Body */}
-        <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
-          <div className="space-y-1.5">
+        <div className="p-5 flex-1 flex flex-col justify-between space-y-4 min-w-0">
+          <div className="space-y-1.5 min-w-0">
             <Link to={`/trips/${tripId}`} className="block group/title">
-              <h3 className="text-base font-bold text-slate-900 group-hover/title:text-teal-600 transition-colors font-display line-clamp-1">
+              <h3 className="text-base font-bold text-white group-hover/title:text-indigo-400 transition-colors font-display truncate-safe">
                 {trip.name}
               </h3>
             </Link>
             {trip.description && (
-              <p className="text-xs text-slate-500 line-clamp-2 leading-relaxed">
+              <p className="text-xs text-slate-400 line-clamp-2 leading-relaxed">
                 {trip.description}
               </p>
             )}
           </div>
 
           {/* Destinations / Stops */}
-          <div className="flex items-center justify-between text-xs text-slate-600 pt-3 border-t border-slate-100">
+          <div className="flex items-center justify-between text-xs text-slate-400 pt-3 border-t border-slate-800 gap-2 min-w-0">
             <div className="flex items-center gap-1.5 min-w-0">
-              <MapPin className="w-3.5 h-3.5 text-teal-600 shrink-0" />
-              <span className="truncate font-medium">
+              <MapPin className="w-3.5 h-3.5 text-indigo-400 shrink-0" />
+              <span className="truncate-safe font-medium">
                 {stopsCount > 0
                   ? `${stopsCount} ${stopsCount === 1 ? 'Stop' : 'Stops'}${stopsList ? ` (${stopsList})` : ''}`
                   : 'No stops added'}
               </span>
             </div>
 
-            <div className="flex items-center gap-1 font-bold text-slate-900 shrink-0">
-              <DollarSign className="w-3.5 h-3.5 text-emerald-600" />
+            <div className="flex items-center gap-1 font-bold text-white shrink-0">
+              <DollarSign className="w-3.5 h-3.5 text-emerald-400" />
               <span>{totalBudget > 0 ? formatCurrency(totalBudget, currency) : 'Unset'}</span>
             </div>
           </div>
 
           {/* Quick Action Footer */}
-          <div className="flex items-center justify-between pt-3 border-t border-slate-100">
+          <div className="flex items-center justify-between pt-3 border-t border-slate-800 min-w-0">
             <Link
               to={`/trips/${tripId}/itinerary`}
-              className="text-xs font-bold text-teal-600 hover:text-teal-700 flex items-center gap-1"
+              className="text-xs font-bold text-indigo-400 hover:text-indigo-300 flex items-center gap-1 transition-colors group/link truncate-safe"
             >
-              Itinerary Builder <ArrowRight className="w-3.5 h-3.5" />
+              Itinerary Builder <ArrowRight className="w-3.5 h-3.5 group-hover/link:translate-x-1 transition-transform" />
             </Link>
             <Link
               to={`/trips/${tripId}`}
-              className="text-xs font-semibold text-slate-500 hover:text-slate-900"
+              className="text-xs font-semibold text-slate-400 hover:text-slate-200 transition-colors shrink-0"
             >
               View Details
             </Link>

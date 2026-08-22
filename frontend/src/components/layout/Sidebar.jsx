@@ -26,42 +26,42 @@ export function Sidebar({ className }) {
   return (
     <aside
       className={cn(
-        'w-64 bg-white border-r border-slate-200/80 flex flex-col justify-between p-4 shrink-0',
+        'w-64 bg-[var(--color-card)] border-r border-[var(--color-border-subtle)] flex flex-col justify-between p-4 shrink-0 transition-colors',
         className
       )}
     >
-      <div className="space-y-6">
+      <div className="space-y-6 flex flex-col min-w-0">
         {/* Quick Action */}
         <NavLink
           to={ROUTES.CREATE_TRIP}
-          className="flex items-center justify-center gap-2 w-full py-2.5 px-4 bg-teal-600 hover:bg-teal-700 text-white rounded-xl font-medium text-xs shadow-xs transition-all duration-150 active:scale-98"
+          className="flex items-center justify-center gap-2 w-full py-3 px-4 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl font-medium text-xs shadow-lg shadow-indigo-600/20 hover:shadow-indigo-500/40 transition-all duration-200 active:scale-95 min-h-[44px]"
         >
-          <PlusCircle className="w-4 h-4" />
-          <span>New Trip Plan</span>
+          <PlusCircle className="w-4 h-4 shrink-0" />
+          <span className="truncate-safe">New Trip Plan</span>
         </NavLink>
 
         {/* Main Navigation */}
-        <div className="space-y-1">
+        <div className="space-y-1 min-w-0 flex flex-col">
           <p className="px-3 text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-2">
             Main Menu
           </p>
           {navigationItems.map((item) => {
             const Icon = item.icon
             return (
-              <NavLink
+               <NavLink
                 key={item.to}
                 to={item.to}
                 className={({ isActive }) =>
                   cn(
-                    'flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold transition-all duration-150',
+                    'flex items-center gap-3 px-3 py-3 rounded-xl text-xs font-semibold transition-all duration-200 min-h-[44px] min-w-0',
                     isActive
-                      ? 'bg-teal-50 text-teal-700 shadow-2xs font-bold'
-                      : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
+                      ? 'bg-indigo-500/15 text-indigo-400 shadow-inner'
+                      : 'text-slate-400 hover:bg-slate-800 hover:text-slate-200 hover:translate-x-1'
                   )
                 }
               >
                 <Icon className="w-4 h-4 shrink-0" />
-                <span>{item.name}</span>
+                <span className="truncate-safe">{item.name}</span>
               </NavLink>
             )
           })}
@@ -69,20 +69,20 @@ export function Sidebar({ className }) {
       </div>
 
       {/* Footer / Settings in Sidebar */}
-      <div className="space-y-1 pt-4 border-t border-slate-100">
+      <div className="space-y-1 pt-4 border-t border-slate-800 min-w-0 flex flex-col">
         <NavLink
           to={ROUTES.SETTINGS}
           className={({ isActive }) =>
             cn(
-              'flex items-center gap-3 px-3 py-2 rounded-xl text-xs font-medium transition-colors',
+              'flex items-center gap-3 px-3 py-3 rounded-xl text-xs font-medium transition-all duration-200 min-h-[44px] min-w-0',
               isActive
-                ? 'bg-slate-100 text-slate-900 font-semibold'
-                : 'text-slate-500 hover:bg-slate-50 hover:text-slate-800'
+                ? 'bg-slate-800 text-white font-semibold'
+                : 'text-slate-400 hover:bg-slate-800 hover:text-slate-300 hover:translate-x-1'
             )
           }
         >
-          <Settings className="w-4 h-4 text-slate-400" />
-          <span>Settings</span>
+          <Settings className="w-4 h-4 shrink-0 text-slate-400" />
+          <span className="truncate-safe">Settings</span>
         </NavLink>
       </div>
     </aside>

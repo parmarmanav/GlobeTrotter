@@ -2,14 +2,15 @@ import React from 'react'
 import { cn } from '@/utils/cn'
 
 const badgeVariants = {
-  default: 'bg-slate-100 text-slate-700 border-slate-200',
-  primary: 'bg-teal-50 text-teal-700 border-teal-200',
-  secondary: 'bg-slate-800 text-white border-slate-700',
-  success: 'bg-emerald-50 text-emerald-700 border-emerald-200',
-  warning: 'bg-amber-50 text-amber-700 border-amber-200',
-  danger: 'bg-rose-50 text-rose-700 border-rose-200',
-  info: 'bg-sky-50 text-sky-700 border-sky-200',
-  purple: 'bg-purple-50 text-purple-700 border-purple-200',
+  default: 'bg-slate-800/80 text-slate-300 border-slate-700/60',
+  primary: 'bg-indigo-500/15 text-indigo-300 border-indigo-500/30',
+  secondary: 'bg-slate-800 text-slate-200 border-slate-700',
+  success: 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30',
+  warning: 'bg-amber-500/15 text-amber-300 border-amber-500/30',
+  danger: 'bg-rose-500/15 text-rose-300 border-rose-500/30',
+  info: 'bg-sky-500/15 text-sky-300 border-sky-500/30',
+  purple: 'bg-purple-500/15 text-purple-300 border-purple-500/30',
+  accent: 'bg-orange-500/15 text-orange-300 border-orange-500/30',
 }
 
 const badgeSizes = {
@@ -29,7 +30,7 @@ export function Badge({
   return (
     <span
       className={cn(
-        'inline-flex items-center gap-1.5 font-medium rounded-full border',
+        'inline-flex items-center gap-1.5 font-semibold rounded-full border backdrop-blur-xs truncate-safe shrink-0',
         badgeVariants[variant],
         badgeSizes[size],
         className
@@ -38,19 +39,20 @@ export function Badge({
       {dot && (
         <span
           className={cn(
-            'w-1.5 h-1.5 rounded-full',
-            variant === 'primary' && 'bg-teal-500',
-            variant === 'success' && 'bg-emerald-500',
-            variant === 'warning' && 'bg-amber-500',
-            variant === 'danger' && 'bg-rose-500',
-            variant === 'info' && 'bg-sky-500',
+            'w-1.5 h-1.5 rounded-full shrink-0',
+            variant === 'primary' && 'bg-indigo-400',
+            variant === 'success' && 'bg-emerald-400',
+            variant === 'warning' && 'bg-amber-400',
+            variant === 'danger' && 'bg-rose-400',
+            variant === 'info' && 'bg-sky-400',
             variant === 'default' && 'bg-slate-400',
-            variant === 'purple' && 'bg-purple-500'
+            variant === 'purple' && 'bg-purple-400',
+            variant === 'accent' && 'bg-orange-400'
           )}
         />
       )}
       {Icon && <Icon className="w-3.5 h-3.5 shrink-0" />}
-      {children}
+      <span className="truncate-safe">{children}</span>
     </span>
   )
 }

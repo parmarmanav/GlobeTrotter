@@ -103,7 +103,7 @@ export function AddStopModal({ isOpen, onClose, onAddStop, isLoading = false }) 
 
         {/* City Search Bar */}
         <div className="space-y-1.5">
-          <label className="block text-xs font-semibold text-slate-700">
+          <label className="block text-xs font-semibold text-slate-300">
             Search Destination City
           </label>
           <div className="relative">
@@ -125,19 +125,19 @@ export function AddStopModal({ isOpen, onClose, onAddStop, isLoading = false }) 
 
           {/* Search Results Dropdown */}
           {searchResults.length > 0 && (
-            <div className="max-h-48 overflow-y-auto rounded-xl border border-slate-200 bg-white shadow-lg p-1 space-y-1 z-20">
+            <div className="max-h-48 overflow-y-auto rounded-xl border border-[var(--color-border-subtle)] bg-[var(--color-card)] shadow-lg p-1 space-y-1 z-20">
               {searchResults.map((city) => (
                 <button
                   key={city._id || city.id || city.name}
                   type="button"
                   onClick={() => handleSelectCity(city)}
-                  className="w-full flex items-center justify-between p-2 rounded-lg hover:bg-teal-50 text-left transition-colors cursor-pointer"
+                  className="w-full flex items-center justify-between p-2 rounded-lg hover:bg-indigo-500/10 text-left transition-colors cursor-pointer"
                 >
                   <div className="flex items-center gap-2">
-                    <MapPin className="w-4 h-4 text-teal-600 shrink-0" />
+                    <MapPin className="w-4 h-4 text-indigo-400 shrink-0" />
                     <div>
-                      <p className="text-xs font-bold text-slate-900">{city.name}</p>
-                      <p className="text-[10px] text-slate-500">{city.country} • {city.region || 'Region'}</p>
+                      <p className="text-xs font-bold text-white">{city.name}</p>
+                      <p className="text-[10px] text-slate-400">{city.country} • {city.region || 'Region'}</p>
                     </div>
                   </div>
                   {city.costIndex && <Badge variant="secondary" size="sm">{city.costIndex}</Badge>}
@@ -149,20 +149,20 @@ export function AddStopModal({ isOpen, onClose, onAddStop, isLoading = false }) 
 
         {/* Selected City or Manual Input */}
         {selectedCity ? (
-          <div className="p-3.5 rounded-xl bg-teal-50/80 border border-teal-200 flex items-center justify-between">
+          <div className="p-3.5 rounded-xl bg-indigo-500/10/80 border border-teal-200 flex items-center justify-between">
             <div className="flex items-center gap-2.5">
-              <div className="p-2 rounded-lg bg-teal-600 text-white">
+              <div className="p-2 rounded-lg bg-indigo-600 text-white">
                 <MapPin className="w-4 h-4" />
               </div>
               <div>
                 <p className="text-xs font-bold text-teal-900">{selectedCity.name}</p>
-                <p className="text-[10px] text-teal-700">{selectedCity.country}</p>
+                <p className="text-[10px] text-indigo-400">{selectedCity.country}</p>
               </div>
             </div>
             <button
               type="button"
               onClick={() => setSelectedCity(null)}
-              className="text-xs text-teal-700 hover:text-teal-900 font-semibold cursor-pointer underline"
+              className="text-xs text-indigo-400 hover:text-teal-900 font-semibold cursor-pointer underline"
             >
               Change
             </button>
@@ -209,7 +209,7 @@ export function AddStopModal({ isOpen, onClose, onAddStop, isLoading = false }) 
           onChange={(e) => setNotes(e.target.value)}
         />
 
-        <div className="flex items-center justify-end gap-2.5 pt-3 border-t border-slate-100">
+        <div className="flex items-center justify-end gap-2.5 pt-3 border-t border-[var(--color-border-subtle)]">
           <Button variant="outline" size="sm" onClick={onClose} disabled={isLoading}>
             Cancel
           </Button>

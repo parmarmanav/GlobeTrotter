@@ -122,8 +122,8 @@ export function ProfilePage() {
   return (
     <div className="max-w-4xl mx-auto space-y-6 animate-in fade-in duration-200">
       <div>
-        <h1 className="text-2xl font-bold text-slate-900 font-display">User Profile</h1>
-        <p className="text-xs text-slate-500 mt-1">Manage your traveler identity and personal details</p>
+        <h1 className="text-2xl font-bold text-white font-display">User Profile</h1>
+        <p className="text-xs text-slate-400 mt-1">Manage your traveler identity and personal details</p>
       </div>
 
       {errorMessage && (
@@ -134,7 +134,7 @@ export function ProfilePage() {
 
       {/* Profile Overview Card */}
       <Card className="p-6 sm:p-8 space-y-6">
-        <div className="flex flex-col sm:flex-row items-center gap-6 pb-6 border-b border-slate-100">
+        <div className="flex flex-col sm:flex-row items-center gap-6 pb-6 border-b border-[var(--color-border-subtle)]">
           <div className="relative">
             <Avatar
               src={user?.profileImage || user?.avatar}
@@ -145,7 +145,7 @@ export function ProfilePage() {
               type="button"
               onClick={handleImageClick}
               disabled={isUploadingImage}
-              className="absolute bottom-0 right-0 p-2 bg-teal-600 hover:bg-teal-700 text-white rounded-full shadow-md cursor-pointer transition-colors disabled:opacity-50"
+              className="absolute bottom-0 right-0 p-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-full shadow-md cursor-pointer transition-colors disabled:opacity-50"
               aria-label="Upload photo"
             >
               {isUploadingImage ? (
@@ -165,7 +165,7 @@ export function ProfilePage() {
 
           <div className="text-center sm:text-left space-y-1">
             <div className="flex items-center justify-center sm:justify-start gap-2">
-              <h2 className="text-xl font-bold text-slate-900 font-display">
+              <h2 className="text-xl font-bold text-white font-display">
                 {fullName}
               </h2>
               {user?.role === 'admin' && (
@@ -174,8 +174,8 @@ export function ProfilePage() {
                 </Badge>
               )}
             </div>
-            <p className="text-xs text-slate-500">{user?.email}</p>
-            <p className="text-xs text-teal-600 font-medium">@{user?.username || 'traveler'}</p>
+            <p className="text-xs text-slate-400">{user?.email}</p>
+            <p className="text-xs text-indigo-400 font-medium">@{user?.username || 'traveler'}</p>
           </div>
         </div>
 
@@ -251,7 +251,7 @@ export function ProfilePage() {
             onChange={handleChange}
           />
 
-          <div className="flex justify-end pt-4 border-t border-slate-100">
+          <div className="flex justify-end pt-4 border-t border-[var(--color-border-subtle)]">
             <Button
               type="submit"
               variant="primary"

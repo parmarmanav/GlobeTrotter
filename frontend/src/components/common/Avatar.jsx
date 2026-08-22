@@ -35,7 +35,7 @@ export function Avatar({
     <div className="relative inline-block shrink-0">
       <div
         className={cn(
-          'relative flex items-center justify-center rounded-full bg-slate-100 border border-slate-200 text-slate-700 font-semibold overflow-hidden select-none',
+          'relative flex items-center justify-center rounded-full bg-slate-800 border border-[var(--color-border-subtle)] text-slate-300 font-semibold overflow-hidden select-none',
           sizes[size],
           className
         )}

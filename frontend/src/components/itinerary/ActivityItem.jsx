@@ -18,10 +18,10 @@ const CATEGORY_COLORS = {
   FOOD: 'bg-amber-50 text-amber-700 border-amber-200',
   ADVENTURE: 'bg-emerald-50 text-emerald-700 border-emerald-200',
   CULTURE: 'bg-purple-50 text-purple-700 border-purple-200',
-  NATURE: 'bg-teal-50 text-teal-700 border-teal-200',
+  NATURE: 'bg-indigo-500/10 text-indigo-400 border-teal-200',
   ENTERTAINMENT: 'bg-pink-50 text-pink-700 border-pink-200',
   SHOPPING: 'bg-indigo-50 text-indigo-700 border-indigo-200',
-  OTHER: 'bg-slate-50 text-slate-700 border-slate-200',
+  OTHER: 'bg-slate-800/50 text-slate-300 border-[var(--color-border-subtle)]',
 }
 
 export function ActivityItem({
@@ -51,7 +51,7 @@ export function ActivityItem({
 
   return (
     <>
-      <div className="group relative flex items-start justify-between p-3.5 rounded-xl bg-white border border-slate-200 hover:border-teal-300 shadow-2xs transition-all duration-150">
+      <div className="group relative flex items-start justify-between p-3.5 rounded-xl bg-[var(--color-card)] border border-[var(--color-border-subtle)] hover:border-teal-300 shadow-2xs transition-all duration-150">
         <div className="flex items-start gap-3 min-w-0">
           {/* Reorder Buttons */}
           <div className="flex flex-col pt-0.5 shrink-0">
@@ -59,7 +59,7 @@ export function ActivityItem({
               type="button"
               disabled={index === 0}
               onClick={() => onMove?.(index, -1)}
-              className="p-0.5 text-slate-400 hover:text-teal-600 disabled:opacity-20 cursor-pointer"
+              className="p-0.5 text-slate-400 hover:text-indigo-400 disabled:opacity-20 cursor-pointer"
               title="Move activity up"
             >
               <ChevronUp className="w-3.5 h-3.5" />
@@ -68,7 +68,7 @@ export function ActivityItem({
               type="button"
               disabled={index === totalCount - 1}
               onClick={() => onMove?.(index, 1)}
-              className="p-0.5 text-slate-400 hover:text-teal-600 disabled:opacity-20 cursor-pointer"
+              className="p-0.5 text-slate-400 hover:text-indigo-400 disabled:opacity-20 cursor-pointer"
               title="Move activity down"
             >
               <ChevronDown className="w-3.5 h-3.5" />
@@ -81,18 +81,18 @@ export function ActivityItem({
                 {category}
               </span>
               {timeDisplay && (
-                <span className="text-[11px] font-medium text-slate-500 flex items-center gap-1">
+                <span className="text-[11px] font-medium text-slate-400 flex items-center gap-1">
                   <Clock className="w-3 h-3 text-slate-400" /> {timeDisplay}
                 </span>
               )}
             </div>
 
-            <h4 className="text-xs font-bold text-slate-900 leading-tight">
+            <h4 className="text-xs font-bold text-white leading-tight">
               {activity.title}
             </h4>
 
             {activity.description && (
-              <p className="text-[11px] text-slate-500 line-clamp-2 leading-relaxed">
+              <p className="text-[11px] text-slate-400 line-clamp-2 leading-relaxed">
                 {activity.description}
               </p>
             )}
@@ -119,7 +119,7 @@ export function ActivityItem({
             <button
               type="button"
               onClick={() => onEdit?.(activity)}
-              className="p-1.5 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-lg cursor-pointer transition-colors"
+              className="p-1.5 text-slate-400 hover:text-slate-300 hover:bg-slate-800 rounded-lg cursor-pointer transition-colors"
               title="Edit activity"
             >
               <Edit2 className="w-3.5 h-3.5" />

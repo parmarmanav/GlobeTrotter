@@ -14,10 +14,10 @@ export function TimelineView({ trip, currency = 'USD' }) {
 
   if (days.length === 0 && stops.length === 0) {
     return (
-      <div className="py-12 text-center bg-white rounded-3xl border border-slate-200 p-8 space-y-3">
-        <Calendar className="w-12 h-12 text-teal-600/50 mx-auto" />
-        <h3 className="text-base font-bold text-slate-800">Timeline not populated yet</h3>
-        <p className="text-xs text-slate-500 max-w-sm mx-auto">
+      <div className="py-12 text-center bg-[var(--color-card)] rounded-3xl border border-[var(--color-border-subtle)] p-8 space-y-3">
+        <Calendar className="w-12 h-12 text-indigo-400/50 mx-auto" />
+        <h3 className="text-base font-bold text-slate-200">Timeline not populated yet</h3>
+        <p className="text-xs text-slate-400 max-w-sm mx-auto">
           Add stops and itinerary days to see your chronological travel schedule.
         </p>
         <Link to={`/trips/${tripId}/itinerary`}>
@@ -38,7 +38,7 @@ export function TimelineView({ trip, currency = 'USD' }) {
         return (
           <div key={day._id || day.id || idx} className="relative space-y-3">
             {/* Timeline Dot Indicator */}
-            <div className="absolute -left-[31px] sm:-left-[39px] top-1 w-4 h-4 rounded-full bg-teal-600 border-4 border-teal-100 ring-2 ring-teal-600/20" />
+            <div className="absolute -left-[31px] sm:-left-[39px] top-1 w-4 h-4 rounded-full bg-indigo-600 border-4 border-teal-100 ring-2 ring-teal-600/20" />
 
             {/* Day Header Bar */}
             <div className="flex flex-wrap items-center justify-between gap-2">
@@ -46,18 +46,18 @@ export function TimelineView({ trip, currency = 'USD' }) {
                 <span className="px-2.5 py-0.5 text-xs font-black bg-slate-900 text-white rounded-lg">
                   Day {day.dayNumber}
                 </span>
-                <h3 className="text-sm font-bold text-slate-900 font-display">
+                <h3 className="text-sm font-bold text-white font-display">
                   {day.title || `Day ${day.dayNumber}`}
                 </h3>
               </div>
-              <span className="text-xs text-slate-500 font-medium flex items-center gap-1">
-                <Calendar className="w-3.5 h-3.5 text-teal-600" /> {formattedDate}
+              <span className="text-xs text-slate-400 font-medium flex items-center gap-1">
+                <Calendar className="w-3.5 h-3.5 text-indigo-400" /> {formattedDate}
               </span>
             </div>
 
             {/* Day Activities Cards */}
             {activities.length === 0 ? (
-              <div className="p-3.5 rounded-xl bg-slate-50 border border-dashed border-slate-200 text-slate-400 text-xs italic">
+              <div className="p-3.5 rounded-xl bg-slate-800/50 border border-dashed border-[var(--color-border-subtle)] text-slate-400 text-xs italic">
                 No activities scheduled for this day yet.
               </div>
             ) : (
@@ -65,7 +65,7 @@ export function TimelineView({ trip, currency = 'USD' }) {
                 {activities.map((act, aIdx) => (
                   <Card
                     key={act._id || act.id || aIdx}
-                    className="p-3.5 border-slate-200/90 shadow-2xs hover:border-teal-300 transition-colors"
+                    className="p-3.5 border-[var(--color-border-subtle)]/90 shadow-2xs hover:border-teal-300 transition-colors"
                   >
                     <div className="flex items-start justify-between gap-3">
                       <div className="space-y-1 min-w-0">
@@ -74,19 +74,19 @@ export function TimelineView({ trip, currency = 'USD' }) {
                             {act.category || 'OTHER'}
                           </Badge>
                           {act.startTime && (
-                            <span className="text-[11px] font-semibold text-slate-500 flex items-center gap-1">
-                              <Clock className="w-3 h-3 text-teal-600" />
+                            <span className="text-[11px] font-semibold text-slate-400 flex items-center gap-1">
+                              <Clock className="w-3 h-3 text-indigo-400" />
                               {act.startTime} {act.endTime ? `– ${act.endTime}` : ''}
                             </span>
                           )}
                         </div>
 
-                        <h4 className="text-xs font-bold text-slate-900 truncate">
+                        <h4 className="text-xs font-bold text-white truncate">
                           {act.title}
                         </h4>
 
                         {act.description && (
-                          <p className="text-[11px] text-slate-500 line-clamp-2">
+                          <p className="text-[11px] text-slate-400 line-clamp-2">
                             {act.description}
                           </p>
                         )}

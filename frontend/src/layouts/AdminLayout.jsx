@@ -22,7 +22,7 @@ export function AdminLayout() {
         <header className="h-16 bg-slate-900/80 backdrop-blur-md border-b border-slate-800 px-6 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Link to={ROUTES.ADMIN} className="flex items-center gap-2 md:hidden">
-              <div className="w-8 h-8 rounded-lg bg-teal-500 flex items-center justify-center text-white">
+              <div className="w-8 h-8 rounded-lg bg-indigo-500 flex items-center justify-center text-white">
                 <Compass className="w-4 h-4" />
               </div>
             </Link>

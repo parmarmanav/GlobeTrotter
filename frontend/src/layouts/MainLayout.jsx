@@ -14,7 +14,11 @@ export function MainLayout() {
   const { sidebarOpen, closeSidebar } = useApp()
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900">
+    <div className="min-h-screen flex flex-col bg-[#080d1a] text-slate-100 relative selection:bg-indigo-500 selection:text-white">
+      {/* Subtle Ambient Background Gradients */}
+      <div className="fixed top-0 left-1/4 w-96 h-96 bg-indigo-600/10 rounded-full blur-3xl pointer-events-none -z-10" />
+      <div className="fixed bottom-10 right-10 w-96 h-96 bg-purple-600/10 rounded-full blur-3xl pointer-events-none -z-10" />
+
       {/* Top Navbar */}
       <Navbar />
 
@@ -40,7 +44,7 @@ export function MainLayout() {
 
         {/* Dynamic Content Area */}
         <main className="flex-1 flex flex-col min-w-0 pb-16 lg:pb-0">
-          <div className="flex-1 p-4 sm:p-6 lg:p-8 max-w-full">
+          <div className="flex-1 p-4 sm:p-6 lg:p-8 max-w-full min-w-0">
             <Outlet />
           </div>
           <Footer />

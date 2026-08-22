@@ -23,36 +23,37 @@ export function CuratedItinerarySection({ city, onAddToTrip }) {
   const activeDay = days[activeDayIndex] || days[0]
 
   return (
-    <Card className="p-6 sm:p-8 space-y-6 shadow-xs border-slate-200">
+    <Card className="p-6 sm:p-8 space-y-6 shadow-xl border border-slate-800 bg-slate-900/80 backdrop-blur-md">
       {/* Section Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-100">
-        <div className="space-y-1">
-          <div className="flex items-center gap-2">
-            <span className="p-1 rounded-lg bg-teal-50 text-teal-700">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-slate-800">
+        <div className="space-y-1.5 min-w-0">
+          <div className="flex items-center gap-2 flex-wrap">
+            <span className="p-1.5 rounded-lg bg-indigo-500/15 text-indigo-400 border border-indigo-500/20">
               <Sparkles className="w-4 h-4" />
             </span>
-            <h2 className="text-base sm:text-lg font-bold text-slate-900 font-display">
+            <h2 className="text-base sm:text-lg font-bold text-white font-display truncate-safe">
               Curated {curatedPlan.durationDays}-Day Itinerary for {city.name}
             </h2>
             <Badge variant="primary" size="sm" className="font-bold">
               {curatedPlan.durationDays} Days Plan
             </Badge>
           </div>
-          <p className="text-xs text-slate-500">{curatedPlan.tagline}</p>
+          <p className="text-xs text-slate-400 max-w-xl">{curatedPlan.tagline}</p>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-4 shrink-0">
           <div className="text-right hidden sm:block">
-            <p className="text-[10px] uppercase font-bold text-slate-400">Est. Total Budget</p>
-            <p className="text-xs font-black text-teal-700">
+            <p className="text-[10px] uppercase font-bold text-slate-500 tracking-wider">Est. Total Budget</p>
+            <p className="text-sm font-black text-indigo-400">
               {formatCurrency(curatedPlan.estimatedBudgetINR, 'INR')}
             </p>
           </div>
           <Button
             size="sm"
-            variant="accent"
+            variant="primary"
             icon={Plus}
             onClick={() => onAddToTrip?.(city)}
+            className="shadow-lg shadow-indigo-600/20"
           >
             Add to Trip
           </Button>
@@ -60,19 +61,19 @@ export function CuratedItinerarySection({ city, onAddToTrip }) {
       </div>
 
       {/* Day Tabs Navigation */}
-      <div className="flex items-center gap-2 overflow-x-auto pb-1">
+      <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
         {days.map((day, idx) => (
           <button
             key={day.dayNumber}
             type="button"
             onClick={() => setActiveDayIndex(idx)}
-            className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer shrink-0 ${
+            className={`px-4 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer shrink-0 min-h-[40px] flex items-center gap-1.5 ${
               activeDayIndex === idx
-                ? 'bg-slate-900 text-white shadow-xs scale-102'
-                : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/30 border border-indigo-400/30'
+                : 'bg-slate-800/80 text-slate-400 hover:bg-slate-800 hover:text-slate-200 border border-slate-700/60'
             }`}
           >
-            Day {day.dayNumber}
+            <span>Day {day.dayNumber}</span>
           </button>
         ))}
       </div>
@@ -80,11 +81,11 @@ export function CuratedItinerarySection({ city, onAddToTrip }) {
       {/* Active Day Content */}
       {activeDay && (
         <div className="space-y-4 animate-in fade-in duration-150">
-          <div className="p-4 rounded-2xl bg-teal-50/60 border border-teal-100 space-y-1">
-            <h3 className="text-sm font-bold text-slate-900 font-display">
+          <div className="p-4 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 space-y-1">
+            <h3 className="text-sm font-bold text-indigo-300 font-display">
               {activeDay.title}
             </h3>
-            <p className="text-xs text-slate-600 leading-relaxed">{activeDay.summary}</p>
+            <p className="text-xs text-slate-300 leading-relaxed font-light">{activeDay.summary}</p>
           </div>
 
           {/* Activities List for this Day */}
@@ -92,31 +93,31 @@ export function CuratedItinerarySection({ city, onAddToTrip }) {
             {(activeDay.activities || []).map((activity, aIdx) => (
               <div
                 key={aIdx}
-                className="p-4 rounded-2xl bg-white border border-slate-200/90 shadow-2xs hover:border-teal-300 transition-all space-y-2"
+                className="p-4 rounded-2xl bg-slate-900 border border-slate-800 hover:border-slate-700 transition-all space-y-2 hover-lift"
               >
                 <div className="flex items-start justify-between gap-3">
-                  <div className="space-y-1 min-w-0">
+                  <div className="space-y-1.5 min-w-0">
                     <div className="flex items-center gap-2 flex-wrap">
                       <Badge variant="secondary" size="sm" className="text-[10px]">
                         {activity.category || 'SIGHTSEEING'}
                       </Badge>
                       {activity.startTime && (
-                        <span className="text-[11px] font-semibold text-slate-500 flex items-center gap-1">
-                          <Clock className="w-3 h-3 text-teal-600" />
+                        <span className="text-[11px] font-semibold text-slate-400 flex items-center gap-1">
+                          <Clock className="w-3 h-3 text-indigo-400 shrink-0" />
                           {activity.startTime} {activity.endTime ? `– ${activity.endTime}` : ''}
                         </span>
                       )}
                     </div>
-                    <h4 className="text-xs sm:text-sm font-bold text-slate-900 truncate">
+                    <h4 className="text-xs sm:text-sm font-bold text-white truncate-safe">
                       {activity.title}
                     </h4>
-                    <p className="text-xs text-slate-600 leading-relaxed">
+                    <p className="text-xs text-slate-400 leading-relaxed">
                       {activity.description}
                     </p>
                   </div>
 
                   {Number(activity.estimatedCost) > 0 && (
-                    <span className="text-xs font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-xl border border-emerald-200 shrink-0">
+                    <span className="text-xs font-bold text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-xl border border-emerald-500/20 shrink-0">
                       {formatCurrency(activity.estimatedCost, 'INR')}
                     </span>
                   )}

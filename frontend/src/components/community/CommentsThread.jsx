@@ -50,8 +50,8 @@ export function CommentsThread({ postId, initialComments = [] }) {
 
   return (
     <div className="space-y-6">
-      <h3 className="text-sm font-bold text-slate-900 font-display flex items-center gap-2">
-        <MessageSquare className="w-4 h-4 text-teal-600" /> Discussion ({comments.length})
+      <h3 className="text-sm font-bold text-white font-display flex items-center gap-2">
+        <MessageSquare className="w-4 h-4 text-indigo-400" /> Discussion ({comments.length})
       </h3>
 
       {/* Add Comment Input */}
@@ -93,16 +93,16 @@ export function CommentsThread({ postId, initialComments = [] }) {
             return (
               <div
                 key={commentId}
-                className="flex items-start justify-between gap-3 p-3 rounded-xl bg-slate-50 border border-slate-100"
+                className="flex items-start justify-between gap-3 p-3 rounded-xl bg-slate-800/50 border border-[var(--color-border-subtle)]"
               >
                 <div className="flex items-start gap-2.5 min-w-0">
                   <Avatar src={author.profileImage} name={authorName} size="sm" />
                   <div className="space-y-0.5 min-w-0">
                     <div className="flex items-center gap-2">
-                      <span className="text-xs font-bold text-slate-900">{authorName}</span>
+                      <span className="text-xs font-bold text-white">{authorName}</span>
                       <span className="text-[10px] text-slate-400">{formatDate(c.createdAt || new Date())}</span>
                     </div>
-                    <p className="text-xs text-slate-700 leading-relaxed whitespace-pre-line">
+                    <p className="text-xs text-slate-300 leading-relaxed whitespace-pre-line">
                       {c.text || c.content}
                     </p>
                   </div>

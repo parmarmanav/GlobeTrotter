@@ -159,7 +159,7 @@ export function PublicTripPage() {
 
         {/* Top Badges */}
         <div className="absolute top-6 left-6 right-6 flex items-center justify-between z-10">
-          <span className="px-3 py-1 text-xs font-bold rounded-full bg-emerald-500/90 text-white backdrop-blur-md flex items-center gap-1.5 shadow-sm">
+          <span className="px-3 py-1 text-xs font-bold rounded-full bg-emerald-500/90 text-white backdrop-blur-md flex items-center gap-1.5 shadow-lg">
             <Globe className="w-3.5 h-3.5" /> Public Travel Plan
           </span>
 
@@ -211,8 +211,8 @@ export function PublicTripPage() {
       {/* Description */}
       {trip.description && (
         <Card className="p-6">
-          <h3 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Trip Overview</h3>
-          <p className="text-xs sm:text-sm text-slate-700 leading-relaxed whitespace-pre-line">
+          <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Trip Overview</h3>
+          <p className="text-xs sm:text-sm text-slate-300 leading-relaxed whitespace-pre-line">
             {trip.description}
           </p>
         </Card>
@@ -221,21 +221,21 @@ export function PublicTripPage() {
       {/* Sequenced Route Stops */}
       {stops.length > 0 && (
         <Card className="p-6 space-y-4">
-          <h3 className="text-sm font-bold text-slate-900 font-display">Route Destinations</h3>
+          <h3 className="text-sm font-bold text-white font-display">Route Destinations</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
             {stops.map((stop, idx) => (
               <div
                 key={stop._id || stop.id || idx}
-                className="flex items-center gap-3 p-3 rounded-xl bg-slate-50 border border-slate-100"
+                className="flex items-center gap-3 p-3 rounded-xl bg-slate-800/50 border border-[var(--color-border-subtle)]"
               >
-                <span className="w-6 h-6 rounded-lg bg-teal-600 text-white font-bold text-xs flex items-center justify-center shrink-0">
+                <span className="w-6 h-6 rounded-lg bg-indigo-600 text-white font-bold text-xs flex items-center justify-center shrink-0">
                   {idx + 1}
                 </span>
                 <div className="min-w-0">
-                  <h4 className="text-xs font-bold text-slate-900 truncate">
+                  <h4 className="text-xs font-bold text-white truncate">
                     {stop.cityName || stop.cityId?.name || 'City'}
                   </h4>
-                  <p className="text-[10px] text-slate-500 truncate">
+                  <p className="text-[10px] text-slate-400 truncate">
                     {stop.country || stop.cityId?.country || ''}
                   </p>
                 </div>
@@ -247,12 +247,12 @@ export function PublicTripPage() {
 
       {/* Day-by-Day Itinerary Timeline */}
       <Card className="p-6 sm:p-8 space-y-6">
-        <div className="pb-4 border-b border-slate-100 flex items-center justify-between">
+        <div className="pb-4 border-b border-[var(--color-border-subtle)] flex items-center justify-between">
           <div>
-            <h2 className="text-base font-bold text-slate-900 font-display">
+            <h2 className="text-base font-bold text-white font-display">
               Day-by-Day Itinerary Schedule
             </h2>
-            <p className="text-xs text-slate-500">
+            <p className="text-xs text-slate-400">
               Read-only view of scheduled activities and visits
             </p>
           </div>

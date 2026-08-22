@@ -66,11 +66,11 @@ export function AdminTripsPage() {
   return (
     <div className="space-y-6 animate-in fade-in duration-200">
       <div>
-        <h1 className="text-2xl font-bold text-slate-900 font-display">Trips Oversight</h1>
-        <p className="text-xs text-slate-500 mt-1">Audit traveler itineraries and public shared routes</p>
+        <h1 className="text-2xl font-bold text-white font-display">Trips Oversight</h1>
+        <p className="text-xs text-slate-400 mt-1">Audit traveler itineraries and public shared routes</p>
       </div>
 
-      <div className="p-3.5 bg-white rounded-2xl border border-slate-200 shadow-2xs">
+      <div className="p-3.5 bg-[var(--color-card)] rounded-2xl border border-[var(--color-border-subtle)] shadow-2xs">
         <Input
           placeholder="Search trips by title or keywords..."
           icon={Search}
@@ -101,9 +101,9 @@ export function AdminTripsPage() {
         />
       ) : (
         <>
-          <div className="hidden md:block overflow-hidden bg-white rounded-2xl border border-slate-200 shadow-2xs">
+          <div className="hidden md:block overflow-hidden bg-[var(--color-card)] rounded-2xl border border-[var(--color-border-subtle)] shadow-2xs">
             <table className="w-full text-left text-xs">
-              <thead className="bg-slate-50 border-b border-slate-100 text-slate-500 font-bold uppercase tracking-wider">
+              <thead className="bg-slate-800/50 border-b border-[var(--color-border-subtle)] text-slate-400 font-bold uppercase tracking-wider">
                 <tr>
                   <th className="py-3.5 px-4">Trip Title</th>
                   <th className="py-3.5 px-4">Dates</th>
@@ -117,17 +117,17 @@ export function AdminTripsPage() {
                 {trips.map((trip) => {
                   const tripId = trip._id || trip.id
                   const status = trip.status || 'PLANNED'
-                  const statusColor = TRIP_STATUS_COLORS[status] || 'bg-slate-100 text-slate-700'
+                  const statusColor = TRIP_STATUS_COLORS[status] || 'bg-slate-800 text-slate-300'
                   const stopsCount = Array.isArray(trip.stops) ? trip.stops.length : 0
 
                   return (
-                    <tr key={tripId} className="hover:bg-slate-50/60 transition-colors">
+                    <tr key={tripId} className="hover:bg-slate-800/50/60 transition-colors">
                       <td className="py-3.5 px-4">
-                        <Link to={`/trips/${tripId}`} className="font-bold text-slate-900 hover:text-teal-600">
+                        <Link to={`/trips/${tripId}`} className="font-bold text-white hover:text-indigo-400">
                           {trip.name}
                         </Link>
                       </td>
-                      <td className="py-3.5 px-4 text-slate-500">
+                      <td className="py-3.5 px-4 text-slate-400">
                         {formatDateRange(trip.startDate, trip.endDate)}
                       </td>
                       <td className="py-3.5 px-4">
@@ -146,7 +146,7 @@ export function AdminTripsPage() {
                           </span>
                         )}
                       </td>
-                      <td className="py-3.5 px-4 font-semibold text-slate-700">
+                      <td className="py-3.5 px-4 font-semibold text-slate-300">
                         {stopsCount} {stopsCount === 1 ? 'Stop' : 'Stops'}
                       </td>
                       <td className="py-3.5 px-4 text-right">

@@ -65,8 +65,8 @@ export function SavedDestinationsPage() {
     <div className="space-y-6 animate-in fade-in duration-200">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900 font-display">Saved Destinations</h1>
-          <p className="text-xs text-slate-500 mt-1">
+          <h1 className="text-2xl font-bold text-white font-display">Saved Destinations</h1>
+          <p className="text-xs text-slate-400 mt-1">
             Your personal wishlist of curated cities and future travel stops
           </p>
         </div>
@@ -105,8 +105,8 @@ export function SavedDestinationsPage() {
             const totalDays = curatedPlan?.durationDays || 3
 
             return (
-              <Card key={cityId} className="p-0 overflow-hidden group hoverable border-slate-200/90 shadow-xs">
-                <div className="relative h-44 w-full bg-slate-100 overflow-hidden">
+              <Card key={cityId} className="p-0 overflow-hidden group hoverable border-[var(--color-border-subtle)]/90 shadow-md">
+                <div className="relative h-44 w-full bg-slate-800 overflow-hidden">
                   <img
                     src={city.image || 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=400&q=80'}
                     alt={city.name}
@@ -127,9 +127,9 @@ export function SavedDestinationsPage() {
                 <div className="p-4 space-y-3">
                   <div className="flex items-start justify-between">
                     <div>
-                      <h3 className="text-base font-bold text-slate-900 font-display">{city.name}</h3>
-                      <p className="text-xs text-slate-500 flex items-center gap-1 mt-0.5">
-                        <MapPin className="w-3.5 h-3.5 text-teal-600" /> {city.country}
+                      <h3 className="text-base font-bold text-white font-display">{city.name}</h3>
+                      <p className="text-xs text-slate-400 flex items-center gap-1 mt-0.5">
+                        <MapPin className="w-3.5 h-3.5 text-indigo-400" /> {city.country}
                       </p>
                     </div>
                     <Badge variant="primary" size="sm" className="font-bold">
@@ -137,12 +137,12 @@ export function SavedDestinationsPage() {
                     </Badge>
                   </div>
 
-                  <p className="text-xs text-slate-500 line-clamp-2 leading-relaxed">
+                  <p className="text-xs text-slate-400 line-clamp-2 leading-relaxed">
                     {curatedPlan?.tagline || city.description}
                   </p>
 
-                  <div className="flex items-center justify-between pt-3 border-t border-slate-100">
-                    <Link to={`/cities/${cityId}`} className="text-xs font-bold text-teal-600 hover:text-teal-700">
+                  <div className="flex items-center justify-between pt-3 border-t border-[var(--color-border-subtle)]">
+                    <Link to={`/cities/${cityId}`} className="text-xs font-bold text-indigo-400 hover:text-indigo-400">
                       View Itinerary &rarr;
                     </Link>
                     <Button

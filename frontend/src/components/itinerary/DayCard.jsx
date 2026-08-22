@@ -55,23 +55,23 @@ export function DayCard({
 
   return (
     <>
-      <Card className="p-5 sm:p-6 border-slate-200 shadow-xs space-y-4">
+      <Card className="p-5 sm:p-6 border-[var(--color-border-subtle)] shadow-md space-y-4">
         {/* Day Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-100">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-[var(--color-border-subtle)]">
           <div className="space-y-1">
             <div className="flex items-center gap-2.5">
-              <span className="px-2.5 py-1 text-xs font-extrabold bg-teal-600 text-white rounded-lg">
+              <span className="px-2.5 py-1 text-xs font-extrabold bg-indigo-600 text-white rounded-lg">
                 Day {day.dayNumber}
               </span>
-              <h3 className="text-base font-bold text-slate-900 font-display">
+              <h3 className="text-base font-bold text-white font-display">
                 {day.title || `Day ${day.dayNumber}`}
               </h3>
             </div>
 
-            <div className="flex flex-wrap items-center gap-3 text-xs text-slate-500">
+            <div className="flex flex-wrap items-center gap-3 text-xs text-slate-400">
               {formattedDate && (
                 <span className="flex items-center gap-1">
-                  <Calendar className="w-3.5 h-3.5 text-teal-600" /> {formattedDate}
+                  <Calendar className="w-3.5 h-3.5 text-indigo-400" /> {formattedDate}
                 </span>
               )}
               {dayTotalCost > 0 && (
@@ -82,7 +82,7 @@ export function DayCard({
             </div>
 
             {day.notes && (
-              <p className="text-xs text-slate-500 italic mt-1">{day.notes}</p>
+              <p className="text-xs text-slate-400 italic mt-1">{day.notes}</p>
             )}
           </div>
 
@@ -111,9 +111,9 @@ export function DayCard({
 
         {/* Activities List */}
         {activities.length === 0 ? (
-          <div className="py-8 text-center bg-slate-50/60 rounded-xl border border-dashed border-slate-200">
-            <Sparkles className="w-6 h-6 text-teal-600/50 mx-auto mb-1.5" />
-            <p className="text-xs font-semibold text-slate-700">No activities scheduled for this day</p>
+          <div className="py-8 text-center bg-slate-800/50/60 rounded-xl border border-dashed border-[var(--color-border-subtle)]">
+            <Sparkles className="w-6 h-6 text-indigo-400/50 mx-auto mb-1.5" />
+            <p className="text-xs font-semibold text-slate-300">No activities scheduled for this day</p>
             <p className="text-[11px] text-slate-400 mb-3">Add sightseeing tours, food stops, or leisure events.</p>
             <Button
               size="sm"

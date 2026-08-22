@@ -45,7 +45,7 @@ const CATEGORY_STYLES = {
   ACTIVITIES: 'bg-emerald-50 text-emerald-700 border-emerald-200',
   ACTIVITY: 'bg-emerald-50 text-emerald-700 border-emerald-200',
   SHOPPING: 'bg-pink-50 text-pink-700 border-pink-200',
-  OTHER: 'bg-slate-100 text-slate-700 border-slate-200',
+  OTHER: 'bg-slate-800 text-slate-300 border-[var(--color-border-subtle)]',
 }
 
 export function BudgetPage() {
@@ -241,20 +241,20 @@ export function BudgetPage() {
   return (
     <div className="space-y-8 animate-in fade-in duration-200">
       {/* Top Header Bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 sm:p-5 bg-white rounded-2xl border border-slate-200 shadow-2xs">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 sm:p-5 bg-[var(--color-card)] rounded-2xl border border-[var(--color-border-subtle)] shadow-2xs">
         <div className="flex items-center gap-3">
           <Link
             to={`/trips/${tripId}`}
-            className="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors"
+            className="p-2 rounded-xl bg-slate-800 hover:bg-slate-200 text-slate-300 transition-colors"
             title="Back to Trip Overview"
           >
             <ArrowLeft className="w-4 h-4" />
           </Link>
           <div>
-            <h1 className="text-lg sm:text-xl font-bold text-slate-900 font-display">
+            <h1 className="text-lg sm:text-xl font-bold text-white font-display">
               {trip.name} — Budget & Expenses
             </h1>
-            <p className="text-xs text-slate-500">
+            <p className="text-xs text-slate-400">
               Track expenditures, category distributions, and daily averages
             </p>
           </div>
@@ -300,20 +300,20 @@ export function BudgetPage() {
       {/* Key Metric Highlights */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <Card className="p-5">
-          <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">
+          <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">
             Total Budget
           </span>
-          <p className="text-2xl font-bold text-slate-900 font-display mt-2">
+          <p className="text-2xl font-bold text-white font-display mt-2">
             {totalBudget > 0 ? formatCurrency(totalBudget, currency) : 'Unset'}
           </p>
           <p className="text-[11px] text-slate-400 mt-0.5">Target spending cap</p>
         </Card>
 
         <Card className="p-5">
-          <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">
+          <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">
             Total Logged
           </span>
-          <p className="text-2xl font-bold text-teal-700 font-display mt-2">
+          <p className="text-2xl font-bold text-indigo-400 font-display mt-2">
             {formatCurrency(totalSpent, currency)}
           </p>
           <p className="text-[11px] text-slate-400 mt-0.5">
@@ -322,7 +322,7 @@ export function BudgetPage() {
         </Card>
 
         <Card className="p-5">
-          <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">
+          <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">
             Remaining Funds
           </span>
           <p
@@ -338,10 +338,10 @@ export function BudgetPage() {
         </Card>
 
         <Card className="p-5">
-          <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">
+          <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">
             Average / Day
           </span>
-          <p className="text-2xl font-bold text-slate-900 font-display mt-2">
+          <p className="text-2xl font-bold text-white font-display mt-2">
             {formatCurrency(avgPerDay, currency)}
           </p>
           <p className="text-[11px] text-slate-400 mt-0.5">Across {durationDays} total days</p>
@@ -354,7 +354,7 @@ export function BudgetPage() {
       {/* Expense Logs Section */}
       <div className="space-y-4">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <h2 className="text-base font-bold text-slate-900 font-display">
+          <h2 className="text-base font-bold text-white font-display">
             Logged Expenditures ({expenses.length})
           </h2>
           <Button
@@ -374,7 +374,7 @@ export function BudgetPage() {
         <div className="space-y-3">
           <Tabs tabs={categoryTabs} activeTab={activeCategory} onChange={setActiveCategory} />
 
-          <div className="p-3 bg-white rounded-2xl border border-slate-200 shadow-2xs">
+          <div className="p-3 bg-[var(--color-card)] rounded-2xl border border-[var(--color-border-subtle)] shadow-2xs">
             <Input
               placeholder="Search expenses by title..."
               icon={Search}
@@ -407,7 +407,7 @@ export function BudgetPage() {
               return (
                 <div
                   key={expId}
-                  className="flex items-center justify-between p-4 rounded-xl bg-white border border-slate-200 hover:border-teal-300 shadow-2xs transition-all"
+                  className="flex items-center justify-between p-4 rounded-xl bg-[var(--color-card)] border border-[var(--color-border-subtle)] hover:border-teal-300 shadow-2xs transition-all"
                 >
                   <div className="flex items-center gap-3.5 min-w-0">
                     <span className={`px-2.5 py-1 text-[10px] font-bold rounded-lg border uppercase ${catColor}`}>
@@ -415,7 +415,7 @@ export function BudgetPage() {
                     </span>
 
                     <div className="min-w-0">
-                      <h4 className="text-xs font-bold text-slate-900 truncate">{exp.title}</h4>
+                      <h4 className="text-xs font-bold text-white truncate">{exp.title}</h4>
                       <p className="text-[11px] text-slate-400 flex items-center gap-1 mt-0.5">
                         <Calendar className="w-3 h-3 text-slate-400" /> {dateStr}
                         {exp.notes && <span className="italic ml-2">• {exp.notes}</span>}
@@ -424,7 +424,7 @@ export function BudgetPage() {
                   </div>
 
                   <div className="flex items-center gap-4 shrink-0">
-                    <span className="text-sm font-black text-slate-900">
+                    <span className="text-sm font-black text-white">
                       {formatCurrency(exp.amount, exp.currency || currency)}
                     </span>
 
@@ -435,7 +435,7 @@ export function BudgetPage() {
                           setExpenseToEdit(exp)
                           setIsExpenseModalOpen(true)
                         }}
-                        className="p-1.5 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-lg cursor-pointer transition-colors"
+                        className="p-1.5 text-slate-400 hover:text-slate-300 hover:bg-slate-800 rounded-lg cursor-pointer transition-colors"
                         title="Edit expense"
                       >
                         <Edit2 className="w-3.5 h-3.5" />

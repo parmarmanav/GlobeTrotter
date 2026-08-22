@@ -61,15 +61,15 @@ export function LoginPage() {
   }
 
   return (
-    <Card className="p-6 sm:p-8 border-slate-200/90 shadow-lg animate-in fade-in duration-200">
+    <Card className="p-6 sm:p-8 bg-slate-900/90 border border-slate-800 shadow-2xl backdrop-blur-xl animate-in fade-in duration-200">
       <div className="text-center mb-6">
-        <h2 className="text-2xl font-bold text-slate-900 font-display">Welcome Back</h2>
-        <p className="text-xs text-slate-500 mt-1">Sign in to continue planning your journeys</p>
+        <h2 className="text-2xl font-bold text-white font-display">Welcome Back</h2>
+        <p className="text-xs text-slate-400 mt-1">Sign in to continue planning your journeys</p>
       </div>
 
       {errorMessage && (
-        <div className="mb-5 p-3.5 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs font-medium">
-          {errorMessage}
+        <div className="mb-5 p-3.5 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-300 text-xs font-medium flex items-center gap-2">
+          <span>{errorMessage}</span>
         </div>
       )}
 
@@ -101,7 +101,7 @@ export function LoginPage() {
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="hover:text-slate-600 cursor-pointer p-1 text-slate-400"
+                className="hover:text-slate-200 cursor-pointer p-1 text-slate-400 transition-colors"
                 aria-label="Toggle password visibility"
               >
                 {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
@@ -111,7 +111,7 @@ export function LoginPage() {
           <div className="flex justify-end mt-1.5">
             <Link
               to={ROUTES.FORGOT_PASSWORD}
-              className="text-xs text-teal-600 hover:text-teal-700 font-semibold"
+              className="text-xs text-indigo-400 hover:text-indigo-300 font-semibold transition-colors"
             >
               Forgot password?
             </Link>
@@ -121,7 +121,7 @@ export function LoginPage() {
         <Button
           type="submit"
           variant="primary"
-          className="w-full mt-2"
+          className="w-full mt-3 min-h-[44px]"
           isLoading={isLoading}
           iconRight={ArrowRight}
         >
@@ -129,9 +129,9 @@ export function LoginPage() {
         </Button>
       </form>
 
-      <div className="mt-6 text-center text-xs text-slate-500">
+      <div className="mt-6 text-center text-xs text-slate-400">
         Don't have an account?{' '}
-        <Link to={ROUTES.SIGNUP} className="text-teal-600 hover:text-teal-700 font-bold">
+        <Link to={ROUTES.SIGNUP} className="text-indigo-400 hover:text-indigo-300 font-bold transition-colors">
           Create Account
         </Link>
       </div>

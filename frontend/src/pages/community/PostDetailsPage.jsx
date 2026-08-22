@@ -67,7 +67,7 @@ export function PostDetailsPage() {
     <div className="max-w-3xl mx-auto space-y-6 animate-in fade-in duration-200">
       <Link
         to={ROUTES.COMMUNITY}
-        className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-slate-900 transition-colors"
+        className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-400 hover:text-white transition-colors"
       >
         <ArrowLeft className="w-4 h-4" /> Back to Community Feed
       </Link>

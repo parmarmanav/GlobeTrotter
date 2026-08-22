@@ -73,7 +73,7 @@ export function BudgetCharts({ expenses = [], currency = 'USD', totalBudget = 0 
       <Card className="p-6">
         <CardHeader className="border-none px-0 pt-0 mb-2">
           <CardTitle>Spending by Category</CardTitle>
-          <p className="text-xs text-slate-500">Distribution across travel expense types</p>
+          <p className="text-xs text-slate-400">Distribution across travel expense types</p>
         </CardHeader>
 
         <div className="h-64 w-full">
@@ -99,13 +99,13 @@ export function BudgetCharts({ expenses = [], currency = 'USD', totalBudget = 0 
 
         <div className="flex flex-wrap justify-center gap-3 pt-2">
           {pieData.map((entry, index) => (
-            <div key={entry.name} className="flex items-center gap-1.5 text-xs text-slate-600">
+            <div key={entry.name} className="flex items-center gap-1.5 text-xs text-slate-400">
               <span
                 className="w-2.5 h-2.5 rounded-full shrink-0"
                 style={{ backgroundColor: COLORS[index % COLORS.length] }}
               />
               <span className="font-medium capitalize">{entry.name.toLowerCase()}:</span>
-              <span className="font-bold text-slate-900">{formatCurrency(entry.value, currency)}</span>
+              <span className="font-bold text-white">{formatCurrency(entry.value, currency)}</span>
             </div>
           ))}
         </div>
@@ -115,7 +115,7 @@ export function BudgetCharts({ expenses = [], currency = 'USD', totalBudget = 0 
       <Card className="p-6">
         <CardHeader className="border-none px-0 pt-0 mb-2">
           <CardTitle>Expense Timeline</CardTitle>
-          <p className="text-xs text-slate-500">Expenditure flow by logging date</p>
+          <p className="text-xs text-slate-400">Expenditure flow by logging date</p>
         </CardHeader>
 
         <div className="h-64 w-full">

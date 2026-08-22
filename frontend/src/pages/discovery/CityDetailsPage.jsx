@@ -143,67 +143,70 @@ export function CityDetailsPage() {
 
   return (
     <div className="space-y-8 animate-in fade-in duration-200">
-      {/* City Hero Banner */}
-      <div className="relative overflow-hidden rounded-3xl h-72 sm:h-96 shadow-lg bg-slate-900">
+      {/* City Hero Banner (Flexible non-overlapping layout) */}
+      <div className="relative overflow-hidden rounded-3xl min-h-[360px] sm:min-h-[440px] shadow-2xl bg-slate-950 p-6 sm:p-10 flex flex-col justify-between border border-slate-800/80">
         <img
           src={city.image || DEFAULT_COVER}
           alt={city.name}
-          className="w-full h-full object-cover opacity-80"
+          className="absolute inset-0 w-full h-full object-cover opacity-75 -z-10"
           onError={(e) => { e.target.src = DEFAULT_COVER }}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-black/40 -z-10" />
 
         {/* Top Badges & Back Button */}
-        <div className="absolute top-6 left-6 right-6 flex items-center justify-between z-10">
+        <div className="relative z-10 flex items-center justify-between gap-4">
           <Link
             to={ROUTES.EXPLORE}
-            className="px-3.5 py-1.5 rounded-full bg-black/40 hover:bg-black/60 text-white backdrop-blur-md text-xs font-semibold flex items-center gap-1.5 transition-colors"
+            className="px-4 py-2 rounded-full bg-slate-900/80 hover:bg-slate-800 text-white backdrop-blur-md text-xs font-semibold flex items-center gap-2 transition-all border border-slate-700/50 hover-lift min-h-[36px]"
           >
-            <ArrowLeft className="w-3.5 h-3.5" /> All Destinations
+            <ArrowLeft className="w-4 h-4" />
+            <span>All Destinations</span>
           </Link>
 
           <button
             type="button"
             onClick={handleSaveToggle}
             disabled={isSaving}
-            className={`p-2.5 rounded-full backdrop-blur-md transition-all cursor-pointer ${
-              isSaved ? 'bg-rose-600 text-white scale-105' : 'bg-black/40 hover:bg-black/60 text-white'
+            className={`p-2.5 rounded-full backdrop-blur-md transition-all cursor-pointer min-w-[40px] min-h-[40px] flex items-center justify-center border border-white/10 ${
+              isSaved ? 'bg-rose-600 text-white shadow-lg shadow-rose-600/30' : 'bg-slate-900/80 hover:bg-slate-800 text-white hover-lift'
             }`}
-            title={isSaved ? 'Remove from Saved' : 'Save to Wishlist'}
+            title={isSaved ? 'Remove from Wishlist' : 'Save to Wishlist'}
           >
             <Bookmark className={`w-4 h-4 ${isSaved ? 'fill-white' : ''}`} />
           </button>
         </div>
 
         {/* Hero Bottom Meta */}
-        <div className="absolute bottom-6 left-6 right-6 z-10 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-          <div className="space-y-2 max-w-2xl">
-            <div className="flex items-center gap-2">
-              <span className="px-2.5 py-0.5 text-xs font-bold rounded-full bg-teal-500/80 text-white backdrop-blur-md">
+        <div className="relative z-10 flex flex-col md:flex-row md:items-end justify-between gap-6 mt-auto pt-8 min-w-0">
+          <div className="space-y-3 max-w-2xl min-w-0">
+            <div className="flex items-center gap-2 flex-wrap">
+              <span className="px-3 py-1 text-xs font-bold rounded-full bg-indigo-600/90 text-white backdrop-blur-md shadow-md">
                 {city.region || 'International'}
               </span>
-              <span className="px-2.5 py-0.5 text-xs font-bold rounded-full bg-black/50 text-white backdrop-blur-md border border-white/20">
-                {city.costIndex || '$$'} Cost
+              <span className="px-3 py-1 text-xs font-bold rounded-full bg-black/60 text-slate-100 backdrop-blur-md border border-white/15">
+                {city.costIndex || '$$'} Cost Index
               </span>
-              <span className="px-2.5 py-0.5 text-xs font-bold rounded-full bg-black/50 text-white backdrop-blur-md flex items-center gap-1">
-                <Star className="w-3 h-3 fill-amber-300 text-amber-300" /> {city.popularityScore || 90} Popularity
+              <span className="px-3 py-1 text-xs font-bold rounded-full bg-black/60 text-slate-100 backdrop-blur-md border border-white/15 flex items-center gap-1.5">
+                <Star className="w-3.5 h-3.5 fill-amber-300 text-amber-300" /> {city.popularityScore || 90}% Popularity
               </span>
             </div>
 
-            <h1 className="text-3xl sm:text-5xl font-extrabold text-white font-display drop-shadow-md">
+            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white font-display drop-shadow-md truncate-safe">
               {city.name}
             </h1>
-            <p className="text-xs sm:text-sm text-slate-200 flex items-center gap-1">
-              <MapPin className="w-4 h-4 text-teal-400" /> {city.country}
+            <p className="text-sm sm:text-base text-slate-200 flex items-center gap-1.5 font-medium">
+              <MapPin className="w-4 h-4 text-indigo-400 shrink-0" />
+              <span className="truncate-safe">{city.country}</span>
             </p>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3 shrink-0">
             <Button
-              variant="accent"
-              size="md"
+              variant="primary"
+              size="lg"
               icon={Plus}
               onClick={() => setIsGenerateTripOpen(true)}
+              className="shadow-xl shadow-indigo-600/30"
             >
               Add to Trip
             </Button>
@@ -214,39 +217,42 @@ export function CityDetailsPage() {
       {/* Main Grid: Guide Details & Curated Daily Itinerary */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
         {/* Left Column: About, Essentials & Curated Itinerary */}
-        <div className="lg:col-span-2 space-y-6">
-          <Card className="p-6 sm:p-8 space-y-4">
-            <h2 className="text-lg font-bold text-slate-900 font-display">About {city.name}</h2>
-            <p className="text-xs sm:text-sm text-slate-700 leading-relaxed whitespace-pre-line">
+        <div className="lg:col-span-2 space-y-6 min-w-0">
+          <Card className="p-6 sm:p-8 space-y-4 bg-slate-900/90 border border-slate-800 shadow-xl backdrop-blur-md">
+            <h2 className="text-lg sm:text-xl font-bold text-white font-display">About {city.name}</h2>
+            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed whitespace-pre-line font-light">
               {city.description || `Welcome to ${city.name}, a prominent destination in ${city.country}. Known for rich culture, memorable attractions, and scenic neighborhoods.`}
             </p>
 
             {/* Travel Essentials Grid */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-4 border-t border-slate-100">
-              <div className="space-y-1">
-                <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 border-t border-slate-800">
+              <div className="space-y-1 p-3 rounded-xl bg-slate-800/40 border border-slate-800">
+                <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block">
                   Best Time to Visit
                 </span>
-                <p className="text-xs font-semibold text-slate-800 flex items-center gap-1">
-                  <Sun className="w-3.5 h-3.5 text-amber-500" /> {city.bestTimeToVisit || 'Spring & Autumn'}
+                <p className="text-xs font-semibold text-slate-200 flex items-center gap-1.5">
+                  <Sun className="w-4 h-4 text-amber-400 shrink-0" />
+                  <span className="truncate-safe">{city.bestTimeToVisit || 'Spring & Autumn'}</span>
                 </p>
               </div>
 
-              <div className="space-y-1">
-                <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">
+              <div className="space-y-1 p-3 rounded-xl bg-slate-800/40 border border-slate-800">
+                <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block">
                   Primary Language
                 </span>
-                <p className="text-xs font-semibold text-slate-800 flex items-center gap-1">
-                  <Globe2 className="w-3.5 h-3.5 text-teal-600" /> {city.language || 'English / Native'}
+                <p className="text-xs font-semibold text-slate-200 flex items-center gap-1.5">
+                  <Globe2 className="w-4 h-4 text-indigo-400 shrink-0" />
+                  <span className="truncate-safe">{city.language || 'English / Native'}</span>
                 </p>
               </div>
 
-              <div className="space-y-1">
-                <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">
+              <div className="space-y-1 p-3 rounded-xl bg-slate-800/40 border border-slate-800">
+                <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block">
                   Platform Currency
                 </span>
-                <p className="text-xs font-semibold text-slate-800 flex items-center gap-1">
-                  <IndianRupee className="w-3.5 h-3.5 text-emerald-600" /> INR (₹)
+                <p className="text-xs font-semibold text-slate-200 flex items-center gap-1.5">
+                  <IndianRupee className="w-4 h-4 text-emerald-400 shrink-0" />
+                  <span>INR (₹)</span>
                 </p>
               </div>
             </div>
@@ -261,11 +267,11 @@ export function CityDetailsPage() {
 
         {/* Right Sidebar: Trip Generation CTA */}
         <div className="space-y-6">
-          <Card className="p-6 space-y-4 sticky top-24">
-            <h3 className="text-sm font-bold text-slate-900 font-display">
+          <Card className="p-6 space-y-4 sticky top-24 bg-slate-900/90 border border-slate-800 shadow-xl backdrop-blur-md">
+            <h3 className="text-base font-bold text-white font-display">
               Ready for {city.name}?
             </h3>
-            <p className="text-xs text-slate-500 leading-relaxed">
+            <p className="text-xs text-slate-300 leading-relaxed font-light">
               Auto-generate your multi-day trip with all curated activities, timings, and budget pre-scheduled into your account.
             </p>
 
@@ -273,7 +279,7 @@ export function CityDetailsPage() {
               <Button
                 variant="primary"
                 size="md"
-                className="w-full"
+                className="w-full shadow-lg shadow-indigo-600/25"
                 icon={Plus}
                 onClick={() => setIsGenerateTripOpen(true)}
               >

@@ -43,11 +43,11 @@ export function AdminCitiesPage() {
   return (
     <div className="space-y-6 animate-in fade-in duration-200">
       <div>
-        <h1 className="text-2xl font-bold text-slate-900 font-display">Destination Cities Directory</h1>
-        <p className="text-xs text-slate-500 mt-1">Review catalog destinations, cost ratings, and popularity metrics</p>
+        <h1 className="text-2xl font-bold text-white font-display">Destination Cities Directory</h1>
+        <p className="text-xs text-slate-400 mt-1">Review catalog destinations, cost ratings, and popularity metrics</p>
       </div>
 
-      <div className="p-3.5 bg-white rounded-2xl border border-slate-200 shadow-2xs">
+      <div className="p-3.5 bg-[var(--color-card)] rounded-2xl border border-[var(--color-border-subtle)] shadow-2xs">
         <Input
           placeholder="Search cities by name or country..."
           icon={Search}
@@ -78,9 +78,9 @@ export function AdminCitiesPage() {
         />
       ) : (
         <>
-          <div className="overflow-hidden bg-white rounded-2xl border border-slate-200 shadow-2xs">
+          <div className="overflow-hidden bg-[var(--color-card)] rounded-2xl border border-[var(--color-border-subtle)] shadow-2xs">
             <table className="w-full text-left text-xs">
-              <thead className="bg-slate-50 border-b border-slate-100 text-slate-500 font-bold uppercase tracking-wider">
+              <thead className="bg-slate-800/50 border-b border-[var(--color-border-subtle)] text-slate-400 font-bold uppercase tracking-wider">
                 <tr>
                   <th className="py-3.5 px-4">City</th>
                   <th className="py-3.5 px-4">Country</th>
@@ -94,16 +94,16 @@ export function AdminCitiesPage() {
                 {cities.map((c) => {
                   const cId = c._id || c.id
                   return (
-                    <tr key={cId} className="hover:bg-slate-50/60 transition-colors">
-                      <td className="py-3.5 px-4 font-bold text-slate-900">{c.name}</td>
-                      <td className="py-3.5 px-4 text-slate-600">{c.country}</td>
-                      <td className="py-3.5 px-4 text-slate-500">{c.region || 'Global'}</td>
+                    <tr key={cId} className="hover:bg-slate-800/50/60 transition-colors">
+                      <td className="py-3.5 px-4 font-bold text-white">{c.name}</td>
+                      <td className="py-3.5 px-4 text-slate-400">{c.country}</td>
+                      <td className="py-3.5 px-4 text-slate-400">{c.region || 'Global'}</td>
                       <td className="py-3.5 px-4">
-                        <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-700 border border-slate-200">
+                        <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-800 text-slate-300 border border-[var(--color-border-subtle)]">
                           {c.costIndex || '$$'}
                         </span>
                       </td>
-                      <td className="py-3.5 px-4 font-bold text-teal-700 flex items-center gap-1">
+                      <td className="py-3.5 px-4 font-bold text-indigo-400 flex items-center gap-1">
                         <Star className="w-3 h-3 fill-amber-400 text-amber-400" /> {c.popularityScore || 90}
                       </td>
                       <td className="py-3.5 px-4 text-right">

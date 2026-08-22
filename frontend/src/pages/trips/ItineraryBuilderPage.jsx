@@ -362,27 +362,27 @@ export function ItineraryBuilderPage() {
   return (
     <div className="space-y-6 animate-in fade-in duration-200">
       {/* Top Header Bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 sm:p-5 bg-white rounded-2xl border border-slate-200 shadow-2xs">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 sm:p-5 bg-[var(--color-card)] rounded-2xl border border-[var(--color-border-subtle)] shadow-2xs">
         <div className="flex items-center gap-3">
           <Link
             to={`/trips/${tripId}`}
-            className="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors"
+            className="p-2 rounded-xl bg-slate-800 hover:bg-slate-200 text-slate-300 transition-colors"
             title="Back to Overview"
           >
             <ArrowLeft className="w-4 h-4" />
           </Link>
           <div>
-            <h1 className="text-lg sm:text-xl font-bold text-slate-900 font-display line-clamp-1">
+            <h1 className="text-lg sm:text-xl font-bold text-white font-display line-clamp-1">
               {trip.name} — Itinerary Builder
             </h1>
-            <p className="text-xs text-slate-500 flex items-center gap-2 flex-wrap">
+            <p className="text-xs text-slate-400 flex items-center gap-2 flex-wrap">
               <span>{stops.length} Stops</span>
               <span>•</span>
               <span className={isMaxDaysReached ? 'text-amber-600 font-semibold' : ''}>
                 {days.length} {maxDays ? `of ${maxDays} Days Planned` : 'Days'}
               </span>
               <span>•</span>
-              <span className="font-semibold text-teal-600">{trip.budget?.currency || 'USD'} Budget</span>
+              <span className="font-semibold text-indigo-400">{trip.budget?.currency || 'USD'} Budget</span>
             </p>
           </div>
         </div>
@@ -443,7 +443,7 @@ export function ItineraryBuilderPage() {
         {/* Right Column: Days & Activities Workspace */}
         <div className="lg:col-span-2 space-y-5">
           <div className="flex items-center justify-between flex-wrap gap-2">
-            <h2 className="text-xs font-bold text-slate-900 uppercase tracking-wider">
+            <h2 className="text-xs font-bold text-white uppercase tracking-wider">
               Day-by-Day Itinerary Schedule ({days.length}{maxDays ? `/${maxDays}` : ''})
             </h2>
             <Button

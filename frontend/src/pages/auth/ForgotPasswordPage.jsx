@@ -31,10 +31,10 @@ export function ForgotPasswordPage() {
   }
 
   return (
-    <Card className="p-6 sm:p-8 border-slate-200/90 shadow-lg">
+    <Card className="p-6 sm:p-8 border-[var(--color-border-subtle)]/90 shadow-lg">
       <div className="text-center mb-6">
-        <h2 className="text-2xl font-bold text-slate-900 font-display">Reset Password</h2>
-        <p className="text-xs text-slate-500 mt-1">
+        <h2 className="text-2xl font-bold text-white font-display">Reset Password</h2>
+        <p className="text-xs text-slate-400 mt-1">
           Enter your email and we'll send a recovery link
         </p>
       </div>
@@ -44,8 +44,8 @@ export function ForgotPasswordPage() {
           <div className="w-12 h-12 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto">
             <CheckCircle2 className="w-6 h-6" />
           </div>
-          <p className="text-xs text-slate-600 leading-relaxed">
-            If an account exists for <strong className="text-slate-900">{email}</strong>, you will receive password reset instructions shortly.
+          <p className="text-xs text-slate-400 leading-relaxed">
+            If an account exists for <strong className="text-white">{email}</strong>, you will receive password reset instructions shortly.
           </p>
           <Link to={ROUTES.LOGIN} className="block mt-4">
             <Button variant="outline" size="sm" className="w-full">
@@ -84,7 +84,7 @@ export function ForgotPasswordPage() {
           <div className="text-center pt-2">
             <Link
               to={ROUTES.LOGIN}
-              className="inline-flex items-center gap-1.5 text-xs text-slate-600 hover:text-slate-900 font-semibold"
+              className="inline-flex items-center gap-1.5 text-xs text-slate-400 hover:text-white font-semibold"
             >
               <ArrowLeft className="w-3.5 h-3.5" /> Back to Sign In
             </Link>

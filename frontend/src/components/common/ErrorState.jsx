@@ -16,13 +16,13 @@ export function ErrorState({
         className
       )}
     >
-      <div className="w-14 h-14 rounded-2xl bg-rose-100 border border-rose-200 flex items-center justify-center text-rose-600 mb-4 shadow-xs">
+      <div className="w-14 h-14 rounded-2xl bg-rose-100 border border-rose-200 flex items-center justify-center text-rose-600 mb-4 shadow-md">
         <AlertCircle className="w-7 h-7" />
       </div>
-      <h3 className="text-base font-bold text-slate-900 font-display">
+      <h3 className="text-base font-bold text-white font-display">
         {title}
       </h3>
-      <p className="text-xs text-slate-600 max-w-sm mt-1 mb-6 leading-relaxed">
+      <p className="text-xs text-slate-400 max-w-sm mt-1 mb-6 leading-relaxed">
         {message}
       </p>
       {onRetry && (

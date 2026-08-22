@@ -208,23 +208,23 @@ export function GenerateTripFromCityModal({ isOpen, onClose, city }) {
     >
       <form onSubmit={handleSubmit} className="space-y-4">
         {errorMessage && (
-          <div className="p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs font-semibold">
-            {errorMessage}
+          <div className="p-3.5 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-300 text-xs font-semibold flex items-center gap-2">
+            <span>{errorMessage}</span>
           </div>
         )}
 
         {/* Trip Name & Highlights Preview */}
-        <div className="p-4 rounded-2xl bg-gradient-to-br from-teal-50 to-emerald-50/50 border border-teal-100 space-y-2">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-teal-800 flex items-center gap-1.5">
-              <Sparkles className="w-3.5 h-3.5 text-teal-600" />
+        <div className="p-4 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 space-y-2">
+          <div className="flex items-center justify-between gap-2 flex-wrap">
+            <span className="text-xs font-bold text-indigo-300 flex items-center gap-1.5 truncate-safe">
+              <Sparkles className="w-3.5 h-3.5 text-indigo-400 shrink-0" />
               Pre-filled {totalDays}-Day Curated Schedule
             </span>
-            <Badge variant="primary" size="sm" className="bg-teal-600 text-white font-bold">
-              {totalDays} Days Fixed Itinerary
+            <Badge variant="primary" size="sm" className="font-bold">
+              {totalDays} Days Fixed
             </Badge>
           </div>
-          <p className="text-xs text-slate-600">{curatedPlan.tagline}</p>
+          <p className="text-xs text-slate-300 font-light">{curatedPlan.tagline}</p>
         </div>
 
         <Input
@@ -252,9 +252,9 @@ export function GenerateTripFromCityModal({ isOpen, onClose, city }) {
               type="date"
               value={endDate}
               readOnly
-              className="bg-slate-50 cursor-not-allowed opacity-90"
+              className="bg-slate-950/50 text-slate-400 cursor-not-allowed opacity-90 border-slate-800"
             />
-            <p className="text-[11px] text-teal-600 font-medium mt-1">
+            <p className="text-[11px] text-indigo-400 font-medium mt-1">
               Automatically calculated for {totalDays} days
             </p>
           </div>
@@ -272,31 +272,31 @@ export function GenerateTripFromCityModal({ isOpen, onClose, city }) {
         />
 
         {/* Preview of Day-by-Day Schedule */}
-        <div className="space-y-2 pt-2 border-t border-slate-100">
-          <p className="text-xs font-bold text-slate-800 uppercase tracking-wider">
+        <div className="space-y-2 pt-2 border-t border-slate-800">
+          <p className="text-xs font-bold text-slate-300 uppercase tracking-wider">
             Included Day-by-Day Itinerary Preview:
           </p>
           <div className="space-y-2 max-h-48 overflow-y-auto pr-1">
             {curatedPlan.days.map((d) => (
               <div
                 key={d.dayNumber}
-                className="p-2.5 rounded-xl bg-slate-50 border border-slate-200/80 text-xs space-y-1"
+                className="p-3 rounded-xl bg-slate-900 border border-slate-800 text-xs space-y-1"
               >
-                <div className="flex items-center justify-between">
-                  <span className="font-bold text-slate-900">{d.title}</span>
-                  <span className="text-[10px] text-slate-400 font-semibold">
+                <div className="flex items-center justify-between gap-2">
+                  <span className="font-bold text-white truncate-safe">{d.title}</span>
+                  <span className="text-[10px] text-slate-400 font-semibold shrink-0">
                     {d.activities?.length || 0} activities
                   </span>
                 </div>
-                <p className="text-[11px] text-slate-500 line-clamp-1">{d.summary}</p>
+                <p className="text-[11px] text-slate-400 line-clamp-1">{d.summary}</p>
               </div>
             ))}
           </div>
         </div>
 
         {/* Modal Actions */}
-        <div className="flex items-center justify-end gap-2.5 pt-3 border-t border-slate-100">
-          <Button variant="outline" size="sm" onClick={onClose} disabled={isSubmitting}>
+        <div className="flex items-center justify-end gap-3 pt-3 border-t border-slate-800">
+          <Button variant="ghost" size="sm" onClick={onClose} disabled={isSubmitting}>
             Cancel
           </Button>
           <Button

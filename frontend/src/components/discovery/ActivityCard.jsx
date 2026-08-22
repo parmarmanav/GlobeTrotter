@@ -11,10 +11,10 @@ const CATEGORY_COLORS = {
   FOOD: 'bg-amber-50 text-amber-700 border-amber-200',
   ADVENTURE: 'bg-emerald-50 text-emerald-700 border-emerald-200',
   CULTURE: 'bg-purple-50 text-purple-700 border-purple-200',
-  NATURE: 'bg-teal-50 text-teal-700 border-teal-200',
+  NATURE: 'bg-indigo-500/10 text-indigo-400 border-teal-200',
   ENTERTAINMENT: 'bg-pink-50 text-pink-700 border-pink-200',
   SHOPPING: 'bg-indigo-50 text-indigo-700 border-indigo-200',
-  OTHER: 'bg-slate-50 text-slate-700 border-slate-200',
+  OTHER: 'bg-slate-800/50 text-slate-300 border-[var(--color-border-subtle)]',
 }
 
 export function ActivityCard({ activity, onAddToTrip, currency = 'USD' }) {
@@ -30,9 +30,9 @@ export function ActivityCard({ activity, onAddToTrip, currency = 'USD' }) {
   const cityName = activity.cityId?.name || activity.cityName || activity.city || ''
 
   return (
-    <Card className="p-0 overflow-hidden flex flex-col justify-between group hoverable border-slate-200/90 shadow-xs hover:shadow-md transition-all duration-200">
+    <Card className="p-0 overflow-hidden flex flex-col justify-between group hoverable border-[var(--color-border-subtle)]/90 shadow-md hover:shadow-md transition-all duration-200">
       {/* Image & Overlay */}
-      <div className="relative h-44 w-full bg-slate-100 overflow-hidden">
+      <div className="relative h-44 w-full bg-slate-800 overflow-hidden">
         <img
           src={activity.image || DEFAULT_ACTIVITY_IMAGE}
           alt={title}
@@ -43,7 +43,7 @@ export function ActivityCard({ activity, onAddToTrip, currency = 'USD' }) {
 
         {/* Category & Rating Badges */}
         <div className="absolute top-3 left-3">
-          <span className={`px-2.5 py-0.5 text-[10px] font-bold rounded-full border shadow-xs backdrop-blur-md ${categoryColor}`}>
+          <span className={`px-2.5 py-0.5 text-[10px] font-bold rounded-full border shadow-md backdrop-blur-md ${categoryColor}`}>
             {category}
           </span>
         </div>
@@ -56,7 +56,7 @@ export function ActivityCard({ activity, onAddToTrip, currency = 'USD' }) {
 
         {cityName && (
           <div className="absolute bottom-3 left-3 right-3 text-white">
-            <p className="text-[11px] font-medium text-slate-100 flex items-center gap-1 drop-shadow-sm">
+            <p className="text-[11px] font-medium text-slate-100 flex items-center gap-1 drop-shadow-lg">
               <MapPin className="w-3 h-3 text-teal-300" /> {cityName}
             </p>
           </div>
@@ -67,21 +67,21 @@ export function ActivityCard({ activity, onAddToTrip, currency = 'USD' }) {
       <div className="p-4 flex-1 flex flex-col justify-between space-y-3">
         <div className="space-y-1.5">
           <Link to={`/activities/${activityId}`} className="block group/title">
-            <h4 className="text-xs sm:text-sm font-bold text-slate-900 group-hover/title:text-teal-600 transition-colors font-display line-clamp-1">
+            <h4 className="text-xs sm:text-sm font-bold text-white group-hover/title:text-indigo-400 transition-colors font-display line-clamp-1">
               {title}
             </h4>
           </Link>
 
           {activity.description && (
-            <p className="text-xs text-slate-500 line-clamp-2 leading-relaxed">
+            <p className="text-xs text-slate-400 line-clamp-2 leading-relaxed">
               {activity.description}
             </p>
           )}
         </div>
 
         {/* Cost & Duration Meta */}
-        <div className="flex items-center justify-between text-xs text-slate-600 pt-3 border-t border-slate-100">
-          <span className="flex items-center gap-1 font-semibold text-slate-700">
+        <div className="flex items-center justify-between text-xs text-slate-400 pt-3 border-t border-[var(--color-border-subtle)]">
+          <span className="flex items-center gap-1 font-semibold text-slate-300">
             <Clock className="w-3.5 h-3.5 text-slate-400" /> {duration}
           </span>
           <span className="font-bold text-emerald-700">
@@ -93,7 +93,7 @@ export function ActivityCard({ activity, onAddToTrip, currency = 'USD' }) {
         <div className="flex items-center justify-between pt-2">
           <Link
             to={`/activities/${activityId}`}
-            className="text-xs font-semibold text-slate-500 hover:text-slate-900"
+            className="text-xs font-semibold text-slate-400 hover:text-white"
           >
             Details
           </Link>

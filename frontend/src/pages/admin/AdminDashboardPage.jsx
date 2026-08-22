@@ -80,7 +80,7 @@ export function AdminDashboardPage() {
       value: analytics?.totalUsers || 0,
       sublabel: `${analytics?.activeUsers || 0} active travelers`,
       icon: Users,
-      color: 'bg-teal-50 text-teal-600',
+      color: 'bg-indigo-500/10 text-indigo-400',
       link: ROUTES.ADMIN.USERS,
     },
     {
@@ -119,10 +119,10 @@ export function AdminDashboardPage() {
               <ShieldCheck className="w-3.5 h-3.5 mr-1" /> Platform Administration
             </Badge>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 font-display mt-1">
+          <h1 className="text-2xl sm:text-3xl font-bold text-white font-display mt-1">
             System Analytics & Management
           </h1>
-          <p className="text-xs text-slate-500">
+          <p className="text-xs text-slate-400">
             Platform health, traveler trends, content moderation, and global destination metrics
           </p>
         </div>
@@ -142,9 +142,9 @@ export function AdminDashboardPage() {
           const Icon = s.icon
           return (
             <Link key={i} to={s.link} className="block group">
-              <Card className="p-5 border-slate-200/90 group-hover:border-teal-300 transition-all">
+              <Card className="p-5 border-[var(--color-border-subtle)]/90 group-hover:border-teal-300 transition-all">
                 <div className="flex items-center justify-between">
-                  <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">
+                  <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">
                     {s.label}
                   </span>
                   <div className={`p-2 rounded-xl ${s.color}`}>
@@ -152,7 +152,7 @@ export function AdminDashboardPage() {
                   </div>
                 </div>
                 <div className="mt-3">
-                  <span className="text-2xl font-bold text-slate-900 font-display">
+                  <span className="text-2xl font-bold text-white font-display">
                     {s.value}
                   </span>
                   <p className="text-[11px] text-slate-400 mt-0.5">{s.sublabel}</p>
@@ -167,10 +167,10 @@ export function AdminDashboardPage() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <Card className="p-6 space-y-3">
           <div className="flex items-center justify-between">
-            <h3 className="text-sm font-bold text-slate-900 font-display">User Accounts</h3>
-            <Users className="w-4 h-4 text-teal-600" />
+            <h3 className="text-sm font-bold text-white font-display">User Accounts</h3>
+            <Users className="w-4 h-4 text-indigo-400" />
           </div>
-          <p className="text-xs text-slate-500">
+          <p className="text-xs text-slate-400">
             View all travelers, update user status (Active/Suspended), and promote administrators.
           </p>
           <Link to={ROUTES.ADMIN.USERS} className="block pt-2">
@@ -182,10 +182,10 @@ export function AdminDashboardPage() {
 
         <Card className="p-6 space-y-3">
           <div className="flex items-center justify-between">
-            <h3 className="text-sm font-bold text-slate-900 font-display">Platform Trips</h3>
+            <h3 className="text-sm font-bold text-white font-display">Platform Trips</h3>
             <Map className="w-4 h-4 text-sky-600" />
           </div>
-          <p className="text-xs text-slate-500">
+          <p className="text-xs text-slate-400">
             Audit planned itineraries, inspect public shared journeys, and manage trip records.
           </p>
           <Link to={ROUTES.ADMIN.TRIPS} className="block pt-2">
@@ -197,10 +197,10 @@ export function AdminDashboardPage() {
 
         <Card className="p-6 space-y-3">
           <div className="flex items-center justify-between">
-            <h3 className="text-sm font-bold text-slate-900 font-display">Cities & Activities</h3>
+            <h3 className="text-sm font-bold text-white font-display">Cities & Activities</h3>
             <Compass className="w-4 h-4 text-emerald-600" />
           </div>
-          <p className="text-xs text-slate-500">
+          <p className="text-xs text-slate-400">
             Inspect curated destination guides, popular attraction scores, and activity catalogs.
           </p>
           <Link to={ROUTES.ADMIN.CITIES} className="block pt-2">

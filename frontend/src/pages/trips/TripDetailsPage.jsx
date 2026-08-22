@@ -165,7 +165,7 @@ export function TripDetailsPage() {
   }
 
   const status = trip.status || 'PLANNED'
-  const statusColor = TRIP_STATUS_COLORS[status] || 'bg-slate-100 text-slate-700'
+  const statusColor = TRIP_STATUS_COLORS[status] || 'bg-slate-800 text-slate-300'
   const statusLabel = TRIP_STATUS_LABELS[status] || status
   const dateRange = formatDateRange(trip.startDate, trip.endDate)
   const stops = Array.isArray(trip.stops) ? trip.stops : []
@@ -211,11 +211,11 @@ export function TripDetailsPage() {
           </Link>
 
           <div className="flex items-center gap-2">
-            <span className={`px-3 py-1 text-xs font-bold rounded-full border shadow-sm backdrop-blur-md ${statusColor}`}>
+            <span className={`px-3 py-1 text-xs font-bold rounded-full border shadow-lg backdrop-blur-md ${statusColor}`}>
               {statusLabel}
             </span>
             {trip.isPublic && (
-              <span className="px-3 py-1 text-xs font-bold rounded-full bg-emerald-500/80 text-white border border-emerald-400/50 shadow-sm backdrop-blur-md flex items-center gap-1">
+              <span className="px-3 py-1 text-xs font-bold rounded-full bg-emerald-500/80 text-white border border-emerald-400/50 shadow-lg backdrop-blur-md flex items-center gap-1">
                 <Globe className="w-3 h-3" /> Public
               </span>
             )}
@@ -252,7 +252,7 @@ export function TripDetailsPage() {
               variant="secondary"
               size="sm"
               icon={Share2}
-              className="bg-white/20 hover:bg-white/30 text-white border border-white/30"
+              className="bg-[var(--color-card)]/20 hover:bg-[var(--color-card)]/30 text-white border border-white/30"
               onClick={() => setIsShareModalOpen(true)}
             >
               Share
@@ -281,8 +281,8 @@ export function TripDetailsPage() {
             {/* Description Card */}
             {trip.description && (
               <Card className="p-6">
-                <h3 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">About this Trip</h3>
-                <p className="text-xs sm:text-sm text-slate-700 leading-relaxed whitespace-pre-line">
+                <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">About this Trip</h3>
+                <p className="text-xs sm:text-sm text-slate-300 leading-relaxed whitespace-pre-line">
                   {trip.description}
                 </p>
               </Card>
@@ -292,18 +292,18 @@ export function TripDetailsPage() {
             <Card className="p-6 space-y-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <h3 className="text-sm font-bold text-slate-900 font-display">Route Destinations</h3>
-                  <p className="text-xs text-slate-500">Stops sequenced along this journey</p>
+                  <h3 className="text-sm font-bold text-white font-display">Route Destinations</h3>
+                  <p className="text-xs text-slate-400">Stops sequenced along this journey</p>
                 </div>
-                <Link to={`/trips/${tripId}/itinerary`} className="text-xs font-bold text-teal-600 hover:text-teal-700">
+                <Link to={`/trips/${tripId}/itinerary`} className="text-xs font-bold text-indigo-400 hover:text-indigo-400">
                   Manage Stops &rarr;
                 </Link>
               </div>
 
               {stops.length === 0 ? (
-                <div className="p-6 text-center bg-slate-50 rounded-2xl border border-dashed border-slate-200">
+                <div className="p-6 text-center bg-slate-800/50 rounded-2xl border border-dashed border-[var(--color-border-subtle)]">
                   <MapPin className="w-8 h-8 text-slate-300 mx-auto mb-1.5" />
-                  <p className="text-xs font-semibold text-slate-700">No destination stops added</p>
+                  <p className="text-xs font-semibold text-slate-300">No destination stops added</p>
                   <p className="text-[11px] text-slate-400 mb-3">Add cities to begin building your itinerary.</p>
                   <Link to={`/trips/${tripId}/itinerary`}>
                     <Button size="sm" variant="primary">Add Stops in Builder</Button>
@@ -314,16 +314,16 @@ export function TripDetailsPage() {
                   {stops.map((stop, idx) => (
                     <div
                       key={stop._id || stop.id || idx}
-                      className="flex items-center gap-3 p-3 rounded-xl bg-slate-50 border border-slate-100"
+                      className="flex items-center gap-3 p-3 rounded-xl bg-slate-800/50 border border-[var(--color-border-subtle)]"
                     >
-                      <span className="w-6 h-6 rounded-lg bg-teal-600 text-white font-bold text-xs flex items-center justify-center shrink-0">
+                      <span className="w-6 h-6 rounded-lg bg-indigo-600 text-white font-bold text-xs flex items-center justify-center shrink-0">
                         {idx + 1}
                       </span>
                       <div className="min-w-0">
-                        <h4 className="text-xs font-bold text-slate-900 truncate">
+                        <h4 className="text-xs font-bold text-white truncate">
                           {stop.cityName || stop.cityId?.name || 'City'}
                         </h4>
-                        <p className="text-[10px] text-slate-500 truncate">
+                        <p className="text-[10px] text-slate-400 truncate">
                           {stop.country || stop.cityId?.country || ''}
                         </p>
                       </div>
@@ -337,9 +337,9 @@ export function TripDetailsPage() {
           {/* Sidebar Column: Budget & Stats */}
           <div className="space-y-6">
             <Card className="p-6 space-y-4">
-              <h3 className="text-sm font-bold text-slate-900 font-display">Journey Highlights</h3>
+              <h3 className="text-sm font-bold text-white font-display">Journey Highlights</h3>
               <div className="space-y-3">
-                <div className="flex items-center justify-between p-3 rounded-xl bg-teal-50 border border-teal-100">
+                <div className="flex items-center justify-between p-3 rounded-xl bg-indigo-500/10 border border-teal-100">
                   <span className="text-xs font-medium text-teal-800">Itinerary Days</span>
                   <span className="text-sm font-extrabold text-teal-900">{itineraryDays.length} Days</span>
                 </div>
@@ -355,7 +355,7 @@ export function TripDetailsPage() {
                 </div>
               </div>
 
-              <div className="pt-2 border-t border-slate-100 flex flex-col gap-2">
+              <div className="pt-2 border-t border-[var(--color-border-subtle)] flex flex-col gap-2">
                 <Link to={`/trips/${tripId}/itinerary`}>
                   <Button variant="primary" size="sm" className="w-full" icon={ListOrdered}>
                     Open Builder
@@ -376,8 +376,8 @@ export function TripDetailsPage() {
         <div className="space-y-6">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-lg font-bold text-slate-900 font-display">Daily Schedule</h2>
-              <p className="text-xs text-slate-500">Day-by-day plan of places, meals and activities</p>
+              <h2 className="text-lg font-bold text-white font-display">Daily Schedule</h2>
+              <p className="text-xs text-slate-400">Day-by-day plan of places, meals and activities</p>
             </div>
             <Link to={`/trips/${tripId}/itinerary`}>
               <Button variant="primary" size="sm" icon={Edit2}>
@@ -387,10 +387,10 @@ export function TripDetailsPage() {
           </div>
 
           {itineraryDays.length === 0 ? (
-            <div className="py-12 text-center bg-white rounded-3xl border border-slate-200 p-8 space-y-3">
-              <Calendar className="w-10 h-10 text-teal-600/50 mx-auto" />
-              <h3 className="text-sm font-bold text-slate-800">No itinerary days created yet</h3>
-              <p className="text-xs text-slate-500 max-w-sm mx-auto">
+            <div className="py-12 text-center bg-[var(--color-card)] rounded-3xl border border-[var(--color-border-subtle)] p-8 space-y-3">
+              <Calendar className="w-10 h-10 text-indigo-400/50 mx-auto" />
+              <h3 className="text-sm font-bold text-slate-200">No itinerary days created yet</h3>
+              <p className="text-xs text-slate-400 max-w-sm mx-auto">
                 Use the Itinerary Builder to add day blocks and schedule activities.
               </p>
               <Link to={`/trips/${tripId}/itinerary`}>
@@ -403,10 +403,10 @@ export function TripDetailsPage() {
                 const acts = Array.isArray(day.activities) ? day.activities : []
                 return (
                   <Card key={day._id || day.id || idx} className="p-5 space-y-3">
-                    <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+                    <div className="flex items-center justify-between pb-2 border-b border-[var(--color-border-subtle)]">
                       <div className="flex items-center gap-2">
                         <Badge variant="primary" size="sm">Day {day.dayNumber}</Badge>
-                        <h4 className="text-xs font-bold text-slate-900">{day.title || `Day ${day.dayNumber}`}</h4>
+                        <h4 className="text-xs font-bold text-white">{day.title || `Day ${day.dayNumber}`}</h4>
                       </div>
                       {day.date && (
                         <span className="text-[11px] text-slate-400">{formatDate(day.date)}</span>
@@ -418,7 +418,7 @@ export function TripDetailsPage() {
                       <ul className="space-y-2">
                         {acts.map((a, aIdx) => (
                           <li key={a._id || a.id || aIdx} className="flex items-start justify-between text-xs">
-                            <span className="font-medium text-slate-700 truncate">{a.title}</span>
+                            <span className="font-medium text-slate-300 truncate">{a.title}</span>
                             {Number(a.estimatedCost) > 0 && (
                               <span className="font-bold text-emerald-600 shrink-0 ml-2">
                                 {formatCurrency(a.estimatedCost, currency)}
@@ -444,8 +444,8 @@ export function TripDetailsPage() {
         <div className="space-y-6">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-lg font-bold text-slate-900 font-display">Budget & Cost Summary</h2>
-              <p className="text-xs text-slate-500">Expenditures, breakdown, and estimated activity expenses</p>
+              <h2 className="text-lg font-bold text-white font-display">Budget & Cost Summary</h2>
+              <p className="text-xs text-slate-400">Expenditures, breakdown, and estimated activity expenses</p>
             </div>
             <Link to={`/trips/${tripId}/budget`}>
               <Button variant="primary" size="sm" icon={DollarSign}>
@@ -467,11 +467,11 @@ export function TripDetailsPage() {
         maxWidth="max-w-md"
       >
         <div className="space-y-4">
-          <div className="p-4 rounded-2xl bg-slate-50 border border-slate-100 space-y-3">
+          <div className="p-4 rounded-2xl bg-slate-800/50 border border-[var(--color-border-subtle)] space-y-3">
             <div className="flex items-center justify-between">
               <div>
-                <h4 className="text-xs font-bold text-slate-900">Public Visibility</h4>
-                <p className="text-[11px] text-slate-500">
+                <h4 className="text-xs font-bold text-white">Public Visibility</h4>
+                <p className="text-[11px] text-slate-400">
                   {trip.isPublic
                     ? 'Anyone with the link can view your itinerary.'
                     : 'Currently private. Only you can view this trip.'}
@@ -490,7 +490,7 @@ export function TripDetailsPage() {
 
           {trip.isPublic && (
             <div className="space-y-1.5">
-              <label className="block text-xs font-semibold text-slate-700">
+              <label className="block text-xs font-semibold text-slate-300">
                 Shareable Public URL
               </label>
               <div className="flex items-center gap-2">
@@ -498,7 +498,7 @@ export function TripDetailsPage() {
                   type="text"
                   readOnly
                   value={publicUrl}
-                  className="flex-1 px-3 py-2 text-xs rounded-xl bg-slate-100 border border-slate-200 text-slate-700 font-mono select-all"
+                  className="flex-1 px-3 py-2 text-xs rounded-xl bg-slate-800 border border-[var(--color-border-subtle)] text-slate-300 font-mono select-all"
                 />
                 <Button size="sm" variant="primary" icon={copiedLink ? Check : Copy} onClick={handleCopyLink}>
                   {copiedLink ? 'Copied' : 'Copy'}

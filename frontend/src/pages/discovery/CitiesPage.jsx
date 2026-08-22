@@ -107,23 +107,26 @@ export function CitiesPage() {
   return (
     <div className="space-y-8 animate-in fade-in duration-200">
       {/* Header Banner */}
-      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-teal-800 via-teal-900 to-slate-900 text-white p-6 sm:p-10 shadow-lg">
-        <div className="relative z-10 max-w-2xl space-y-3">
-          <span className="px-3 py-1 text-xs font-bold rounded-full bg-teal-500/20 text-teal-200 border border-teal-400/30 flex items-center gap-1.5 w-fit">
+      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-indigo-950 via-slate-900 to-[var(--color-body)] border border-indigo-500/20 text-white p-6 sm:p-10 shadow-2xl hover-lift">
+        <div className="absolute -right-16 -top-16 w-80 h-80 bg-indigo-500/15 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -left-16 -bottom-16 w-80 h-80 bg-purple-500/15 rounded-full blur-3xl pointer-events-none" />
+
+        <div className="relative z-10 max-w-2xl space-y-3.5 min-w-0">
+          <span className="px-3 py-1 text-xs font-bold rounded-full bg-indigo-500/20 text-indigo-300 border border-indigo-400/30 flex items-center gap-1.5 w-fit">
             <Globe className="w-3.5 h-3.5" /> Destination Directory
           </span>
-          <h1 className="text-2xl sm:text-4xl font-extrabold font-display">
+          <h1 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold font-display tracking-tight text-white drop-shadow-sm truncate-safe">
             Discover Curated Destinations
           </h1>
-          <p className="text-xs sm:text-sm text-slate-200 leading-relaxed">
+          <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-light">
             Explore 2–3 hand-picked destinations per region complete with detailed day-by-day itineraries, estimated budgets in ₹ INR, and auto-trip generation.
           </p>
         </div>
       </div>
 
       {/* Search & Filter Controls */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 p-4 bg-white rounded-2xl border border-slate-200 shadow-2xs">
-        <div className="lg:col-span-1">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 p-4 bg-slate-900/90 rounded-2xl border border-slate-800 shadow-xl backdrop-blur-md">
+        <div className="lg:col-span-1 min-w-0">
           <Input
             placeholder="Search by city or country..."
             icon={Search}
@@ -132,23 +135,29 @@ export function CitiesPage() {
           />
         </div>
 
-        <Select
-          options={regionOptions}
-          value={regionFilter}
-          onChange={(e) => setRegionFilter(e.target.value)}
-        />
+        <div className="min-w-0">
+          <Select
+            options={regionOptions}
+            value={regionFilter}
+            onChange={(e) => setRegionFilter(e.target.value)}
+          />
+        </div>
 
-        <Select
-          options={costOptions}
-          value={costFilter}
-          onChange={(e) => setCostFilter(e.target.value)}
-        />
+        <div className="min-w-0">
+          <Select
+            options={costOptions}
+            value={costFilter}
+            onChange={(e) => setCostFilter(e.target.value)}
+          />
+        </div>
 
-        <Select
-          options={sortOptions}
-          value={sortBy}
-          onChange={(e) => setSortBy(e.target.value)}
-        />
+        <div className="min-w-0">
+          <Select
+            options={sortOptions}
+            value={sortBy}
+            onChange={(e) => setSortBy(e.target.value)}
+          />
+        </div>
       </div>
 
       {/* City Cards Grid */}

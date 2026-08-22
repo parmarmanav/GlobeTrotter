@@ -12,8 +12,8 @@ export function Spinner({ size = 'md', className, label }) {
 
   return (
     <div className={cn('flex flex-col items-center justify-center gap-2', className)}>
-      <Loader2 className={cn('animate-spin text-teal-600', sizes[size])} />
-      {label && <p className="text-xs text-slate-500 font-medium">{label}</p>}
+      <Loader2 className={cn('animate-spin text-indigo-400', sizes[size])} />
+      {label && <p className="text-xs text-slate-400 font-medium">{label}</p>}
     </div>
   )
 }

@@ -19,9 +19,9 @@ export function PopularDestinationsWidget({ destinations = [] }) {
       <CardHeader className="border-none px-0 pt-0">
         <div>
           <CardTitle>Popular Destinations</CardTitle>
-          <p className="text-xs text-slate-500 mt-0.5">Top-rated spots across the globe</p>
+          <p className="text-xs text-slate-400 mt-0.5">Top-rated spots across the globe</p>
         </div>
-        <Link to={ROUTES.EXPLORE} className="text-xs font-bold text-teal-600 hover:text-teal-700">
+        <Link to={ROUTES.EXPLORE} className="text-xs font-bold text-indigo-400 hover:text-indigo-400">
           Explore All
         </Link>
       </CardHeader>
@@ -32,7 +32,7 @@ export function PopularDestinationsWidget({ destinations = [] }) {
           return (
             <div
               key={cityId}
-              className="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 hover:bg-teal-50/50 border border-slate-100 transition-colors"
+              className="flex items-center justify-between p-2.5 rounded-xl bg-slate-800/50 hover:bg-indigo-500/10/50 border border-[var(--color-border-subtle)] transition-colors"
             >
               <div className="flex items-center gap-3 min-w-0">
                 <div className="w-10 h-10 rounded-xl overflow-hidden shrink-0 bg-slate-200">
@@ -44,12 +44,12 @@ export function PopularDestinationsWidget({ destinations = [] }) {
                 </div>
                 <div className="min-w-0">
                   <Link to={`/cities/${cityId}`} className="block">
-                    <h5 className="text-xs font-bold text-slate-900 truncate hover:text-teal-600">
+                    <h5 className="text-xs font-bold text-white truncate hover:text-indigo-400">
                       {city.name}
                     </h5>
                   </Link>
-                  <p className="text-[10px] text-slate-500 truncate flex items-center gap-1">
-                    <MapPin className="w-2.5 h-2.5 text-teal-600" /> {city.country}
+                  <p className="text-[10px] text-slate-400 truncate flex items-center gap-1">
+                    <MapPin className="w-2.5 h-2.5 text-indigo-400" /> {city.country}
                   </p>
                 </div>
               </div>
@@ -61,7 +61,7 @@ export function PopularDestinationsWidget({ destinations = [] }) {
                   </Badge>
                 )}
                 <Link to={ROUTES.CREATE_TRIP}>
-                  <Button variant="ghost" size="sm" className="p-1.5 h-7 w-7 text-teal-600 hover:bg-teal-100/60 rounded-lg">
+                  <Button variant="ghost" size="sm" className="p-1.5 h-7 w-7 text-indigo-400 hover:bg-teal-100/60 rounded-lg">
                     <Plus className="w-3.5 h-3.5" />
                   </Button>
                 </Link>

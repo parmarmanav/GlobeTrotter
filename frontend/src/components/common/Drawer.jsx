@@ -44,18 +44,18 @@ export function Drawer({
       />
       <div
         className={cn(
-          'fixed bg-white shadow-2xl flex flex-col z-10 w-full',
+          'fixed bg-[var(--color-card)] shadow-2xl flex flex-col z-10 w-full',
           size,
           positionStyles[position],
           className
         )}
       >
-        <div className="flex items-center justify-between p-4 border-b border-slate-100">
-          <h3 className="font-semibold text-slate-900">{title}</h3>
+        <div className="flex items-center justify-between p-4 border-b border-[var(--color-border-subtle)]">
+          <h3 className="font-semibold text-white">{title}</h3>
           <button
             type="button"
             onClick={onClose}
-            className="p-1.5 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-lg cursor-pointer transition-colors"
+            className="p-1.5 text-slate-400 hover:text-slate-300 hover:bg-slate-800 rounded-lg cursor-pointer transition-colors"
           >
             <X className="w-5 h-5" />
           </button>

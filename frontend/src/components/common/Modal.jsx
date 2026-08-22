@@ -42,28 +42,28 @@ export function Modal({
       {/* Dialog Box */}
       <div
         className={cn(
-          'relative w-full bg-white rounded-2xl shadow-2xl border border-slate-100 z-10 overflow-hidden transform transition-all animate-in zoom-in-95 duration-200',
+          'relative w-full bg-[var(--color-card)] rounded-2xl shadow-2xl border border-[var(--color-border-subtle)] z-10 overflow-hidden transform transition-all animate-in zoom-in-95 duration-200',
           maxWidth,
           className
         )}
       >
         {(title || showClose) && (
-          <div className="flex items-start justify-between p-5 sm:p-6 border-b border-slate-100">
+          <div className="flex items-start justify-between p-5 sm:p-6 border-b border-[var(--color-border-subtle)]">
             <div>
               {title && (
-                <h3 className="text-lg font-bold text-slate-900 font-display">
+                <h3 className="text-lg font-bold text-white font-display">
                   {title}
                 </h3>
               )}
               {description && (
-                <p className="text-xs text-slate-500 mt-1">{description}</p>
+                <p className="text-xs text-slate-400 mt-1">{description}</p>
               )}
             </div>
             {showClose && (
               <button
                 type="button"
                 onClick={onClose}
-                className="p-1.5 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition-colors cursor-pointer"
+                className="p-1.5 text-slate-400 hover:text-slate-300 hover:bg-slate-800 rounded-lg transition-colors cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>

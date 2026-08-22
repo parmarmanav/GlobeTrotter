@@ -57,7 +57,7 @@ export function AddDayModal({
     >
       <form onSubmit={handleSubmit} className="space-y-4">
         {maxDays && (
-          <div className="p-2.5 rounded-xl bg-teal-50 border border-teal-200 text-teal-800 text-xs flex items-center justify-between">
+          <div className="p-2.5 rounded-xl bg-indigo-500/10 border border-teal-200 text-teal-800 text-xs flex items-center justify-between">
             <span className="font-semibold">Trip Duration: {maxDays} Days Maximum</span>
             <span className="font-medium">{currentDaysCount} / {maxDays} planned</span>
           </div>
@@ -108,7 +108,7 @@ export function AddDayModal({
           onChange={(e) => setNotes(e.target.value)}
         />
 
-        <div className="flex items-center justify-end gap-2.5 pt-3 border-t border-slate-100">
+        <div className="flex items-center justify-end gap-2.5 pt-3 border-t border-[var(--color-border-subtle)]">
           <Button variant="outline" size="sm" onClick={onClose} disabled={isLoading}>
             Cancel
           </Button>

@@ -17,50 +17,50 @@ export function DashboardMetrics({ highlights }) {
       value: activeTrips,
       sublabel: `${totalTrips} Total Trips`,
       icon: Map,
-      color: 'bg-teal-50 text-teal-600',
+      color: 'bg-indigo-500/15 text-indigo-400 border border-indigo-500/30',
     },
     {
       label: 'Completed Trips',
       value: completedTrips,
       sublabel: 'Adventures finished',
       icon: CheckCircle2,
-      color: 'bg-emerald-50 text-emerald-600',
+      color: 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/30',
     },
     {
       label: 'Planned Budget',
       value: formatCurrency(totalBudget, currency),
       sublabel: 'Allocated across trips',
       icon: DollarSign,
-      color: 'bg-sky-50 text-sky-600',
+      color: 'bg-sky-500/15 text-sky-400 border border-sky-500/30',
     },
     {
       label: 'Logged Expenses',
       value: formatCurrency(totalExpenses, currency),
       sublabel: totalBudget > 0 ? `${Math.round((totalExpenses / totalBudget) * 100)}% of total budget` : 'No budget set',
       icon: TrendingUp,
-      color: 'bg-amber-50 text-amber-600',
+      color: 'bg-amber-500/15 text-amber-400 border border-amber-500/30',
     },
   ]
 
   return (
-    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
       {metrics.map((m, idx) => {
         const Icon = m.icon
         return (
-          <Card key={idx} className="p-5 border-slate-200/80">
-            <div className="flex items-center justify-between">
-              <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">
+          <Card key={idx} className="p-5 border-slate-800 bg-slate-900/80 hover-lift backdrop-blur-md">
+            <div className="flex items-center justify-between gap-2">
+              <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider truncate-safe">
                 {m.label}
               </span>
-              <div className={`p-2 rounded-xl ${m.color}`}>
+              <div className={`p-2 rounded-xl shrink-0 ${m.color}`}>
                 <Icon className="w-4 h-4" />
               </div>
             </div>
-            <div className="mt-3">
-              <span className="text-2xl font-bold text-slate-900 font-display">
+            <div className="mt-3 min-w-0">
+              <span className="text-2xl font-bold text-white font-display truncate-safe block">
                 {m.value}
               </span>
-              <p className="text-[11px] text-slate-400 mt-0.5">{m.sublabel}</p>
+              <p className="text-[11px] text-slate-400 mt-0.5 truncate-safe">{m.sublabel}</p>
             </div>
           </Card>
         )

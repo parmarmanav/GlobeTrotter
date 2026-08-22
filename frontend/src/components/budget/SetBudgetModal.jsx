@@ -44,12 +44,12 @@ export function SetBudgetModal({
           required
         />
 
-        <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-600 flex items-center justify-between">
+        <div className="p-3 rounded-xl bg-slate-800/50 border border-[var(--color-border-subtle)] text-xs text-slate-400 flex items-center justify-between">
           <span className="font-semibold">Standard Platform Currency:</span>
-          <span className="font-bold text-teal-700">INR (₹)</span>
+          <span className="font-bold text-indigo-400">INR (₹)</span>
         </div>
 
-        <div className="flex items-center justify-end gap-2.5 pt-3 border-t border-slate-100">
+        <div className="flex items-center justify-end gap-2.5 pt-3 border-t border-[var(--color-border-subtle)]">
           <Button variant="outline" size="sm" onClick={onClose} disabled={isLoading}>
             Cancel
           </Button>
