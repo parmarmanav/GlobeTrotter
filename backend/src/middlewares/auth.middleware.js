@@ -27,6 +27,28 @@ const protect = async (req, res, next) => {
   }
 };
 
+const optionalAuth = async (req, res, next) => {
+  try {
+    let token;
+    if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+      token = req.headers.authorization.split(' ')[1];
+    }
+
+    if (token) {
+      const decoded = verifyToken(token);
+      const user = await User.findById(decoded.id).select('-passwordHash');
+      if (user && user.isActive) {
+        req.user = user;
+      }
+    }
+    next();
+  } catch (error) {
+    // In optional auth, proceed even if token invalid/expired without setting req.user
+    next();
+  }
+};
+
 module.exports = {
-  protect
+  protect,
+  optionalAuth
 };

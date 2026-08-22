@@ -31,10 +31,18 @@ describe('STAGE 2 — AUTHENTICATION + PROFILE API TEST SUITE', () => {
     country: 'USA'
   };
 
+  let mongoServer;
+
   beforeAll(async () => {
-    // Connect to MongoDB using env URI or test URI
+    // Connect to MongoDB using MemoryServer or env URI
     if (mongoose.connection.readyState === 0) {
-      await mongoose.connect(config.mongodbUri);
+      try {
+        await mongoose.connect(config.mongodbUri, { serverSelectionTimeoutMS: 1500 });
+      } catch (err) {
+        const { MongoMemoryServer } = require('mongodb-memory-server');
+        mongoServer = await MongoMemoryServer.create();
+        await mongoose.connect(mongoServer.getUri());
+      }
     }
     // Clean up test users
     await User.deleteMany({ email: { $in: [testUser.email, adminUser.email, 'duplicate.email@example.com'] } });
@@ -44,6 +52,9 @@ describe('STAGE 2 — AUTHENTICATION + PROFILE API TEST SUITE', () => {
     // Clean up created test users
     await User.deleteMany({ email: { $in: [testUser.email, adminUser.email, 'duplicate.email@example.com'] } });
     await mongoose.connection.close();
+    if (mongoServer) {
+      await mongoServer.stop();
+    }
   });
 
   // ----------------------------------------------------
